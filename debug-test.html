@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .debug-box {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .error { color: red; }
+        .success { color: green; }
+        .warning { color: orange; }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug - Test de Inteligencias</h1>
+    
+    <div class="debug-box">
+        <h2>Estado de la Aplicación</h2>
+        <div id="appStatus"></div>
+    </div>
+    
+    <div class="debug-box">
+        <h2>Pruebas Rápidas</h2>
+        <button onclick="testAppState()">1. Verificar appState</button>
+        <button onclick="testQuestions()">2. Verificar QUESTIONS</button>
+        <button onclick="testDOM()">3. Verificar DOM</button>
+        <button onclick="testRenderQuestion()">4. Test renderQuestion</button>
+    </div>
+    
+    <div class="debug-box">
+        <h2>Consola de Debug</h2>
+        <div id="debugConsole" style="background: #000; color: #0f0; padding: 10px; font-family: monospace; height: 300px; overflow-y: auto;"></div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+        const debugLog = (message, type = 'log') => {
+            const console = document.getElementById('debugConsole');
+            const color = type === 'error' ? '#f00' : type === 'warn' ? '#ff0' : '#0f0';
+            console.innerHTML += `<div style="color: ${color}">${new Date().toLocaleTimeString()} - ${message}</div>`;
+            console.scrollTop = console.scrollHeight;
+        };
+        
+        // Interceptar console.log
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        console.log = function(...args) {
+            debugLog(args.join(' '), 'log');
+            originalLog.apply(console, args);
+        };
+        
+        console.error = function(...args) {
+            debugLog('ERROR: ' + args.join(' '), 'error');
+            originalError.apply(console, args);
+        };
+        
+        console.warn = function(...args) {
+            debugLog('WARN: ' + args.join(' '), 'warn');
+            originalWarn.apply(console, args);
+        };
+        
+        function testAppState() {
+            debugLog('=== TEST APPSTATE ===');
+            if (typeof appState === 'undefined') {
+                debugLog('❌ appState no está definido', 'error');
+                return;
+            }
+            debugLog('✅ appState existe');
+            debugLog('userInfo: ' + JSON.stringify(appState.userInfo));
+            debugLog('currentQuestion: ' + appState.currentQuestion);
+            debugLog('selectedQuestions length: ' + (appState.selectedQuestions?.length || 0));
+            debugLog('answers length: ' + (appState.answers?.length || 0));
+        }
+        
+        function testQuestions() {
+            debugLog('=== TEST QUESTIONS ===');
+            if (typeof QUESTIONS === 'undefined') {
+                debugLog('❌ QUESTIONS no está definido', 'error');
+                return;
+            }
+            debugLog('✅ QUESTIONS array existe');
+            debugLog('Total preguntas: ' + QUESTIONS.length);
+            debugLog('Preguntas scale: ' + QUESTIONS.filter(q => q.type === 'scale').length);
+            debugLog('Preguntas yesno: ' + QUESTIONS.filter(q => q.type === 'yesno').length);
+            
+            if (QUESTIONS.length > 0) {
+                debugLog('Primera pregunta: ' + JSON.stringify(QUESTIONS[0]));
+            }
+        }
+        
+        function testDOM() {
+            debugLog('=== TEST DOM ===');
+            const elements = [
+                'heroSection',
+                'userFormSection',
+                'testSection',
+                'resultsSection',
+                'questionContainer',
+                'progressBar',
+                'progressText'
+            ];
+            
+            elements.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    debugLog(`✅ ${id} encontrado`);
+                } else {
+                    debugLog(`❌ ${id} NO encontrado`, 'error');
+                }
+            });
+        }
+        
+        function testRenderQuestion() {
+            debugLog('=== TEST RENDER QUESTION ===');
+            
+            // Simular datos de usuario
+            if (!appState.userInfo || !appState.userInfo.name) {
+                debugLog('Configurando datos de prueba...');
+                appState.userInfo = {
+                    name: 'Test User',
+                    email: 'test@test.com',
+                    age: '25',
+                    profession: 'Tester'
+                };
+            }
+            
+            // Seleccionar preguntas si no existen
+            if (!appState.selectedQuestions || appState.selectedQuestions.length === 0) {
+                debugLog('Seleccionando preguntas...');
+                try {
+                    appState.selectedQuestions = selectBalancedQuestions();
+                    debugLog('✅ Preguntas seleccionadas: ' + appState.selectedQuestions.length);
+                } catch (error) {
+                    debugLog('❌ Error al seleccionar preguntas: ' + error.message, 'error');
+                    return;
+                }
+            }
+            
+            appState.currentQuestion = 0;
+            appState.answers = [];
+            
+            debugLog('Mostrando testSection...');
+            showSection('testSection');
+            
+            setTimeout(() => {
+                debugLog('Llamando a renderQuestion...');
+                try {
+                    renderQuestion();
+                    debugLog('✅ renderQuestion ejecutado');
+                } catch (error) {
+                    debugLog('❌ Error en renderQuestion: ' + error.message, 'error');
+                    debugLog('Stack: ' + error.stack, 'error');
+                }
+            }, 200);
+        }
+        
+        // Estado inicial
+        setTimeout(() => {
+            const status = document.getElementById('appStatus');
+            status.innerHTML = `
+                <p class="${typeof appState !== 'undefined' ? 'success' : 'error'}">
+                    appState: ${typeof appState !== 'undefined' ? '✅ Definido' : '❌ No definido'}
+                </p>
+                <p class="${typeof QUESTIONS !== 'undefined' ? 'success' : 'error'}">
+                    QUESTIONS: ${typeof QUESTIONS !== 'undefined' ? '✅ Definido (' + QUESTIONS.length + ' preguntas)' : '❌ No definido'}
+                </p>
+                <p class="${typeof renderQuestion !== 'undefined' ? 'success' : 'error'}">
+                    renderQuestion: ${typeof renderQuestion !== 'undefined' ? '✅ Definida' : '❌ No definida'}
+                </p>
+            `;
+        }, 500);
+    </script>
+</body>
+</html>

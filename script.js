@@ -583,6 +583,7 @@ function renderQuestion() {
     
     if (!appState.selectedQuestions || appState.selectedQuestions.length === 0) {
         console.error('❌ No hay preguntas seleccionadas');
+        console.error('   appState:', appState);
         return;
     }
     
@@ -590,8 +591,11 @@ function renderQuestion() {
     
     if (!question) {
         console.error('❌ Pregunta no encontrada en índice', appState.currentQuestion);
+        console.error('   Total preguntas:', appState.selectedQuestions.length);
         return;
     }
+    
+    console.log('📝 Pregunta a renderizar:', question);
     
     // Actualizar texto de progreso
     const progressText = document.getElementById('progressText');
@@ -614,25 +618,23 @@ function renderQuestion() {
         return;
     }
     
+    console.log('📦 Container encontrado, generando HTML...');
+    
     // Agregar clase de animación
     container.style.opacity = '0';
     container.style.transform = 'translateY(20px)';
     
-    let html = `
-        <div class="question-content">
-            <div class="question-header-info">
-                <span class="question-number">Pregunta ${appState.currentQuestion + 1}/${CONFIG.totalQuestions}</span>
-                <span class="question-category">${question.category}</span>
-            </div>
-            <h3 class="question-text">${question.question}</h3>
-    `;
+    let html = '<div class="question-content">';
+    html += '<div class="question-header-info">';
+    html += '<span class="question-number">Pregunta ' + (appState.currentQuestion + 1) + '/' + CONFIG.totalQuestions + '</span>';
+    html += '<span class="question-category">' + question.category + '</span>';
+    html += '</div>';
+    html += '<h3 class="question-text">' + question.question + '</h3>';
     
     if (question.type === 'scale') {
-        html += `
-            <div class="options-container">
-                <div class="scale-instruction">Selecciona tu nivel de acuerdo:</div>
-                <div class="scale-options">
-        `;
+        html += '<div class="options-container">';
+        html += '<div class="scale-instruction">Selecciona tu nivel de acuerdo:</div>';
+        html += '<div class="scale-options">';
         
         const scaleLabels = [
             { value: 1, label: 'Nunca', emoji: '😟' },
@@ -643,78 +645,81 @@ function renderQuestion() {
         ];
         
         scaleLabels.forEach(option => {
-            html += `
-                <div class="scale-option">
-                    <input type="radio" 
-                           id="scale_${option.value}" 
-                           name="question_${appState.currentQuestion}" 
-                           value="${option.value}"
-                           onchange="selectScaleAnswer(${option.value})">
-                    <label for="scale_${option.value}">
-                        <span class="scale-emoji">${option.emoji}</span>
-                        <span class="scale-number">${option.value}</span>
-                        <span class="scale-label">${option.label}</span>
-                    </label>
-                </div>
-            `;
+            html += '<div class="scale-option">';
+            html += '<input type="radio" ';
+            html += 'id="scale_' + option.value + '" ';
+            html += 'name="question_' + appState.currentQuestion + '" ';
+            html += 'value="' + option.value + '" ';
+            html += 'onchange="selectScaleAnswer(' + option.value + ')">';
+            html += '<label for="scale_' + option.value + '">';
+            html += '<span class="scale-emoji">' + option.emoji + '</span>';
+            html += '<span class="scale-number">' + option.value + '</span>';
+            html += '<span class="scale-label">' + option.label + '</span>';
+            html += '</label>';
+            html += '</div>';
         });
         
         html += '</div></div>';
     } else {
-        html += `
-            <div class="options-container">
-                <div class="boolean-options">
-                    <div class="boolean-option">
-                        <input type="radio" 
-                               id="yes_option" 
-                               name="question_${appState.currentQuestion}" 
-                               value="yes"
-                               onchange="selectYesNoAnswer(true)">
-                        <label for="yes_option" class="boolean-label yes-label">
-                            <span class="boolean-icon">✓</span>
-                            <span class="boolean-text">SÍ</span>
-                        </label>
-                    </div>
-                    <div class="boolean-option">
-                        <input type="radio" 
-                               id="no_option" 
-                               name="question_${appState.currentQuestion}" 
-                               value="no"
-                               onchange="selectYesNoAnswer(false)">
-                        <label for="no_option" class="boolean-label no-label">
-                            <span class="boolean-icon">✗</span>
-                            <span class="boolean-text">NO</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        `;
+        html += '<div class="options-container">';
+        html += '<div class="boolean-options">';
+        html += '<div class="boolean-option">';
+        html += '<input type="radio" ';
+        html += 'id="yes_option" ';
+        html += 'name="question_' + appState.currentQuestion + '" ';
+        html += 'value="yes" ';
+        html += 'onchange="selectYesNoAnswer(true)">';
+        html += '<label for="yes_option" class="boolean-label yes-label">';
+        html += '<span class="boolean-icon">✓</span>';
+        html += '<span class="boolean-text">SÍ</span>';
+        html += '</label>';
+        html += '</div>';
+        html += '<div class="boolean-option">';
+        html += '<input type="radio" ';
+        html += 'id="no_option" ';
+        html += 'name="question_' + appState.currentQuestion + '" ';
+        html += 'value="no" ';
+        html += 'onchange="selectYesNoAnswer(false)">';
+        html += '<label for="no_option" class="boolean-label no-label">';
+        html += '<span class="boolean-icon">✗</span>';
+        html += '<span class="boolean-text">NO</span>';
+        html += '</label>';
+        html += '</div>';
+        html += '</div></div>';
     }
     
     // Botones de navegación mejorados
-    html += `
-        <div class="question-navigation">
-            ${appState.currentQuestion > 0 ? 
-                '<button class="btn-nav btn-prev" onclick="previousQuestion()">← Anterior</button>' : 
-                '<div></div>'
-            }
-            <div class="question-counter">
-                <span class="current">${appState.currentQuestion + 1}</span>
-                <span class="separator">/</span>
-                <span class="total">${CONFIG.totalQuestions}</span>
-            </div>
-        </div>
-    `;
+    html += '<div class="question-navigation">';
+    if (appState.currentQuestion > 0) {
+        html += '<button class="btn-nav btn-prev" onclick="previousQuestion()">← Anterior</button>';
+    } else {
+        html += '<div></div>';
+    }
+    html += '<div class="question-counter">';
+    html += '<span class="current">' + (appState.currentQuestion + 1) + '</span>';
+    html += '<span class="separator">/</span>';
+    html += '<span class="total">' + CONFIG.totalQuestions + '</span>';
+    html += '</div>';
+    html += '</div>';
     
     html += '</div>';
     
-    container.innerHTML = html;
+    console.log('✅ HTML generado, longitud:', html.length);
+    
+    try {
+        container.innerHTML = html;
+        console.log('✅ HTML insertado en container');
+    } catch (error) {
+        console.error('❌ Error al insertar HTML:', error);
+        return;
+    }
     
     // Animar entrada
     setTimeout(() => {
         container.style.transition = 'all 0.5s ease';
         container.style.opacity = '1';
         container.style.transform = 'translateY(0)';
+        console.log('✅ Animación aplicada');
     }, 50);
     
     console.log('✅ Pregunta renderizada correctamente');
