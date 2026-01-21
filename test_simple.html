@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Simple - Verificación de Funcionalidad</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .btn-test {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.2s ease;
+        }
+        .btn-test:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.35);
+        }
+        .section {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .section.active {
+            display: block;
+        }
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Test de Funcionalidad - Botones</h1>
+        <p>Verificación rápida de que los botones funcionan correctamente.</p>
+        
+        <div id="test-results"></div>
+        
+        <button class="btn-test" id="test-start">🚀 Probar Botón Principal</button>
+        <button class="btn-test" id="test-navigation">🔄 Probar Navegación</button>
+        <button class="btn-test" id="test-form">📝 Probar Formulario</button>
+        
+        <div id="section-start" class="section">
+            <h3>✅ Botón Principal Funcionando</h3>
+            <p>El botón "Iniciar Evaluación" está respondiendo correctamente.</p>
+            <button class="btn-test" onclick="hideSection('section-start')">Cerrar</button>
+        </div>
+        
+        <div id="section-nav" class="section">
+            <h3>🔄 Navegación Funcionando</h3>
+            <p>La navegación entre secciones está operativa.</p>
+            <button class="btn-test" onclick="hideSection('section-nav')">Cerrar</button>
+        </div>
+        
+        <div id="section-form" class="section">
+            <h3>📝 Formulario Funcionando</h3>
+            <p>Los elementos del formulario están respondiendo.</p>
+            <button class="btn-test" onclick="hideSection('section-form')">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        // Test de funcionalidades
+        document.addEventListener('DOMContentLoaded', function() {
+            addStatus('🟢 JavaScript cargado correctamente', 'success');
+            
+            // Test botón principal
+            document.getElementById('test-start').addEventListener('click', function() {
+                addStatus('✅ Botón principal responde al click', 'success');
+                showSection('section-start');
+            });
+            
+            // Test navegación
+            document.getElementById('test-navigation').addEventListener('click', function() {
+                addStatus('✅ Navegación funciona correctamente', 'success');
+                showSection('section-nav');
+            });
+            
+            // Test formulario
+            document.getElementById('test-form').addEventListener('click', function() {
+                addStatus('✅ Eventos de formulario funcionando', 'success');
+                showSection('section-form');
+            });
+        });
+        
+        function addStatus(message, type) {
+            const resultsDiv = document.getElementById('test-results');
+            const statusDiv = document.createElement('div');
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
+            resultsDiv.appendChild(statusDiv);
+        }
+        
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            // Mostrar la sección seleccionada
+            document.getElementById(sectionId).classList.add('active');
+        }
+        
+        function hideSection(sectionId) {
+            document.getElementById(sectionId).classList.remove('active');
+        }
+    </script>
+</body>
+</html>

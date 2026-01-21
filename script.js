@@ -1462,15 +1462,56 @@ Generado por English My Way - Test de Análisis Cognitivo
 // ==============================================
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize the application
-    const app = new CognitiveTestApp();
-    
-    // Make app globally accessible for debugging
-    window.cognitiveTestApp = app;
-    
-    console.log('🧠 Test de Análisis Cognitivo cargado correctamente');
-    console.log('📊 Total de preguntas:', CONFIG.totalQuestions);
-    console.log('🎯 Tipos de inteligencia:', CONFIG.intelligenceTypes);
+    try {
+        const app = new CognitiveTestApp();
+        
+        // Make app globally accessible for debugging
+        window.cognitiveTestApp = app;
+        
+        console.log('🧠 Test de Análisis Cognitivo cargado correctamente');
+        console.log('📊 Total de preguntas:', CONFIG.totalQuestions);
+        console.log('🎯 Tipos de inteligencia:', CONFIG.intelligenceTypes);
+        
+        // Test button functionality immediately
+        const startBtn = document.getElementById('startTestBtn');
+        if (startBtn) {
+            console.log('✅ Botón Comenzar Test encontrado');
+        } else {
+            console.error('❌ Botón Comenzar Test no encontrado');
+        }
+        
+    } catch (error) {
+        console.error('❌ Error al inicializar la aplicación:', error);
+        
+        // Fallback simple si hay error
+        initSimpleFallback();
+    }
 });
+
+// Fallback simple si hay problemas con la clase principal
+function initSimpleFallback() {
+    console.log('🔄 Iniciando modo fallback simple...');
+    
+    const startBtn = document.getElementById('startTestBtn');
+    if (startBtn) {
+        startBtn.addEventListener('click', () => {
+            console.log('👆 Click en Comenzar Test - Modo Fallback');
+            showSection('userForm');
+        });
+    }
+    
+    function showSection(sectionId) {
+        const sections = ['hero', 'userForm', 'testSection', 'resultsSection'];
+        sections.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.style.display = id === sectionId ? 'block' : 'none';
+            }
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        console.log('📍 Mostrando sección:', sectionId);
+    }
+}
 
 // ==============================================
 // SERVICE WORKER REGISTRATION (Optional)
