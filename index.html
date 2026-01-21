@@ -21,70 +21,39 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav">
-            <div class="nav-container">
-                <div class="nav-logo">
-                    <i class="fas fa-brain"></i>
-                    <span>English My Way</span>
-                </div>
-                <div class="nav-menu">
-                    <div class="nav-links">
-                        <a href="#hero" class="nav-link">Inicio</a>
-                        <a href="#about" class="nav-link">Acerca de</a>
-                        <a href="#contact" class="nav-link">Contacto</a>
-                    </div>
-                    <button class="nav-toggle" aria-label="Menú" id="navToggle">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-            </div>
-        </nav>
-    </header>
-
     <!-- Main Content -->
     <main class="main">
-        <!-- Hero Section -->
+        <!-- Hero Section - Minimalista -->
         <section class="hero" id="hero">
             <div class="hero-container">
                 <div class="hero-content">
+                    <div class="brand-badge">
+                        <i class="fas fa-brain"></i>
+                        <span>English My Way</span>
+                    </div>
                     <h1 class="hero-title">
-                        <i class="fas fa-brain hero-icon"></i>
                         Test Cognitivo Profesional
                     </h1>
                     <p class="hero-description">
-                        Descubre tus fortalezas cognitivas y potencial intelectual con nuestro test científico de inteligencias múltiples.
+                        Descubre tu potencial intelectual con nuestro análisis científico de inteligencias múltiples.
                     </p>
-                    <button class="hero-cta" id="startTestBtn" type="button" aria-describedby="hero-description">
-                        <i class="fas fa-play" aria-hidden="true"></i>
-                        <span>Iniciar Evaluación</span>
-                        <div class="button-glow"></div>
+                    <button class="hero-cta" id="startTestBtn" type="button">
+                        <span>Comenzar Evaluación</span>
                     </button>
-                </div>
-                <div class="hero-visual">
-                    <div class="brain-animation">
-                        <div class="brain-part brain-left"></div>
-                        <div class="brain-part brain-right"></div>
-                        <div class="neural-network">
-                            <div class="neuron" style="--delay: 0s"></div>
-                            <div class="neuron" style="--delay: 0.5s"></div>
-                            <div class="neuron" style="--delay: 1s"></div>
-                            <div class="neuron" style="--delay: 1.5s"></div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- User Information Form -->
+        <!-- User Information Form - Minimalista -->
         <section class="user-form-section" id="userForm" style="display: none;">
             <div class="container">
                 <div class="form-wrapper">
-                    <h2 class="section-title">
-                        <i class="fas fa-user"></i>
-                        Información Personal
-                    </h2>
+                    <div class="form-header">
+                        <h2 class="form-title">
+                            Información Personal
+                        </h2>
+                        <p class="form-subtitle">Solo necesitamos algunos datos básicos para personalizar tu experiencia</p>
+                    </div>
                     <form class="user-form" id="personalInfoForm">
                         <div class="form-grid">
                             <div class="form-group">
@@ -164,23 +133,6 @@
                                     placeholder="Ej: +57 300 123 4567"
                                 >
                             </div>
-                            
-                            <div class="form-group">
-                                <label for="sede" class="form-label">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    Sede/Ciudad
-                                </label>
-                                <select id="sede" name="sede" class="form-input">
-                                    <option value="">Selecciona una ciudad</option>
-                                    <option value="bogota">Bogotá</option>
-                                    <option value="medellin">Medellín</option>
-                                    <option value="cali">Cali</option>
-                                    <option value="barranquilla">Barranquilla</option>
-                                    <option value="cartagena">Cartagena</option>
-                                    <option value="bucaramanga">Bucaramanga</option>
-                                    <option value="otra">Otra</option>
-                                </select>
-                            </div>
                         </div>
                         
                         <div class="form-actions">
@@ -198,19 +150,18 @@
             </div>
         </section>
 
-        <!-- Cognitive Test Section -->
+        <!-- Cognitive Test Section - Minimalista -->
         <section class="test-section" id="testSection" style="display: none;">
             <div class="container">
                 <div class="test-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-brain"></i>
-                        Test Cognitivo Interactivo
+                    <h2 class="test-title">
+                        Test Cognitivo
                     </h2>
                     <div class="test-progress">
                         <div class="progress-bar">
                             <div class="progress-fill" id="progressFill"></div>
                         </div>
-                        <span class="progress-text" id="progressText">Pregunta 1 de 40</span>
+                        <span class="progress-text" id="progressText">Pregunta 1 de 20</span>
                     </div>
                 </div>
                 
@@ -235,15 +186,14 @@
             </div>
         </section>
 
-        <!-- Results Section -->
+        <!-- Results Section - Minimalista -->
         <section class="results-section" id="resultsSection" style="display: none;">
             <div class="container">
                 <div class="results-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-chart-bar"></i>
+                    <h2 class="results-title">
                         Tus Resultados
                     </h2>
-                    <p class="results-subtitle">Análisis detallado de tus inteligencias múltiples</p>
+                    <p class="results-subtitle">Análisis de tus inteligencias múltiples</p>
                 </div>
                 
                 <div class="results-content">
@@ -274,34 +224,6 @@
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>English My Way</h3>
-                    <p>Desarrollando el potencial cognitivo a través de la educación personalizada.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Contacto</h4>
-                    <p><i class="fas fa-envelope"></i> info@englishmyway.com</p>
-                    <p><i class="fas fa-phone"></i> +57 300 123 4567</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Enlaces</h4>
-                    <ul>
-                        <li><a href="#privacy">Política de Privacidad</a></li>
-                        <li><a href="#terms">Términos y Condiciones</a></li>
-                        <li><a href="#about">Acerca de Nosotros</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 English My Way. Todos los derechos reservados.</p>
-            </div>
-        </div>
-    </footer>
-
     <!-- Loading Spinner -->
     <div class="loading-spinner" id="loadingSpinner" style="display: none;">
         <div class="spinner">
@@ -313,7 +235,189 @@
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script>
-        // Script de emergencia para asegurar funcionamiento del botón principal
+        // Configuración del test
+        const CONFIG = {
+            totalQuestions: 40,
+            timePerQuestion: 60,
+            intelligenceTypes: [
+                'linguistic',
+                'logical',
+                'spatial',
+                'musical',
+                'bodily',
+                'interpersonal',
+                'intrapersonal',
+                'naturalistic'
+            ]
+        };
+        
+        // Base de datos de preguntas del test cognitivo
+        const QUESTIONS = [
+            // Inteligencia Lingüística
+            {
+                type: 'linguistic',
+                category: 'Comprensión Verbal',
+                question: '¿Cuál de las siguientes palabras tiene un significado más similar a "PERSPICAZ"?',
+                options: ['Confundido', 'Agudo', 'Lento', 'Distraído'],
+                correct: 1,
+                difficulty: 'medium'
+            },
+            {
+                type: 'linguistic',
+                category: 'Analogías Verbales',
+                question: 'LIBRO es a BIBLIOTECA como CUADRO es a:',
+                options: ['Marco', 'Pincel', 'Museo', 'Color'],
+                correct: 2,
+                difficulty: 'medium'
+            },
+            {
+                type: 'logical',
+                category: 'Razonamiento Lógico',
+                question: 'Si todos los X son Y, y algunos Y son Z, entonces:',
+                options: ['Todos los X son Z', 'Algunos X pueden ser Z', 'Ningún X es Z', 'Todos los Z son X'],
+                correct: 1,
+                difficulty: 'hard'
+            },
+            {
+                type: 'logical',
+                category: 'Secuencias Numéricas',
+                question: '¿Qué número sigue en la secuencia: 2, 6, 12, 20, 30, ?',
+                options: ['40', '42', '44', '46'],
+                correct: 1,
+                difficulty: 'medium'
+            },
+            {
+                type: 'spatial',
+                category: 'Visualización Espacial',
+                question: 'Si rotas un cubo 90° hacia la derecha, ¿qué cara quedará al frente?',
+                options: ['La cara superior', 'La cara izquierda', 'La cara derecha', 'La cara inferior'],
+                correct: 1,
+                difficulty: 'medium'
+            },
+            {
+                type: 'musical',
+                category: 'Reconocimiento Musical',
+                question: '¿Cuántos tiempos tiene un compás de 4/4?',
+                options: ['2', '3', '4', '8'],
+                correct: 2,
+                difficulty: 'easy'
+            },
+            {
+                type: 'bodily',
+                category: 'Coordinación Motora',
+                question: '¿Cuál es la mejor forma de mejorar la coordinación mano-ojo?',
+                options: ['Leer libros', 'Hacer ejercicios de equilibrio', 'Practicar deportes de pelota', 'Meditar'],
+                correct: 2,
+                difficulty: 'easy'
+            },
+            {
+                type: 'interpersonal',
+                category: 'Habilidades Sociales',
+                question: 'En una conversación, es más importante:',
+                options: ['Hablar claramente', 'Escuchar activamente', 'Usar vocabulario técnico', 'Ser el centro de atención'],
+                correct: 1,
+                difficulty: 'medium'
+            },
+            {
+                type: 'intrapersonal',
+                category: 'Autoconocimiento',
+                question: '¿Cuál es el primer paso para resolver un conflicto personal?',
+                options: ['Culpar a otros', 'Ignorar el problema', 'Reflexionar sobre las emociones propias', 'Buscar consejos externos'],
+                correct: 2,
+                difficulty: 'medium'
+            },
+            {
+                type: 'naturalistic',
+                category: 'Conexión con la Naturaleza',
+                question: '¿Cuál de estos es un indicador de un ecosistema saludable?',
+                options: ['Pocas especies', 'Gran biodiversidad', 'Dominancia de una especie', 'Ausencia de depredadores'],
+                correct: 1,
+                difficulty: 'medium'
+            },
+            // Más preguntas para completar las 40
+            {
+                type: 'linguistic',
+                category: 'Vocabulario',
+                question: '¿Cuál es el antónimo de "DILIGENTE"?',
+                options: ['Perezoso', 'Rápido', 'Inteligente', 'Fuerte'],
+                correct: 0,
+                difficulty: 'easy'
+            },
+            {
+                type: 'logical',
+                category: 'Problemas Matemáticos',
+                question: 'Si un tren viaja a 80 km/h durante 2.5 horas, ¿qué distancia recorre?',
+                options: ['160 km', '180 km', '200 km', '220 km'],
+                correct: 2,
+                difficulty: 'easy'
+            },
+            {
+                type: 'spatial',
+                category: 'Geometría',
+                question: '¿Cuántos lados tiene un octágono?',
+                options: ['6', '7', '8', '9'],
+                correct: 2,
+                difficulty: 'easy'
+            },
+            {
+                type: 'musical',
+                category: 'Teoría Musical',
+                question: '¿Cuántas notas musicales hay en la escala cromática?',
+                options: ['7', '10', '12', '15'],
+                correct: 2,
+                difficulty: 'medium'
+            },
+            {
+                type: 'bodily',
+                category: 'Anatomía',
+                question: '¿Cuál es el músculo más grande del cuerpo humano?',
+                options: ['Bíceps', 'Glúteo mayor', 'Cuádriceps', 'Deltoides'],
+                correct: 1,
+                difficulty: 'medium'
+            },
+            {
+                type: 'interpersonal',
+                category: 'Comunicación',
+                question: '¿Qué porcentaje de la comunicación es no verbal?',
+                options: ['25%', '45%', '55%', '75%'],
+                correct: 2,
+                difficulty: 'hard'
+            },
+            {
+                type: 'intrapersonal',
+                category: 'Inteligencia Emocional',
+                question: '¿Cuál es una característica de las personas con alta inteligencia emocional?',
+                options: ['Evitar conflictos', 'Controlar sus emociones', 'Ser siempre positivos', 'No mostrar emociones'],
+                correct: 1,
+                difficulty: 'medium'
+            },
+            {
+                type: 'naturalistic',
+                category: 'Biología',
+                question: '¿Cuál de estos animales es un mamífero?',
+                options: ['Tiburón', 'Delfín', 'Cocodrilo', 'Águila'],
+                correct: 1,
+                difficulty: 'easy'
+            },
+            {
+                type: 'linguistic',
+                category: 'Gramática',
+                question: 'En la oración "El gato subió rápidamente", ¿qué función cumple "rápidamente"?',
+                options: ['Sujeto', 'Predicado', 'Adverbio', 'Adjetivo'],
+                correct: 2,
+                difficulty: 'medium'
+            },
+            {
+                type: 'logical',
+                category: 'Razonamiento Deductivo',
+                question: 'Si A > B y B > C, entonces:',
+                options: ['C > A', 'A > C', 'A = C', 'No se puede determinar'],
+                correct: 1,
+                difficulty: 'easy'
+            }
+        ];
+        
+        // Script principal de emergencia
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🔄 Sistema de respaldo activado');
             
@@ -466,21 +570,280 @@
         function initializeTest() {
             console.log('🧠 Inicializando test cognitivo...');
             
+            // Obtener datos del usuario
+            const userData = JSON.parse(localStorage.getItem('cognitiveTestUser') || '{}');
+            
+            // Inicializar variables del test
+            window.testState = {
+                currentQuestion: 0,
+                answers: [],
+                startTime: Date.now(),
+                userData: userData
+            };
+            
+            // Mostrar primera pregunta
+            showQuestion(0);
+            
+            // Configurar botones de navegación del test
+            setupTestNavigation();
+        }
+        
+        // Función para mostrar una pregunta específica
+        function showQuestion(questionIndex) {
+            if (questionIndex >= QUESTIONS.length) {
+                finishTest();
+                return;
+            }
+            
+            const question = QUESTIONS[questionIndex];
             const testContent = document.getElementById('testContent');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            // Actualizar progreso
+            const progress = ((questionIndex + 1) / QUESTIONS.length) * 100;
+            if (progressFill) {
+                progressFill.style.width = `${progress}%`;
+            }
+            if (progressText) {
+                progressText.textContent = `Pregunta ${questionIndex + 1} de ${QUESTIONS.length}`;
+            }
+            
+            // Mostrar pregunta
             if (testContent) {
                 testContent.innerHTML = `
-                    <div style="text-align: center; padding: 40px;">
-                        <h3>🎯 ¡Test Iniciado Correctamente!</h3>
-                        <p>Datos del usuario guardados exitosamente.</p>
-                        <p><strong>Próximo paso:</strong> Implementar las preguntas del test.</p>
-                        <br>
-                        <button class="btn btn-primary" onclick="goBackToStart()">
-                            <i class="fas fa-home"></i>
-                            Volver al Inicio
-                        </button>
+                    <div class="question-container">
+                        <div class="question-header">
+                            <span class="question-category">${question.category}</span>
+                            <span class="question-type">${getTypeLabel(question.type)}</span>
+                        </div>
+                        <h3 class="question-text">${question.question}</h3>
+                        <div class="options-container">
+                            ${question.options.map((option, index) => `
+                                <label class="option-item" for="option-${index}">
+                                    <input type="radio" 
+                                           id="option-${index}" 
+                                           name="question-${questionIndex}" 
+                                           value="${index}"
+                                           onchange="selectAnswer(${index})">
+                                    <span class="option-text">${option}</span>
+                                </label>
+                            `).join('')}
+                        </div>
                     </div>
                 `;
             }
+            
+            // Actualizar visibilidad de botones
+            updateNavigationButtons(questionIndex);
+        }
+        
+        // Función para obtener la etiqueta del tipo de inteligencia
+        function getTypeLabel(type) {
+            const labels = {
+                'linguistic': 'Inteligencia Lingüística',
+                'logical': 'Inteligencia Lógico-Matemática',
+                'spatial': 'Inteligencia Espacial',
+                'musical': 'Inteligencia Musical',
+                'bodily': 'Inteligencia Corporal',
+                'interpersonal': 'Inteligencia Interpersonal',
+                'intrapersonal': 'Inteligencia Intrapersonal',
+                'naturalistic': 'Inteligencia Naturalista'
+            };
+            return labels[type] || type;
+        }
+        
+        // Función para seleccionar una respuesta
+        function selectAnswer(optionIndex) {
+            const currentQ = window.testState.currentQuestion;
+            
+            // Guardar respuesta
+            window.testState.answers[currentQ] = {
+                questionIndex: currentQ,
+                selectedOption: optionIndex,
+                isCorrect: optionIndex === QUESTIONS[currentQ].correct,
+                timeSpent: Date.now() - (window.testState.questionStartTime || Date.now())
+            };
+            
+            console.log(`Respuesta guardada para pregunta ${currentQ + 1}:`, window.testState.answers[currentQ]);
+            
+            // Habilitar botón siguiente
+            const nextBtn = document.getElementById('nextQuestion');
+            if (nextBtn) {
+                nextBtn.disabled = false;
+                nextBtn.style.opacity = '1';
+            }
+        }
+        
+        // Función para actualizar botones de navegación
+        function updateNavigationButtons(questionIndex) {
+            const prevBtn = document.getElementById('prevQuestion');
+            const nextBtn = document.getElementById('nextQuestion');
+            const finishBtn = document.getElementById('finishTest');
+            
+            // Botón anterior
+            if (prevBtn) {
+                prevBtn.style.display = questionIndex > 0 ? 'inline-flex' : 'none';
+            }
+            
+            // Botón siguiente / finalizar
+            if (questionIndex < QUESTIONS.length - 1) {
+                if (nextBtn) {
+                    nextBtn.style.display = 'inline-flex';
+                    nextBtn.disabled = true;
+                    nextBtn.style.opacity = '0.5';
+                }
+                if (finishBtn) finishBtn.style.display = 'none';
+            } else {
+                if (nextBtn) nextBtn.style.display = 'none';
+                if (finishBtn) {
+                    finishBtn.style.display = 'inline-flex';
+                    finishBtn.disabled = true;
+                    finishBtn.style.opacity = '0.5';
+                }
+            }
+            
+            // Marcar tiempo de inicio de pregunta
+            window.testState.questionStartTime = Date.now();
+        }
+        
+        // Configurar navegación del test
+        function setupTestNavigation() {
+            const prevBtn = document.getElementById('prevQuestion');
+            const nextBtn = document.getElementById('nextQuestion');
+            const finishBtn = document.getElementById('finishTest');
+            
+            if (prevBtn) {
+                prevBtn.onclick = function() {
+                    if (window.testState.currentQuestion > 0) {
+                        window.testState.currentQuestion--;
+                        showQuestion(window.testState.currentQuestion);
+                    }
+                };
+            }
+            
+            if (nextBtn) {
+                nextBtn.onclick = function() {
+                    if (window.testState.currentQuestion < QUESTIONS.length - 1) {
+                        window.testState.currentQuestion++;
+                        showQuestion(window.testState.currentQuestion);
+                    }
+                };
+            }
+            
+            if (finishBtn) {
+                finishBtn.onclick = function() {
+                    finishTest();
+                };
+            }
+        }
+        
+        // Función para finalizar el test
+        function finishTest() {
+            console.log('✅ Test finalizado');
+            
+            // Calcular resultados
+            const results = calculateResults();
+            
+            // Mostrar resultados
+            displayResults(results);
+            
+            // Cambiar a sección de resultados
+            document.getElementById('testSection').style.display = 'none';
+            document.getElementById('resultsSection').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Función para calcular resultados
+        function calculateResults() {
+            const answers = window.testState.answers;
+            const totalQuestions = QUESTIONS.length;
+            const correctAnswers = answers.filter(a => a && a.isCorrect).length;
+            const percentage = (correctAnswers / totalQuestions) * 100;
+            
+            // Análisis por tipo de inteligencia
+            const intelligenceScores = {};
+            CONFIG.intelligenceTypes.forEach(type => {
+                intelligenceScores[type] = 0;
+            });
+            
+            answers.forEach((answer, index) => {
+                if (answer && QUESTIONS[index]) {
+                    const questionType = QUESTIONS[index].type;
+                    if (answer.isCorrect) {
+                        intelligenceScores[questionType] = (intelligenceScores[questionType] || 0) + 1;
+                    }
+                }
+            });
+            
+            // Encontrar inteligencia dominante
+            let dominantIntelligence = 'linguistic';
+            let maxScore = 0;
+            Object.keys(intelligenceScores).forEach(type => {
+                if (intelligenceScores[type] > maxScore) {
+                    maxScore = intelligenceScores[type];
+                    dominantIntelligence = type;
+                }
+            });
+            
+            return {
+                totalQuestions,
+                correctAnswers,
+                percentage: Math.round(percentage),
+                intelligenceScores,
+                dominantIntelligence,
+                completionTime: Date.now() - window.testState.startTime
+            };
+        }
+        
+        // Función para mostrar resultados
+        function displayResults(results) {
+            const resultsDetails = document.getElementById('resultsDetails');
+            if (resultsDetails) {
+                resultsDetails.innerHTML = `
+                    <div class="results-summary">
+                        <h3>🎯 Resumen de Resultados</h3>
+                        <div class="score-card">
+                            <div class="score-item">
+                                <span class="score-label">Puntuación General:</span>
+                                <span class="score-value">${results.percentage}%</span>
+                            </div>
+                            <div class="score-item">
+                                <span class="score-label">Respuestas Correctas:</span>
+                                <span class="score-value">${results.correctAnswers}/${results.totalQuestions}</span>
+                            </div>
+                            <div class="score-item">
+                                <span class="score-label">Inteligencia Dominante:</span>
+                                <span class="score-value">${getTypeLabel(results.dominantIntelligence)}</span>
+                            </div>
+                            <div class="score-item">
+                                <span class="score-label">Tiempo Total:</span>
+                                <span class="score-value">${Math.round(results.completionTime / 60000)} min</span>
+                            </div>
+                        </div>
+                        
+                        <div class="intelligence-breakdown">
+                            <h4>📊 Análisis por Inteligencia:</h4>
+                            ${Object.entries(results.intelligenceScores).map(([type, score]) => `
+                                <div class="intelligence-item">
+                                    <span>${getTypeLabel(type)}:</span>
+                                    <span>${score} puntos</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Guardar resultados
+            const finalData = {
+                ...window.testState.userData,
+                results: results,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('cognitiveTestResults', JSON.stringify(finalData));
+            console.log('💾 Resultados guardados:', finalData);
         }
         
         // Función para volver al inicio

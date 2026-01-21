@@ -1,7 +1,9 @@
-CREATE DATABASE IF NOT EXISTS u527555083_testenglish 
-CHARACTER SET utf8mb4 
-COLLATE utf8mb4_unicode_ci;
+-- ============================================
+-- BASE DE DATOS PARA TEST COGNITIVO
+-- Versión optimizada para hosting compartido
+-- ============================================
 
+-- Usar la base de datos existente
 USE u527555083_testenglish;
 
 -- Tabla principal para almacenar información de los tests
@@ -13,7 +15,6 @@ CREATE TABLE IF NOT EXISTS cognitive_tests (
     edad INT NULL,
     profesion VARCHAR(100) NULL,
     celular VARCHAR(20) NULL,
-    sede VARCHAR(50) NULL,
     overall_score DECIMAL(5,2) NOT NULL,
     dominant_intelligence VARCHAR(20) NOT NULL,
     total_time INT NOT NULL COMMENT 'Tiempo total en milisegundos',
@@ -47,6 +48,12 @@ CREATE TABLE IF NOT EXISTS intelligence_scores (
     total_questions INT NOT NULL DEFAULT 0,
     percentage DECIMAL(5,2) NOT NULL DEFAULT 0.00,
     average_response_time INT DEFAULT 0 COMMENT 'Tiempo promedio de respuesta en milisegundos',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (test_id) REFERENCES cognitive_tests(test_id) ON DELETE CASCADE,
+    UNIQUE KEY unique_test_intelligence (test_id, intelligence_type),
+    INDEX idx_intelligence_type (intelligence_type),
+    INDEX idx_percentage (percentage)
+) ENGINE=InnoDB;
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (test_id) REFERENCES cognitive_tests(test_id) ON DELETE CASCADE,
     UNIQUE KEY unique_test_intelligence (test_id, intelligence_type),
