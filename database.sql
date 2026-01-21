@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS cognitive_test 
+CREATE DATABASE IF NOT EXISTS u527555083_testenglish 
 CHARACTER SET utf8mb4 
 COLLATE utf8mb4_unicode_ci;
 
-USE cognitive_test;
+USE u527555083_testenglish;
 
 -- Tabla principal para almacenar información de los tests
 CREATE TABLE IF NOT EXISTS cognitive_tests (

@@ -27,9 +27,9 @@ ini_set('error_log', __DIR__ . '/logs/error.log');
 $config = [
     'database' => [
         'host' => 'localhost',
-        'dbname' => 'cognitive_test',
-        'username' => 'db_user',
-        'password' => 'db_password',
+        'dbname' => 'u527555083_testenglish',
+        'username' => 'u527555083_testmywa',
+        'password' => '=P?f?Zd6',
         'charset' => 'utf8mb4'
     ],
     'email' => [

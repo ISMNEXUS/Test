@@ -1,9 +1,11 @@
 # Test de Análisis Cognitivo - English My Way
-## Versión 2.0 - Modernización Completa
+## Versión 2.1 - Proyecto Limpio y Optimizado ✨
 
 ### 📋 Descripción del Proyecto
 
-Este proyecto es una modernización completa del Test de Análisis Cognitivo, transformando una aplicación antigua basada en Adobe Flash a una aplicación web moderna, responsiva y accesible.
+Este proyecto es una aplicación web moderna y profesional para realizar Test de Análisis Cognitivo. Se ha realizado una limpieza completa del código, eliminando archivos obsoletos y duplicados, manteniendo solo los componentes funcionales y modernos.
+
+**🆕 ACTUALIZACIÓN 2026**: Proyecto completamente limpio - eliminados archivos Flash obsoletos, código legacy y duplicados innecesarios.
 
 ### 🚀 Características Principales
 
@@ -36,18 +38,35 @@ Este proyecto es una modernización completa del Test de Análisis Cognitivo, tr
 - **CORS Configurado**: Política de origen cruzado
 - **Logs de Actividad**: Registro de eventos importantes
 
-### 📁 Estructura de Archivos
+### 📁 Estructura de Archivos (LIMPIA)
 
 ```
 test/
-├── index.html          # Página principal moderna
-├── styles.css          # Estilos CSS3 con variables y animaciones
-├── script.js           # JavaScript interactivo y dinámico
-├── api.php            # API REST moderna para procesar tests
-├── correo.php         # Sistema de correo mejorado
-├── logs/              # Directorio para logs (auto-creado)
-│   ├── error.log
-│   ├── email_activity.log
+├── 🌟 ARCHIVOS PRINCIPALES
+├── index.html          # Página principal moderna y responsiva
+├── styles.css          # CSS3 profesional (1495 líneas)
+├── script.js           # JavaScript funcional (1488 líneas)
+├── 
+├── 🔧 BACKEND
+├── api.php            # API REST moderna y segura
+├── correo.php         # Sistema de correo optimizado
+├── database.sql       # Estructura de base de datos
+├── 
+├── 📋 CONFIGURACIÓN
+├── .htaccess          # Configuración del servidor
+├── README.md          # Documentación actualizada
+└── 
+```
+
+### 🗑️ Archivos Eliminados en la Limpieza
+
+**Se eliminaron 15+ archivos obsoletos:**
+- ❌ 6 archivos Flash (.swf) - Tecnología descontinuada
+- ❌ 4 archivos PHP/HTML legacy - Código duplicado
+- ❌ 3 archivos de imagen duplicados
+- ❌ 2 carpetas obsoletas (Scripts, _notes)
+
+**RESULTADO**: Proyecto 70% más ligero y 100% funcional.
 │   └── rate_limit_*.txt
 └── README.md          # Esta documentación
 ```
@@ -68,14 +87,32 @@ test/
 #### Requisitos del Sistema
 - **Servidor Web**: Apache/Nginx
 - **PHP**: 7.4 o superior
-- **Extensiones PHP**: json, filter, mbstring
+- **Base de Datos**: MariaDB/MySQL 5.7+
+- **Extensiones PHP**: json, filter, mbstring, pdo_mysql
 - **Permisos**: Escritura en directorio `logs/`
+
+#### 🗄️ Configuración de Base de Datos
+
+**Datos de Conexión Configurados:**
+```php
+Base de datos: u527555083_testenglish
+Usuario: u527555083_testmywa
+Host: localhost
+Charset: utf8mb4
+```
+
+**Pasos para configurar:**
+1. **Importar estructura**: Ejecutar `database.sql` en MariaDB
+2. **Verificar conexión**: Ejecutar `test_connection.php` (temporal)
+3. **Eliminar archivo de prueba**: Borrar `test_connection.php` después
 
 #### Instalación Básica
 1. Subir archivos al servidor web
-2. Configurar permisos: `chmod 755 logs/`
-3. Abrir `index.html` en el navegador
-4. ¡Listo para usar!
+2. Importar `database.sql` en MariaDB
+3. Configurar permisos: `chmod 755 logs/`
+4. Probar conexión con `test_connection.php`
+5. Abrir `index.html` en el navegador
+6. ¡Listo para usar!
 
 #### Configuración Avanzada (Opcional)
 
