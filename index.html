@@ -3,856 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Test de Análisis Cognitivo - Evalúa tus habilidades cognitivas de manera interactiva">
-    <meta name="keywords" content="test cognitivo, análisis mental, evaluación cognitiva, inteligencias múltiples">
-    <title>Test de Análisis Cognitivo | English My Way</title>
-    
-    <!-- Preload critical resources -->
-    <link rel="preload" href="styles.css" as="style">
-    <link rel="preload" href="script.js" as="script">
+    <meta name="description" content="Test de Inteligencias Múltiples y Estilos de Aprendizaje">
+    <meta name="keywords" content="test inteligencias, estilos aprendizaje, análisis cognitivo">
+    <title>Test de Inteligencias Múltiples | English My Way</title>
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles.css">
     
-    <!-- Font Awesome for icons -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-    <!-- Main Content -->
     <main class="main">
-        <!-- Hero Section - Minimalista -->
-        <section class="hero" id="hero">
+        <!-- HERO SECTION -->
+        <section id="hero">
             <div class="hero-container">
-                <div class="hero-content">
-                    <div class="brand-badge">
-                        <i class="fas fa-brain"></i>
-                        <span>English My Way</span>
-                    </div>
-                    <h1 class="hero-title">
-                        Test Cognitivo Profesional
-                    </h1>
-                    <p class="hero-description">
-                        Descubre tu potencial intelectual con nuestro análisis científico de inteligencias múltiples.
-                    </p>
-                    <button class="hero-cta" id="startTestBtn" type="button">
-                        <span>Comenzar Evaluación</span>
-                    </button>
+                <div class="brand-badge">
+                    <i class="fas fa-brain"></i>
+                    <span>English My Way</span>
                 </div>
+                <h1 class="hero-title">Test de Inteligencias Múltiples</h1>
+                <p class="hero-description">
+                    Descubre tu perfil de inteligencias y estilos de aprendizaje con este análisis científico de 80 preguntas.
+                </p>
+                <button class="btn btn-primary" id="startTestBtn" type="button">
+                    <i class="fas fa-play"></i> Comenzar Test
+                </button>
             </div>
         </section>
 
-        <!-- User Information Form - Minimalista -->
-        <section class="user-form-section" id="userForm" style="display: none;">
-            <div class="container">
-                <div class="form-wrapper">
-                    <div class="form-header">
-                        <h2 class="form-title">
-                            Información Personal
-                        </h2>
-                        <p class="form-subtitle">Solo necesitamos algunos datos básicos para personalizar tu experiencia</p>
-                    </div>
-                    <form class="user-form" id="personalInfoForm">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="nombre" class="form-label">
-                                    <i class="fas fa-user" aria-hidden="true"></i>
-                                    Nombre Completo
-                                    <span class="required-indicator" aria-label="requerido">*</span>
-                                </label>
-                                <input 
-                                    type="text" 
-                                    id="nombre" 
-                                    name="nombre" 
-                                    class="form-input" 
-                                    required
-                                    placeholder="Ingresa tu nombre completo"
-                                >
-                                <span class="form-error" id="nombre-error"></span>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="email" class="form-label">
-                                    <i class="fas fa-envelope" aria-hidden="true"></i>
-                                    Correo Electrónico
-                                    <span class="required-indicator" aria-label="requerido">*</span>
-                                </label>
-                                <input 
-                                    type="email" 
-                                    id="email" 
-                                    name="email" 
-                                    class="form-input" 
-                                    required
-                                    placeholder="ejemplo@correo.com"
-                                >
-                                <span class="form-error" id="email-error"></span>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="edad" class="form-label">
-                                    <i class="fas fa-calendar"></i>
-                                    Edad
-                                </label>
-                                <input 
-                                    type="number" 
-                                    id="edad" 
-                                    name="edad" 
-                                    class="form-input" 
-                                    min="10" 
-                                    max="100"
-                                    placeholder="Ej: 25"
-                                >
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="profesion" class="form-label">
-                                    <i class="fas fa-briefcase"></i>
-                                    Profesión/Ocupación
-                                </label>
-                                <input 
-                                    type="text" 
-                                    id="profesion" 
-                                    name="profesion" 
-                                    class="form-input"
-                                    placeholder="Ej: Estudiante, Ingeniero, etc."
-                                >
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="celular" class="form-label">
-                                    <i class="fas fa-mobile-alt"></i>
-                                    Teléfono Celular
-                                </label>
-                                <input 
-                                    type="tel" 
-                                    id="celular" 
-                                    name="celular" 
-                                    class="form-input"
-                                    placeholder="Ej: +57 300 123 4567"
-                                >
-                            </div>
+        <!-- FORMULARIO DE USUARIO -->
+        <section id="userForm" style="display: none;">
+            <div class="form-wrapper">
+                <div class="form-header">
+                    <h2>Información Personal</h2>
+                    <p>Necesitamos algunos datos básicos para personalizar tu experiencia</p>
+                </div>
+                <form class="user-form" id="personalInfoForm" onsubmit="submitUserForm(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="nombre" class="form-label">
+                                <i class="fas fa-user"></i> Nombre Completo
+                            </label>
+                            <input 
+                                type="text" 
+                                id="nombre" 
+                                name="nombre" 
+                                class="form-input" 
+                                required
+                                placeholder="Tu nombre completo"
+                            >
                         </div>
                         
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-secondary" id="backToHero">
-                                <i class="fas fa-arrow-left"></i>
-                                Regresar
-                            </button>
-                            <button type="submit" class="btn btn-primary" id="continueToTest">
-                                <i class="fas fa-arrow-right"></i>
-                                <span>Continuar al Test</span>
-                            </button>
+                        <div class="form-group">
+                            <label for="email" class="form-label">
+                                <i class="fas fa-envelope"></i> Email
+                            </label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                class="form-input" 
+                                required
+                                placeholder="tu@email.com"
+                            >
                         </div>
-                    </form>
-                </div>
+
+                        <div class="form-group">
+                            <label for="edad" class="form-label">
+                                <i class="fas fa-calendar"></i> Edad
+                            </label>
+                            <input 
+                                type="number" 
+                                id="edad" 
+                                name="edad" 
+                                class="form-input" 
+                                placeholder="Tu edad"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profesion" class="form-label">
+                                <i class="fas fa-briefcase"></i> Profesión
+                            </label>
+                            <input 
+                                type="text" 
+                                id="profesion" 
+                                name="profesion" 
+                                class="form-input" 
+                                placeholder="Tu profesión"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="goBack()">
+                            <i class="fas fa-arrow-left"></i> Atrás
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i> Continuar
+                        </button>
+                    </div>
+                </form>
             </div>
         </section>
 
-        <!-- Cognitive Test Section - Minimalista -->
-        <section class="test-section" id="testSection" style="display: none;">
-            <div class="container">
-                <div class="test-header">
-                    <h2 class="test-title">
-                        Test Cognitivo
-                    </h2>
-                    <div class="test-progress">
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="progressFill"></div>
-                        </div>
-                        <span class="progress-text" id="progressText">Pregunta 1 de 20</span>
-                    </div>
-                </div>
-                
-                <div class="test-content" id="testContent">
-                    <!-- Las preguntas se cargarán dinámicamente aquí -->
-                </div>
-                
-                <div class="test-navigation">
-                    <button type="button" class="btn btn-secondary" id="prevQuestion" style="display: none;">
-                        <i class="fas fa-arrow-left"></i>
-                        Anterior
-                    </button>
-                    <button type="button" class="btn btn-primary" id="nextQuestion">
-                        <i class="fas fa-arrow-right"></i>
-                        Siguiente
-                    </button>
-                    <button type="button" class="btn btn-success" id="finishTest" style="display: none;">
-                        <i class="fas fa-check"></i>
-                        Finalizar Test
-                    </button>
-                </div>
-            </div>
+        <!-- SECCIÓN DE TEST -->
+        <section id="testSection" style="display: none;">
+            <div id="questionContainer"></div>
         </section>
 
-        <!-- Results Section - Minimalista -->
-        <section class="results-section" id="resultsSection" style="display: none;">
-            <div class="container">
-                <div class="results-header">
-                    <h2 class="results-title">
-                        Tus Resultados
-                    </h2>
-                    <p class="results-subtitle">Análisis de tus inteligencias múltiples</p>
-                </div>
-                
-                <div class="results-content">
-                    <div class="results-chart">
-                        <canvas id="resultsChart" width="400" height="300"></canvas>
-                    </div>
-                    
-                    <div class="results-details" id="resultsDetails">
-                        <!-- Los detalles se cargarán dinámicamente -->
-                    </div>
-                </div>
-                
-                <div class="results-actions">
-                    <button type="button" class="btn btn-primary" id="downloadResults">
-                        <i class="fas fa-download"></i>
-                        Descargar Resultados
-                    </button>
-                    <button type="button" class="btn btn-secondary" id="retakeTest">
-                        <i class="fas fa-redo"></i>
-                        Tomar Test de Nuevo
-                    </button>
-                    <button type="button" class="btn btn-success" id="shareResults">
-                        <i class="fas fa-share"></i>
-                        Compartir Resultados
-                    </button>
-                </div>
+        <!-- SECCIÓN DE RESULTADOS -->
+        <section id="resultsSection" style="display: none;">
+            <div class="results-summary">
+                <div id="resultsContent"></div>
             </div>
         </section>
     </main>
 
-    <!-- Loading Spinner -->
-    <div class="loading-spinner" id="loadingSpinner" style="display: none;">
-        <div class="spinner">
-            <i class="fas fa-brain"></i>
-        </div>
-        <p>Procesando información...</p>
-    </div>
-
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <script>
-        // Configuración del test
-        const CONFIG = {
-            totalQuestions: 40,
-            timePerQuestion: 60,
-            intelligenceTypes: [
-                'linguistic',
-                'logical',
-                'spatial',
-                'musical',
-                'bodily',
-                'interpersonal',
-                'intrapersonal',
-                'naturalistic'
-            ]
-        };
-        
-        // Base de datos de preguntas del test cognitivo
-        const QUESTIONS = [
-            // Inteligencia Lingüística
-            {
-                type: 'linguistic',
-                category: 'Comprensión Verbal',
-                question: '¿Cuál de las siguientes palabras tiene un significado más similar a "PERSPICAZ"?',
-                options: ['Confundido', 'Agudo', 'Lento', 'Distraído'],
-                correct: 1,
-                difficulty: 'medium'
-            },
-            {
-                type: 'linguistic',
-                category: 'Analogías Verbales',
-                question: 'LIBRO es a BIBLIOTECA como CUADRO es a:',
-                options: ['Marco', 'Pincel', 'Museo', 'Color'],
-                correct: 2,
-                difficulty: 'medium'
-            },
-            {
-                type: 'logical',
-                category: 'Razonamiento Lógico',
-                question: 'Si todos los X son Y, y algunos Y son Z, entonces:',
-                options: ['Todos los X son Z', 'Algunos X pueden ser Z', 'Ningún X es Z', 'Todos los Z son X'],
-                correct: 1,
-                difficulty: 'hard'
-            },
-            {
-                type: 'logical',
-                category: 'Secuencias Numéricas',
-                question: '¿Qué número sigue en la secuencia: 2, 6, 12, 20, 30, ?',
-                options: ['40', '42', '44', '46'],
-                correct: 1,
-                difficulty: 'medium'
-            },
-            {
-                type: 'spatial',
-                category: 'Visualización Espacial',
-                question: 'Si rotas un cubo 90° hacia la derecha, ¿qué cara quedará al frente?',
-                options: ['La cara superior', 'La cara izquierda', 'La cara derecha', 'La cara inferior'],
-                correct: 1,
-                difficulty: 'medium'
-            },
-            {
-                type: 'musical',
-                category: 'Reconocimiento Musical',
-                question: '¿Cuántos tiempos tiene un compás de 4/4?',
-                options: ['2', '3', '4', '8'],
-                correct: 2,
-                difficulty: 'easy'
-            },
-            {
-                type: 'bodily',
-                category: 'Coordinación Motora',
-                question: '¿Cuál es la mejor forma de mejorar la coordinación mano-ojo?',
-                options: ['Leer libros', 'Hacer ejercicios de equilibrio', 'Practicar deportes de pelota', 'Meditar'],
-                correct: 2,
-                difficulty: 'easy'
-            },
-            {
-                type: 'interpersonal',
-                category: 'Habilidades Sociales',
-                question: 'En una conversación, es más importante:',
-                options: ['Hablar claramente', 'Escuchar activamente', 'Usar vocabulario técnico', 'Ser el centro de atención'],
-                correct: 1,
-                difficulty: 'medium'
-            },
-            {
-                type: 'intrapersonal',
-                category: 'Autoconocimiento',
-                question: '¿Cuál es el primer paso para resolver un conflicto personal?',
-                options: ['Culpar a otros', 'Ignorar el problema', 'Reflexionar sobre las emociones propias', 'Buscar consejos externos'],
-                correct: 2,
-                difficulty: 'medium'
-            },
-            {
-                type: 'naturalistic',
-                category: 'Conexión con la Naturaleza',
-                question: '¿Cuál de estos es un indicador de un ecosistema saludable?',
-                options: ['Pocas especies', 'Gran biodiversidad', 'Dominancia de una especie', 'Ausencia de depredadores'],
-                correct: 1,
-                difficulty: 'medium'
-            },
-            // Más preguntas para completar las 40
-            {
-                type: 'linguistic',
-                category: 'Vocabulario',
-                question: '¿Cuál es el antónimo de "DILIGENTE"?',
-                options: ['Perezoso', 'Rápido', 'Inteligente', 'Fuerte'],
-                correct: 0,
-                difficulty: 'easy'
-            },
-            {
-                type: 'logical',
-                category: 'Problemas Matemáticos',
-                question: 'Si un tren viaja a 80 km/h durante 2.5 horas, ¿qué distancia recorre?',
-                options: ['160 km', '180 km', '200 km', '220 km'],
-                correct: 2,
-                difficulty: 'easy'
-            },
-            {
-                type: 'spatial',
-                category: 'Geometría',
-                question: '¿Cuántos lados tiene un octágono?',
-                options: ['6', '7', '8', '9'],
-                correct: 2,
-                difficulty: 'easy'
-            },
-            {
-                type: 'musical',
-                category: 'Teoría Musical',
-                question: '¿Cuántas notas musicales hay en la escala cromática?',
-                options: ['7', '10', '12', '15'],
-                correct: 2,
-                difficulty: 'medium'
-            },
-            {
-                type: 'bodily',
-                category: 'Anatomía',
-                question: '¿Cuál es el músculo más grande del cuerpo humano?',
-                options: ['Bíceps', 'Glúteo mayor', 'Cuádriceps', 'Deltoides'],
-                correct: 1,
-                difficulty: 'medium'
-            },
-            {
-                type: 'interpersonal',
-                category: 'Comunicación',
-                question: '¿Qué porcentaje de la comunicación es no verbal?',
-                options: ['25%', '45%', '55%', '75%'],
-                correct: 2,
-                difficulty: 'hard'
-            },
-            {
-                type: 'intrapersonal',
-                category: 'Inteligencia Emocional',
-                question: '¿Cuál es una característica de las personas con alta inteligencia emocional?',
-                options: ['Evitar conflictos', 'Controlar sus emociones', 'Ser siempre positivos', 'No mostrar emociones'],
-                correct: 1,
-                difficulty: 'medium'
-            },
-            {
-                type: 'naturalistic',
-                category: 'Biología',
-                question: '¿Cuál de estos animales es un mamífero?',
-                options: ['Tiburón', 'Delfín', 'Cocodrilo', 'Águila'],
-                correct: 1,
-                difficulty: 'easy'
-            },
-            {
-                type: 'linguistic',
-                category: 'Gramática',
-                question: 'En la oración "El gato subió rápidamente", ¿qué función cumple "rápidamente"?',
-                options: ['Sujeto', 'Predicado', 'Adverbio', 'Adjetivo'],
-                correct: 2,
-                difficulty: 'medium'
-            },
-            {
-                type: 'logical',
-                category: 'Razonamiento Deductivo',
-                question: 'Si A > B y B > C, entonces:',
-                options: ['C > A', 'A > C', 'A = C', 'No se puede determinar'],
-                correct: 1,
-                difficulty: 'easy'
-            }
-        ];
-        
-        // Script principal de emergencia
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🔄 Sistema de respaldo activado');
-            
-            const startBtn = document.getElementById('startTestBtn');
-            if (startBtn) {
-                // Eliminar listeners previos para evitar duplicados
-                startBtn.replaceWith(startBtn.cloneNode(true));
-                const newStartBtn = document.getElementById('startTestBtn');
-                
-                newStartBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    console.log('✅ ¡Botón Iniciar Evaluación funciona!');
-                    
-                    // Mostrar formulario
-                    document.getElementById('hero').style.display = 'none';
-                    document.getElementById('userForm').style.display = 'block';
-                    
-                    // Scroll suave al inicio
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    
-                    // Feedback visual
-                    newStartBtn.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        newStartBtn.style.transform = 'scale(1)';
-                    }, 150);
-                });
-                
-                console.log('🎯 Botón principal configurado correctamente');
-            }
-            
-            // Configurar botón regresar
-            const backBtn = document.getElementById('backToHero');
-            if (backBtn) {
-                backBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    document.getElementById('userForm').style.display = 'none';
-                    document.getElementById('hero').style.display = 'block';
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                });
-            }
-            
-            // SOLUCIÓN CRÍTICA: Manejo del formulario
-            const form = document.getElementById('personalInfoForm');
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault(); // Evitar recarga de página
-                    console.log('📝 Formulario enviado - procesando...');
-                    
-                    // Cambiar botón a estado de carga
-                    const submitBtn = document.getElementById('continueToTest');
-                    const originalContent = submitBtn.innerHTML;
-                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Procesando...</span>';
-                    submitBtn.disabled = true;
-                    
-                    // Obtener datos del formulario
-                    const formData = new FormData(form);
-                    const nombre = formData.get('nombre').trim();
-                    const email = formData.get('email').trim();
-                    
-                    // Validación básica
-                    if (!nombre || !email) {
-                        showFormError('Por favor completa los campos obligatorios (Nombre y Email)');
-                        resetSubmitButton(submitBtn, originalContent);
-                        return;
-                    }
-                    
-                    // Validar email
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailRegex.test(email)) {
-                        showFormError('Por favor ingresa un email válido');
-                        resetSubmitButton(submitBtn, originalContent);
-                        return;
-                    }
-                    
-                    // Simular procesamiento (para UX)
-                    setTimeout(() => {
-                        // Guardar datos del usuario (localStorage para persistencia)
-                        const userData = {
-                            nombre: nombre,
-                            email: email,
-                            edad: formData.get('edad') || '',
-                            profesion: formData.get('profesion') || '',
-                            celular: formData.get('celular') || '',
-                            sede: formData.get('sede') || ''
-                        };
-                        
-                        localStorage.setItem('cognitiveTestUser', JSON.stringify(userData));
-                        
-                        // Mostrar mensaje de éxito
-                        console.log('✅ Datos guardados:', userData);
-                        showFormSuccess('¡Datos guardados correctamente! Iniciando test...');
-                        
-                        // Proceder al test después de un breve delay
-                        setTimeout(() => {
-                            // Ocultar formulario y mostrar sección de test
-                            document.getElementById('userForm').style.display = 'none';
-                            document.getElementById('testSection').style.display = 'block';
-                            
-                            // Scroll al inicio
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                            
-                            // Inicializar test
-                            initializeTest();
-                            
-                            // Restaurar botón
-                            resetSubmitButton(submitBtn, originalContent);
-                        }, 1500);
-                    }, 800);
-                });
-            }
-        });
-        
-        // Funciones auxiliares para feedback del formulario
-        function showFormError(message) {
-            // Eliminar mensajes previos
-            removeFormMessages();
-            
-            const form = document.getElementById('personalInfoForm');
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'form-message form-error-msg';
-            errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
-            form.insertBefore(errorDiv, form.querySelector('.form-actions'));
-            
-            // Remover después de 5 segundos
-            setTimeout(() => removeFormMessages(), 5000);
-        }
-        
-        function showFormSuccess(message) {
-            // Eliminar mensajes previos
-            removeFormMessages();
-            
-            const form = document.getElementById('personalInfoForm');
-            const successDiv = document.createElement('div');
-            successDiv.className = 'form-message form-success-msg';
-            successDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
-            form.insertBefore(successDiv, form.querySelector('.form-actions'));
-        }
-        
-        function removeFormMessages() {
-            const messages = document.querySelectorAll('.form-message');
-            messages.forEach(msg => msg.remove());
-        }
-        
-        function resetSubmitButton(button, originalContent) {
-            button.innerHTML = originalContent;
-            button.disabled = false;
-        }
-        
-        // Función para inicializar el test
-        function initializeTest() {
-            console.log('🧠 Inicializando test cognitivo...');
-            
-            // Obtener datos del usuario
-            const userData = JSON.parse(localStorage.getItem('cognitiveTestUser') || '{}');
-            
-            // Inicializar variables del test
-            window.testState = {
-                currentQuestion: 0,
-                answers: [],
-                startTime: Date.now(),
-                userData: userData
-            };
-            
-            // Mostrar primera pregunta
-            showQuestion(0);
-            
-            // Configurar botones de navegación del test
-            setupTestNavigation();
-        }
-        
-        // Función para mostrar una pregunta específica
-        function showQuestion(questionIndex) {
-            if (questionIndex >= QUESTIONS.length) {
-                finishTest();
-                return;
-            }
-            
-            const question = QUESTIONS[questionIndex];
-            const testContent = document.getElementById('testContent');
-            const progressFill = document.getElementById('progressFill');
-            const progressText = document.getElementById('progressText');
-            
-            // Actualizar progreso
-            const progress = ((questionIndex + 1) / QUESTIONS.length) * 100;
-            if (progressFill) {
-                progressFill.style.width = `${progress}%`;
-            }
-            if (progressText) {
-                progressText.textContent = `Pregunta ${questionIndex + 1} de ${QUESTIONS.length}`;
-            }
-            
-            // Mostrar pregunta
-            if (testContent) {
-                testContent.innerHTML = `
-                    <div class="question-container">
-                        <div class="question-header">
-                            <span class="question-category">${question.category}</span>
-                            <span class="question-type">${getTypeLabel(question.type)}</span>
-                        </div>
-                        <h3 class="question-text">${question.question}</h3>
-                        <div class="options-container">
-                            ${question.options.map((option, index) => `
-                                <label class="option-item" for="option-${index}">
-                                    <input type="radio" 
-                                           id="option-${index}" 
-                                           name="question-${questionIndex}" 
-                                           value="${index}"
-                                           onchange="selectAnswer(${index})">
-                                    <span class="option-text">${option}</span>
-                                </label>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-            
-            // Actualizar visibilidad de botones
-            updateNavigationButtons(questionIndex);
-        }
-        
-        // Función para obtener la etiqueta del tipo de inteligencia
-        function getTypeLabel(type) {
-            const labels = {
-                'linguistic': 'Inteligencia Lingüística',
-                'logical': 'Inteligencia Lógico-Matemática',
-                'spatial': 'Inteligencia Espacial',
-                'musical': 'Inteligencia Musical',
-                'bodily': 'Inteligencia Corporal',
-                'interpersonal': 'Inteligencia Interpersonal',
-                'intrapersonal': 'Inteligencia Intrapersonal',
-                'naturalistic': 'Inteligencia Naturalista'
-            };
-            return labels[type] || type;
-        }
-        
-        // Función para seleccionar una respuesta
-        function selectAnswer(optionIndex) {
-            const currentQ = window.testState.currentQuestion;
-            
-            // Guardar respuesta
-            window.testState.answers[currentQ] = {
-                questionIndex: currentQ,
-                selectedOption: optionIndex,
-                isCorrect: optionIndex === QUESTIONS[currentQ].correct,
-                timeSpent: Date.now() - (window.testState.questionStartTime || Date.now())
-            };
-            
-            console.log(`Respuesta guardada para pregunta ${currentQ + 1}:`, window.testState.answers[currentQ]);
-            
-            // Habilitar botón siguiente
-            const nextBtn = document.getElementById('nextQuestion');
-            if (nextBtn) {
-                nextBtn.disabled = false;
-                nextBtn.style.opacity = '1';
-            }
-        }
-        
-        // Función para actualizar botones de navegación
-        function updateNavigationButtons(questionIndex) {
-            const prevBtn = document.getElementById('prevQuestion');
-            const nextBtn = document.getElementById('nextQuestion');
-            const finishBtn = document.getElementById('finishTest');
-            
-            // Botón anterior
-            if (prevBtn) {
-                prevBtn.style.display = questionIndex > 0 ? 'inline-flex' : 'none';
-            }
-            
-            // Botón siguiente / finalizar
-            if (questionIndex < QUESTIONS.length - 1) {
-                if (nextBtn) {
-                    nextBtn.style.display = 'inline-flex';
-                    nextBtn.disabled = true;
-                    nextBtn.style.opacity = '0.5';
-                }
-                if (finishBtn) finishBtn.style.display = 'none';
-            } else {
-                if (nextBtn) nextBtn.style.display = 'none';
-                if (finishBtn) {
-                    finishBtn.style.display = 'inline-flex';
-                    finishBtn.disabled = true;
-                    finishBtn.style.opacity = '0.5';
-                }
-            }
-            
-            // Marcar tiempo de inicio de pregunta
-            window.testState.questionStartTime = Date.now();
-        }
-        
-        // Configurar navegación del test
-        function setupTestNavigation() {
-            const prevBtn = document.getElementById('prevQuestion');
-            const nextBtn = document.getElementById('nextQuestion');
-            const finishBtn = document.getElementById('finishTest');
-            
-            if (prevBtn) {
-                prevBtn.onclick = function() {
-                    if (window.testState.currentQuestion > 0) {
-                        window.testState.currentQuestion--;
-                        showQuestion(window.testState.currentQuestion);
-                    }
-                };
-            }
-            
-            if (nextBtn) {
-                nextBtn.onclick = function() {
-                    if (window.testState.currentQuestion < QUESTIONS.length - 1) {
-                        window.testState.currentQuestion++;
-                        showQuestion(window.testState.currentQuestion);
-                    }
-                };
-            }
-            
-            if (finishBtn) {
-                finishBtn.onclick = function() {
-                    finishTest();
-                };
-            }
-        }
-        
-        // Función para finalizar el test
-        function finishTest() {
-            console.log('✅ Test finalizado');
-            
-            // Calcular resultados
-            const results = calculateResults();
-            
-            // Mostrar resultados
-            displayResults(results);
-            
-            // Cambiar a sección de resultados
-            document.getElementById('testSection').style.display = 'none';
-            document.getElementById('resultsSection').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        
-        // Función para calcular resultados
-        function calculateResults() {
-            const answers = window.testState.answers;
-            const totalQuestions = QUESTIONS.length;
-            const correctAnswers = answers.filter(a => a && a.isCorrect).length;
-            const percentage = (correctAnswers / totalQuestions) * 100;
-            
-            // Análisis por tipo de inteligencia
-            const intelligenceScores = {};
-            CONFIG.intelligenceTypes.forEach(type => {
-                intelligenceScores[type] = 0;
-            });
-            
-            answers.forEach((answer, index) => {
-                if (answer && QUESTIONS[index]) {
-                    const questionType = QUESTIONS[index].type;
-                    if (answer.isCorrect) {
-                        intelligenceScores[questionType] = (intelligenceScores[questionType] || 0) + 1;
-                    }
-                }
-            });
-            
-            // Encontrar inteligencia dominante
-            let dominantIntelligence = 'linguistic';
-            let maxScore = 0;
-            Object.keys(intelligenceScores).forEach(type => {
-                if (intelligenceScores[type] > maxScore) {
-                    maxScore = intelligenceScores[type];
-                    dominantIntelligence = type;
-                }
-            });
-            
-            return {
-                totalQuestions,
-                correctAnswers,
-                percentage: Math.round(percentage),
-                intelligenceScores,
-                dominantIntelligence,
-                completionTime: Date.now() - window.testState.startTime
-            };
-        }
-        
-        // Función para mostrar resultados
-        function displayResults(results) {
-            const resultsDetails = document.getElementById('resultsDetails');
-            if (resultsDetails) {
-                resultsDetails.innerHTML = `
-                    <div class="results-summary">
-                        <h3>🎯 Resumen de Resultados</h3>
-                        <div class="score-card">
-                            <div class="score-item">
-                                <span class="score-label">Puntuación General:</span>
-                                <span class="score-value">${results.percentage}%</span>
-                            </div>
-                            <div class="score-item">
-                                <span class="score-label">Respuestas Correctas:</span>
-                                <span class="score-value">${results.correctAnswers}/${results.totalQuestions}</span>
-                            </div>
-                            <div class="score-item">
-                                <span class="score-label">Inteligencia Dominante:</span>
-                                <span class="score-value">${getTypeLabel(results.dominantIntelligence)}</span>
-                            </div>
-                            <div class="score-item">
-                                <span class="score-label">Tiempo Total:</span>
-                                <span class="score-value">${Math.round(results.completionTime / 60000)} min</span>
-                            </div>
-                        </div>
-                        
-                        <div class="intelligence-breakdown">
-                            <h4>📊 Análisis por Inteligencia:</h4>
-                            ${Object.entries(results.intelligenceScores).map(([type, score]) => `
-                                <div class="intelligence-item">
-                                    <span>${getTypeLabel(type)}:</span>
-                                    <span>${score} puntos</span>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-            
-            // Guardar resultados
-            const finalData = {
-                ...window.testState.userData,
-                results: results,
-                timestamp: new Date().toISOString()
-            };
-            
-            localStorage.setItem('cognitiveTestResults', JSON.stringify(finalData));
-            console.log('💾 Resultados guardados:', finalData);
-        }
-        
-        // Función para volver al inicio
-        function goBackToStart() {
-            document.getElementById('testSection').style.display = 'none';
-            document.getElementById('hero').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    </script>
-    <script src="script.js"></script>
+    <script src="script_v3.js"></script>
 </body>
 </html>

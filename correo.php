@@ -1,9 +1,8 @@
-
 <?php
 /**
- * Sistema de Correo Modernizado para Test Cognitivo
- * Versión mejorada con mejor seguridad y funcionalidad
- * @version 2.0.0
+ * Sistema de Correo para Resultados del Test
+ * Envía los resultados del test a la dirección del usuario
+ * @version 3.0.0
  */
 
 header('Content-Type: application/json; charset=utf-8');
@@ -11,393 +10,301 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
-// Manejar preflight OPTIONS request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
 
-// Configuración
-$config = [
-    'admin_emails' => [
-        'centerbta@englishmyway.com',
-        'sistemas@englishmyway.com',
-        'oscarlopez@englishmyway.com'
-    ],
-    'from_email' => 'test@englishmyway.com',
-    'from_name' => 'Test Cognitivo - English My Way',
-    'max_file_size' => 1048576, // 1MB
-    'rate_limit' => 10, // máximo 10 envíos por hora por IP
-    'required_fields' => ['nombre', 'email']
-];
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['success' => false, 'message' => 'Método no permitido']);
+    exit();
+}
 
-/**
- * Clase para manejar el envío de correos
- */
-class EmailHandler {
-    private $config;
-    private $response;
-    private $errors = [];
+// Leer datos JSON
+$input = file_get_contents('php://input');
+$data = json_decode($input, true);
 
-    public function __construct($config) {
-        $this->config = $config;
-        $this->response = [
-            'success' => false,
-            'message' => '',
-            'timestamp' => date('c')
-        ];
+// Validar datos
+if (!isset($data['email']) || !isset($data['nombre']) || !isset($data['resultados'])) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Datos incompletos']);
+    exit();
+}
+
+$nombre = sanitize($data['nombre']);
+$email = sanitize($data['email']);
+$edad = sanitize($data['edad'] ?? 'No especificada');
+$profesion = sanitize($data['profesion'] ?? 'No especificada');
+$resultados = json_decode($data['resultados'], true);
+$fecha = $data['fecha'] ?? date('d/m/Y H:i:s');
+
+// Validar email
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Email inválido']);
+    exit();
+}
+
+// Preparar contenido del correo
+$subject = "Resultados de tu Test de Inteligencias Múltiples - English My Way";
+
+$message = prepareEmailContent($nombre, $edad, $profesion, $resultados, $fecha);
+
+// Headers del correo
+$headers = "MIME-Version: 1.0\r\n";
+$headers .= "Content-type: text/html; charset=UTF-8\r\n";
+$headers .= "From: Test Cognitivo <test@englishmyway.com>\r\n";
+$headers .= "Reply-To: test@englishmyway.com\r\n";
+$headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
+
+// Enviar correo al usuario
+$emailSent = mail($email, $subject, $message, $headers);
+
+// Registrar envío
+if ($emailSent) {
+    // Enviar copia a administrador
+    $adminHeaders = "MIME-Version: 1.0\r\n";
+    $adminHeaders .= "Content-type: text/html; charset=UTF-8\r\n";
+    $adminHeaders .= "From: Test Cognitivo <test@englishmyway.com>\r\n";
+    $adminHeaders .= "X-Mailer: PHP/" . phpversion() . "\r\n";
+    
+    $adminEmail = "centerbta@englishmyway.com";
+    $adminSubject = "Nuevo Test Completado - " . $nombre;
+    $adminMessage = prepareAdminEmail($nombre, $email, $edad, $profesion, $resultados, $fecha);
+    
+    @mail($adminEmail, $adminSubject, $adminMessage, $adminHeaders);
+    
+    http_response_code(200);
+    echo json_encode([
+        'success' => true,
+        'message' => 'Email enviado correctamente',
+        'timestamp' => date('c')
+    ]);
+} else {
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Error al enviar el email'
+    ]);
+}
+
+// =====================================================
+// FUNCIONES AUXILIARES
+// =====================================================
+
+function sanitize($string) {
+    return htmlspecialchars(strip_tags(trim($string)), ENT_QUOTES, 'UTF-8');
+}
+
+function prepareEmailContent($nombre, $edad, $profesion, $resultados, $fecha) {
+    $intelligences = $resultados['intelligences'] ?? [];
+    $learningStyles = $resultados['learningStyles'] ?? [];
+    
+    $intelligenceHtml = '';
+    $intelligenceNames = [
+        'linguistic' => 'Inteligencia Lingüística',
+        'logical' => 'Inteligencia Lógica y Matemática',
+        'spatial' => 'Inteligencia Espacial',
+        'bodily' => 'Inteligencia Física y Cinestésica',
+        'musical' => 'Inteligencia Musical',
+        'interpersonal' => 'Inteligencia Interpersonal',
+        'intrapersonal' => 'Inteligencia Intrapersonal'
+    ];
+    
+    foreach ($intelligences as $type => $score) {
+        $name = $intelligenceNames[$type] ?? $type;
+        $percentage = ($score / 25) * 100;
+        $intelligenceHtml .= "
+            <tr>
+                <td style='padding: 12px; border-bottom: 1px solid #e5e7eb;'>
+                    <strong>{$name}</strong>
+                </td>
+                <td style='padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: center;'>
+                    {$score}/25
+                </td>
+                <td style='padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: center;'>
+                    " . round($percentage, 1) . "%
+                </td>
+            </tr>
+        ";
     }
-
-    /**
-     * Procesar la solicitud
-     */
-    public function process() {
-        try {
-            // Validar método
-            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-                throw new Exception('Método no permitido', 405);
-            }
-
-            // Verificar rate limiting
-            $this->checkRateLimit();
-
-            // Obtener y validar datos
-            $data = $this->getData();
-            $this->validateData($data);
-
-            if (!empty($this->errors)) {
-                throw new Exception('Datos inválidos: ' . implode(', ', $this->errors), 400);
-            }
-
-            // Enviar correos
-            $this->sendEmails($data);
-
-            $this->response['success'] = true;
-            $this->response['message'] = 'Datos enviados correctamente. Recibirás una confirmación por email.';
-
-        } catch (Exception $e) {
-            $this->handleError($e);
-        }
-
-        $this->sendResponse();
+    
+    $learningHtml = '';
+    $learningNames = [
+        'active' => 'Estilo Activo',
+        'reflective' => 'Estilo Reflexivo',
+        'theoretic' => 'Estilo Teórico',
+        'pragmatic' => 'Estilo Pragmático'
+    ];
+    
+    foreach ($learningStyles as $style => $count) {
+        $name = $learningNames[$style] ?? $style;
+        $learningHtml .= "
+            <tr>
+                <td style='padding: 12px; border-bottom: 1px solid #e5e7eb;'>
+                    <strong>{$name}</strong>
+                </td>
+                <td style='padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: center;'>
+                    {$count} respuestas
+                </td>
+            </tr>
+        ";
     }
-
-    /**
-     * Obtener datos del POST
-     */
-    private function getData() {
-        $data = [];
-        
-        // Campos básicos
-        $fields = [
-            'nombre', 'email', 'edad', 'profesion', 'celular', 'sede',
-            'linguistic_score', 'logical_score', 'spatial_score', 'musical_score',
-            'bodily_score', 'interpersonal_score', 'intrapersonal_score', 'naturalistic_score',
-            'dominant_intelligence', 'overall_score', 'total_time'
-        ];
-
-        foreach ($fields as $field) {
-            $data[$field] = $_POST[$field] ?? '';
-        }
-
-        // Limpiar y sanitizar
-        $data['nombre'] = $this->sanitizeString($data['nombre']);
-        $data['email'] = filter_var($data['email'], FILTER_SANITIZE_EMAIL);
-        $data['profesion'] = $this->sanitizeString($data['profesion']);
-        $data['sede'] = $this->sanitizeString($data['sede']);
-        
-        // Validar números
-        $numericFields = ['edad', 'overall_score', 'total_time'];
-        foreach ($numericFields as $field) {
-            if (!empty($data[$field])) {
-                $data[$field] = intval($data[$field]);
+    
+    $html = "
+    <!DOCTYPE html>
+    <html lang='es'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>Resultados del Test</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
             }
-        }
-
-        // Validar porcentajes
-        $scoreFields = ['linguistic_score', 'logical_score', 'spatial_score', 'musical_score',
-                       'bodily_score', 'interpersonal_score', 'intrapersonal_score', 'naturalistic_score'];
-        foreach ($scoreFields as $field) {
-            if (!empty($data[$field])) {
-                $data[$field] = min(100, max(0, intval($data[$field])));
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                background: #f9fafb;
+                border-radius: 8px;
+                overflow: hidden;
             }
-        }
-
-        return $data;
-    }
-
-    /**
-     * Validar datos
-     */
-    private function validateData($data) {
-        // Campos requeridos
-        foreach ($this->config['required_fields'] as $field) {
-            if (empty($data[$field])) {
-                $this->errors[] = "El campo {$field} es requerido";
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 40px 20px;
+                text-align: center;
             }
-        }
-
-        // Validar nombre
-        if (!empty($data['nombre'])) {
-            if (strlen($data['nombre']) < 2) {
-                $this->errors[] = 'El nombre debe tener al menos 2 caracteres';
+            .header h1 {
+                margin: 0;
+                font-size: 24px;
             }
-            if (!preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/', $data['nombre'])) {
-                $this->errors[] = 'El nombre contiene caracteres inválidos';
+            .content {
+                padding: 30px 20px;
+                background: white;
             }
-        }
-
-        // Validar email
-        if (!empty($data['email'])) {
-            if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-                $this->errors[] = 'Email inválido';
+            .info-box {
+                background: #f3f4f6;
+                padding: 16px;
+                border-radius: 6px;
+                margin-bottom: 20px;
             }
-        }
-
-        // Validar edad si está presente
-        if (!empty($data['edad']) && ($data['edad'] < 10 || $data['edad'] > 100)) {
-            $this->errors[] = 'La edad debe estar entre 10 y 100 años';
-        }
-
-        // Validar celular si está presente
-        if (!empty($data['celular'])) {
-            if (!preg_match('/^[\d\s\+\-\(\)]{10,15}$/', $data['celular'])) {
-                $this->errors[] = 'Número de celular inválido';
+            .info-box p {
+                margin: 8px 0;
             }
-        }
-    }
-
-    /**
-     * Sanitizar string
-     */
-    private function sanitizeString($string) {
-        return htmlspecialchars(trim($string), ENT_QUOTES, 'UTF-8');
-    }
-
-    /**
-     * Verificar rate limiting
-     */
-    private function checkRateLimit() {
-        $ip = $this->getClientIP();
-        $rateFile = __DIR__ . '/logs/email_rate_' . md5($ip) . '.txt';
-        
-        $now = time();
-        $hourAgo = $now - 3600;
-        
-        // Crear directorio de logs si no existe
-        $logDir = dirname($rateFile);
-        if (!is_dir($logDir)) {
-            mkdir($logDir, 0755, true);
-        }
-
-        // Leer intentos existentes
-        $attempts = [];
-        if (file_exists($rateFile)) {
-            $lines = file($rateFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-            foreach ($lines as $line) {
-                $timestamp = intval($line);
-                if ($timestamp > $hourAgo) {
-                    $attempts[] = $timestamp;
-                }
+            .section {
+                margin-bottom: 30px;
             }
-        }
-
-        // Verificar límite
-        if (count($attempts) >= $this->config['rate_limit']) {
-            throw new Exception('Demasiados intentos de envío. Inténtalo más tarde.', 429);
-        }
-
-        // Registrar intento actual
-        $attempts[] = $now;
-        file_put_contents($rateFile, implode("\n", $attempts));
-    }
-
-    /**
-     * Enviar correos
-     */
-    private function sendEmails($data) {
-        // Email al usuario
-        $this->sendUserEmail($data);
-        
-        // Email a administradores
-        $this->sendAdminEmail($data);
-        
-        // Log de la actividad
-        $this->logActivity($data);
-    }
-
-    /**
-     * Enviar email al usuario
-     */
-    private function sendUserEmail($data) {
-        $subject = "Confirmación - Test de Análisis Cognitivo Recibido";
-        
-        $html = $this->generateUserEmailHTML($data);
-        $text = $this->generateUserEmailText($data);
-
-        $headers = $this->getEmailHeaders();
-
-        $sent = mail($data['email'], $subject, $html, $headers);
-        
-        if (!$sent) {
-            error_log("Error enviando email de confirmación a: " . $data['email']);
-        }
-    }
-
-    /**
-     * Enviar email a administradores
-     */
-    private function sendAdminEmail($data) {
-        $subject = "Nuevo Test Cognitivo - " . $data['nombre'];
-        
-        $body = $this->generateAdminEmailContent($data);
-        $headers = $this->getEmailHeaders();
-
-        foreach ($this->config['admin_emails'] as $adminEmail) {
-            $sent = mail($adminEmail, $subject, $body, $headers);
-            if (!$sent) {
-                error_log("Error enviando email admin a: " . $adminEmail);
+            .section h2 {
+                color: #667eea;
+                font-size: 18px;
+                margin-bottom: 16px;
+                border-bottom: 2px solid #667eea;
+                padding-bottom: 8px;
             }
-        }
-    }
-$imusicala=$_REQUEST["imusicala"];
-
-$imusicalr=$_REQUEST["imusicalr"];
-
-$imusicalt=$_REQUEST["imusicalt"];
-
-$imusicalp=$_REQUEST["imusicalp"];
-
-$iintera=$_REQUEST["iintera"];
-
-
-
-
-
-
-
-$totalauditiva=$_REQUEST["totalauditiva"];
-
-
-
-         function form1_mail($sPara, $sAsunto, $sTexto, $sDe){ 
-
-
-
-         if ($sDe)$sDe = "From:".$sDe; 
-
-
-
-         foreach ($_POST as $nombre => $valor) 
-
-              $sTexto = $sTexto."\n".$nombre." = ".$valor; 
-
-
-
-         return(mail($sPara, $sAsunto, $sTexto, $sDe)); 
-
-     } 
-
-
-
- 
-
-     if (form1_mail("jofaco1916@hotmail.com",
-
-				 "Test Perfil de Aprendizaje", 
-
-                 "El resultado del Test del Perfil de Aprendizaje es: ", 
-
-                 "Test-de-Personalidad-de-:- $nombre" 
-
-                 ) 
-
-         ) 
-
-		 
-
-   // $gracias_defecto="http://www.englishmyway.com/nacional/Gracias por su inter�s.htm";    
-
-// header( "Location: $gracias_defecto" );
-
-
-
-?> 
-
-<html>
-
-<BODY bgColor=#FFFFFF background="fondo.JPG" text=#000000>
-
-<TABLE cellSpacing=0 cellPadding=2 width="100%" border=0>
-
-  <TBODY>
-
-  <TR>
-
-    <TD colspan="3">
-
-      <HR>
-
-      <p>&nbsp;      </p></TD></TR>
-
-  <TR>
-
-    <TD colspan="3" align=middle bgcolor="#FFFF00"><div align="center"><FONT face="Arial, Helvetica, sans-serif" color=#0000cc 
-
-      size=6><B>SU TEST  HA SIDO ENVIADO CON EXITO</B></FONT></div></TD>
-
-  </TR>
-
-  <TR>
-
-    <TD width="23%" align=middle><div align="center"><FONT face="Arial, Helvetica, sans-serif" size=3>      <BR>
-
-      <BR>
-
-    </FONT></div>      <font face="Arial, Helvetica, sans-serif" size=3>&nbsp;</font></TD>
-
-    <TD width="55%" align=middle><div align="center">
-
-      <p>&nbsp;</p>
-      <p>&nbsp;</p>
-      <p>&nbsp;</p>
-      <p>&nbsp;</p>
-
-      <p><font face="Arial, Helvetica, sans-serif" size=3>El Resultado de este Test ser&aacute; anexado a su visa. <font size=2><br>
-
-        <br>
-
-        Este Test fue dise&ntilde;ado con el fin de ayudarle a desarrollar</font></font> <font size="2" face="Arial, Helvetica, sans-serif">la metodolog&iacute;a</font></p>
-
-      <p><font size="2" face="Arial, Helvetica, sans-serif"> English My Way de acuerdo a su ritmo y estilo de Aprendizaje. </font><font face="Arial, Helvetica, sans-serif" size=3><br>
-
-        <br>
-
-        <font color=#006600 size=5>��� Welcome to the World of English My Way!!!</font></font></p>
-
-    </div></TD>
-
-    <TD width="22%" align=middle><div align="center">
-
-      <p>&nbsp;</p>
-
-      </div></TD>
-
-  </TR>
-
-  <TR>
-
-    <TD colspan="3" align=middle><div align="center"><strong><A href="http://www.englishmyway.com" target="_parent">Intro</A></strong></div></TD></TR>
-
-  <TR>
-
-    <TD colspan="3">
-
-      <HR>
-
-    </TD></TR></TBODY></TABLE>
-
-<p>&nbsp;</p>
-
-</BODY></HTML>
-
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            th {
+                background: #667eea;
+                color: white;
+                padding: 12px;
+                text-align: left;
+            }
+            footer {
+                background: #f3f4f6;
+                padding: 20px;
+                text-align: center;
+                font-size: 12px;
+                color: #6b7280;
+            }
+            .btn {
+                display: inline-block;
+                background: #667eea;
+                color: white;
+                padding: 12px 24px;
+                text-decoration: none;
+                border-radius: 6px;
+                margin-top: 20px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class='container'>
+            <div class='header'>
+                <h1>🧠 Resultados de tu Test</h1>
+                <p>English My Way</p>
+            </div>
+            
+            <div class='content'>
+                <div class='info-box'>
+                    <p><strong>Nombre:</strong> {$nombre}</p>
+                    <p><strong>Edad:</strong> {$edad}</p>
+                    <p><strong>Profesión:</strong> {$profesion}</p>
+                    <p><strong>Fecha:</strong> {$fecha}</p>
+                </div>
+                
+                <div class='section'>
+                    <h2>📊 Inteligencias Múltiples</h2>
+                    <table>
+                        <tr>
+                            <th>Tipo de Inteligencia</th>
+                            <th>Puntuación</th>
+                            <th>Porcentaje</th>
+                        </tr>
+                        {$intelligenceHtml}
+                    </table>
+                </div>
+                
+                <div class='section'>
+                    <h2>🎓 Estilos de Aprendizaje</h2>
+                    <table>
+                        <tr>
+                            <th>Estilo</th>
+                            <th>Respuestas</th>
+                        </tr>
+                        {$learningHtml}
+                    </table>
+                </div>
+                
+                <div style='text-align: center;'>
+                    <a href='https://englishmyway.online' class='btn'>Volver a Inicio</a>
+                </div>
+            </div>
+            
+            <footer>
+                <p>Este es un correo automático de English My Way. No responda a este correo.</p>
+                <p>&copy; 2026 English My Way. Todos los derechos reservados.</p>
+            </footer>
+        </div>
+    </body>
+    </html>
+    ";
+    
+    return $html;
+}
+
+function prepareAdminEmail($nombre, $email, $edad, $profesion, $resultados, $fecha) {
+    $intelligences = $resultados['intelligences'] ?? [];
+    
+    $dominantIntelligence = array_key_first($intelligences);
+    $dominantScore = max($intelligences);
+    
+    $html = "
+    <h2>Nuevo Test Completado</h2>
+    <p><strong>Nombre:</strong> {$nombre}</p>
+    <p><strong>Email:</strong> {$email}</p>
+    <p><strong>Edad:</strong> {$edad}</p>
+    <p><strong>Profesión:</strong> {$profesion}</p>
+    <p><strong>Fecha:</strong> {$fecha}</p>
+    <p><strong>Inteligencia Dominante:</strong> {$dominantIntelligence} ({$dominantScore}/25)</p>
+    ";
+    
+    return $html;
+}
+?>
