@@ -190,7 +190,7 @@
                             </button>
                             <button type="submit" class="btn btn-primary" id="continueToTest">
                                 <i class="fas fa-arrow-right"></i>
-                                Continuar al Test
+                                <span>Continuar al Test</span>
                             </button>
                         </div>
                     </form>
@@ -354,7 +354,141 @@
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             }
+            
+            // SOLUCIÓN CRÍTICA: Manejo del formulario
+            const form = document.getElementById('personalInfoForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault(); // Evitar recarga de página
+                    console.log('📝 Formulario enviado - procesando...');
+                    
+                    // Cambiar botón a estado de carga
+                    const submitBtn = document.getElementById('continueToTest');
+                    const originalContent = submitBtn.innerHTML;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Procesando...</span>';
+                    submitBtn.disabled = true;
+                    
+                    // Obtener datos del formulario
+                    const formData = new FormData(form);
+                    const nombre = formData.get('nombre').trim();
+                    const email = formData.get('email').trim();
+                    
+                    // Validación básica
+                    if (!nombre || !email) {
+                        showFormError('Por favor completa los campos obligatorios (Nombre y Email)');
+                        resetSubmitButton(submitBtn, originalContent);
+                        return;
+                    }
+                    
+                    // Validar email
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(email)) {
+                        showFormError('Por favor ingresa un email válido');
+                        resetSubmitButton(submitBtn, originalContent);
+                        return;
+                    }
+                    
+                    // Simular procesamiento (para UX)
+                    setTimeout(() => {
+                        // Guardar datos del usuario (localStorage para persistencia)
+                        const userData = {
+                            nombre: nombre,
+                            email: email,
+                            edad: formData.get('edad') || '',
+                            profesion: formData.get('profesion') || '',
+                            celular: formData.get('celular') || '',
+                            sede: formData.get('sede') || ''
+                        };
+                        
+                        localStorage.setItem('cognitiveTestUser', JSON.stringify(userData));
+                        
+                        // Mostrar mensaje de éxito
+                        console.log('✅ Datos guardados:', userData);
+                        showFormSuccess('¡Datos guardados correctamente! Iniciando test...');
+                        
+                        // Proceder al test después de un breve delay
+                        setTimeout(() => {
+                            // Ocultar formulario y mostrar sección de test
+                            document.getElementById('userForm').style.display = 'none';
+                            document.getElementById('testSection').style.display = 'block';
+                            
+                            // Scroll al inicio
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            
+                            // Inicializar test
+                            initializeTest();
+                            
+                            // Restaurar botón
+                            resetSubmitButton(submitBtn, originalContent);
+                        }, 1500);
+                    }, 800);
+                });
+            }
         });
+        
+        // Funciones auxiliares para feedback del formulario
+        function showFormError(message) {
+            // Eliminar mensajes previos
+            removeFormMessages();
+            
+            const form = document.getElementById('personalInfoForm');
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'form-message form-error-msg';
+            errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
+            form.insertBefore(errorDiv, form.querySelector('.form-actions'));
+            
+            // Remover después de 5 segundos
+            setTimeout(() => removeFormMessages(), 5000);
+        }
+        
+        function showFormSuccess(message) {
+            // Eliminar mensajes previos
+            removeFormMessages();
+            
+            const form = document.getElementById('personalInfoForm');
+            const successDiv = document.createElement('div');
+            successDiv.className = 'form-message form-success-msg';
+            successDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            form.insertBefore(successDiv, form.querySelector('.form-actions'));
+        }
+        
+        function removeFormMessages() {
+            const messages = document.querySelectorAll('.form-message');
+            messages.forEach(msg => msg.remove());
+        }
+        
+        function resetSubmitButton(button, originalContent) {
+            button.innerHTML = originalContent;
+            button.disabled = false;
+        }
+        
+        // Función para inicializar el test
+        function initializeTest() {
+            console.log('🧠 Inicializando test cognitivo...');
+            
+            const testContent = document.getElementById('testContent');
+            if (testContent) {
+                testContent.innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <h3>🎯 ¡Test Iniciado Correctamente!</h3>
+                        <p>Datos del usuario guardados exitosamente.</p>
+                        <p><strong>Próximo paso:</strong> Implementar las preguntas del test.</p>
+                        <br>
+                        <button class="btn btn-primary" onclick="goBackToStart()">
+                            <i class="fas fa-home"></i>
+                            Volver al Inicio
+                        </button>
+                    </div>
+                `;
+            }
+        }
+        
+        // Función para volver al inicio
+        function goBackToStart() {
+            document.getElementById('testSection').style.display = 'none';
+            document.getElementById('hero').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     </script>
     <script src="script.js"></script>
 </body>
