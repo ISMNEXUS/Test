@@ -4,6 +4,8 @@
  * @version 3.0.0
  */
 
+console.log('🚀 Script cargado correctamente');
+
 // ==============================================
 // CONFIGURACIÓN
 // ==============================================
@@ -60,7 +62,7 @@ function selectBalancedQuestions() {
         logical: [],
         spatial: [],
         musical: [],
-        kinesthetic: [],
+        bodily: [],
         interpersonal: [],
         intrapersonal: [],
         naturalist: [],
@@ -493,14 +495,23 @@ const appState = new AppState();
 // INICIALIZACIÓN
 // ==============================================
 document.addEventListener('DOMContentLoaded', function() {
-    initializeApp();
+    console.log('🔧 Inicializando aplicación...');
+    try {
+        initializeApp();
+        console.log('✅ Inicialización completada exitosamente');
+    } catch (error) {
+        console.error('❌ Error durante la inicialización:', error);
+        alert('Error al inicializar la aplicación. Por favor, recarga la página.');
+    }
 });
 
 function initializeApp() {
-    console.log('Inicializando aplicación...');
+    console.log('📦 Iniciando aplicación...');
+    
+    // Cargar datos guardados
     loadUserData();
     
-    // Hacer las funciones globalmente disponibles
+    // Registrar funciones globalmente
     window.startTest = startTest;
     window.goBack = goBack;  
     window.exitTest = exitTest;
@@ -510,12 +521,22 @@ function initializeApp() {
     window.selectYesNoAnswer = selectYesNoAnswer;
     window.nextQuestion = nextQuestion;
     window.previousQuestion = previousQuestion;
-    window.renderCurrentQuestion = renderCurrentQuestion;
-    window.startQuestionFlow = startQuestionFlow;
     window.retakeTest = retakeTest;
     window.downloadResults = downloadResults;
     
-    console.log('Aplicación inicializada correctamente');
+    console.log('✅ Aplicación inicializada correctamente');
+    console.log('✅ Total de preguntas:', QUESTIONS.length);
+    console.log('✅ window.startTest definida:', typeof window.startTest);
+    
+    // Verificar que todas las funciones críticas estén disponibles
+    const criticalFunctions = ['startTest', 'showSection', 'submitUserForm'];
+    criticalFunctions.forEach(func => {
+        if (typeof window[func] !== 'function') {
+            console.error(`❌ Función crítica no disponible: ${func}`);
+        } else {
+            console.log(`✅ Función disponible: ${func}`);
+        }
+    });
 }
 
 function loadUserData() {
@@ -529,14 +550,23 @@ function loadUserData() {
 // FUNCIONES DE NAVEGACIÓN
 // ==============================================
 function showSection(sectionId) {
-    console.log('Mostrando sección:', sectionId);
-    document.querySelectorAll('section').forEach(s => s.style.display = 'none');
-    const section = document.getElementById(sectionId);
-    if (section) {
-        section.style.display = 'block';
-        console.log('Sección mostrada correctamente:', sectionId);
-    } else {
-        console.error('Sección no encontrada:', sectionId);
+    console.log('📍 Mostrando sección:', sectionId);
+    try {
+        const allSections = document.querySelectorAll('section');
+        console.log('   Total secciones encontradas:', allSections.length);
+        
+        allSections.forEach(s => s.style.display = 'none');
+        
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.style.display = 'block';
+            console.log('✅ Sección mostrada correctamente:', sectionId);
+        } else {
+            console.error('❌ Sección no encontrada:', sectionId);
+            console.log('   Secciones disponibles:', Array.from(allSections).map(s => s.id));
+        }
+    } catch (error) {
+        console.error('❌ Error en showSection:', error);
     }
 }
 
@@ -561,8 +591,21 @@ function exitTest() {
 // FLUJO DEL TEST
 // ==============================================
 function startTest() {
-    appState.currentStep = 'form';
-    showSection('userFormSection');
+    console.log('🚀 Iniciando test...');
+    try {
+        if (!appState) {
+            console.error('❌ appState no está definido');
+            alert('Error: La aplicación no se inicializó correctamente. Por favor, recarga la página.');
+            return;
+        }
+        
+        appState.currentStep = 'form';
+        showSection('userFormSection');
+        console.log('✅ Test iniciado correctamente - Mostrando formulario');
+    } catch (error) {
+        console.error('❌ Error en startTest:', error);
+        alert('Error al iniciar el test. Por favor, recarga la página.');
+    }
 }
 
 function submitUserForm(e) {
@@ -747,7 +790,7 @@ function calculateResults() {
         logical: { score: 0, count: 0, questions: [] },
         spatial: { score: 0, count: 0, questions: [] },
         musical: { score: 0, count: 0, questions: [] },
-        kinesthetic: { score: 0, count: 0, questions: [] },
+        bodily: { score: 0, count: 0, questions: [] },
         interpersonal: { score: 0, count: 0, questions: [] },
         intrapersonal: { score: 0, count: 0, questions: [] },
         naturalist: { score: 0, count: 0, questions: [] }
@@ -1042,7 +1085,7 @@ function getIntelligenceIcon(intelligence) {
         logical: 'fas fa-calculator',
         spatial: 'fas fa-cube',
         musical: 'fas fa-music',
-        kinesthetic: 'fas fa-running',
+        bodily: 'fas fa-running',
         interpersonal: 'fas fa-users',
         intrapersonal: 'fas fa-user-circle',
         naturalist: 'fas fa-leaf'
@@ -1066,7 +1109,7 @@ function getIntelligenceDescription(intelligence) {
         logical: 'Habilidad para resolver problemas lógicos y matemáticos',
         spatial: 'Capacidad para visualizar y manipular espacios',
         musical: 'Sensibilidad hacia ritmos, tonos y melodías',
-        kinesthetic: 'Habilidad para usar el cuerpo y movimiento',
+        bodily: 'Habilidad para usar el cuerpo y movimiento',
         interpersonal: 'Facilidad para relacionarse con otros',
         intrapersonal: 'Conocimiento y comprensión de uno mismo',
         naturalist: 'Conexión con la naturaleza y seres vivos'
@@ -1093,7 +1136,7 @@ function generateRecommendations() {
         logical: '• Resuelve puzzles matemáticos\n• Aprende programación\n• Analiza datos y patrones',
         spatial: '• Practica dibujo y diseño\n• Usa mapas mentales\n• Juega juegos de construcción',
         musical: '• Aprende un instrumento\n• Escucha música variada\n• Crea ritmos y melodías',
-        kinesthetic: '• Realiza actividad física regular\n• Aprende haciendo\n• Usa material manipulativo',
+        bodily: '• Realiza actividad física regular\n• Aprende haciendo\n• Usa material manipulativo',
         interpersonal: '• Participa en actividades grupales\n• Practica liderazgo\n• Desarrolla empatía',
         intrapersonal: '• Practica mindfulness\n• Lleva un diario personal\n• Reflexiona sobre tus metas',
         naturalist: '• Pasa tiempo en la naturaleza\n• Estudia ciencias naturales\n• Cultiva plantas'
