@@ -16,7 +16,7 @@
                 <span>English My Way</span>
             </div>
             <h1>Descubre tu Perfil Cognitivo</h1>
-            <p>Un test integral de 80 preguntas para identificar tus inteligencias múltiples y estilos de aprendizaje</p>
+            <p>Un test inteligente de 40 preguntas seleccionadas para identificar tus fortalezas y estilo de aprendizaje único</p>
             <button onclick="startTest()" class="btn-primary">
                 <i class="fas fa-play"></i> Comenzar Test
             </button>
@@ -26,41 +26,63 @@
     <!-- FORMULARIO DE USUARIO -->
     <section id="userFormSection" style="display: none;">
         <div class="container">
-            <div class="form-header">
-                <h2>Información Personal</h2>
-                <p>Por favor completa tus datos antes de comenzar</p>
+            <div class="form-wrapper">
+                <div class="form-header">
+                    <div class="form-icon">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h2>¡Bienvenido al Test!</h2>
+                    <p>Cuéntanos un poco sobre ti para personalizar tu experiencia</p>
+                </div>
+                
+                <form class="dynamic-form" onsubmit="submitUserForm(event)">
+                    <div class="input-group">
+                        <div class="input-container">
+                            <input type="text" id="nombre" name="nombre" required>
+                            <label for="nombre">Nombre Completo</label>
+                            <div class="input-highlight"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <div class="input-container">
+                            <input type="email" id="email" name="email" required>
+                            <label for="email">Correo Electrónico</label>
+                            <div class="input-highlight"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <div class="input-container">
+                                <input type="number" id="edad" name="edad" min="1" max="120">
+                                <label for="edad">Edad</label>
+                                <div class="input-highlight"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <div class="input-container">
+                                <input type="text" id="profesion" name="profesion">
+                                <label for="profesion">Profesión</label>
+                                <div class="input-highlight"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-ghost" onclick="goBack()">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>Volver</span>
+                        </button>
+                        <button type="submit" class="btn-primary btn-animated">
+                            <span>Comenzar Test</span>
+                            <i class="fas fa-arrow-right"></i>
+                            <div class="btn-ripple"></div>
+                        </button>
+                    </div>
+                </form>
             </div>
-            
-            <form onsubmit="submitUserForm(event)">
-                <div class="form-group">
-                    <label for="nombre">Nombre Completo *</label>
-                    <input type="text" id="nombre" name="nombre" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="edad">Edad</label>
-                    <input type="number" id="edad" name="edad" min="1" max="120">
-                </div>
-                
-                <div class="form-group">
-                    <label for="profesion">Profesión</label>
-                    <input type="text" id="profesion" name="profesion">
-                </div>
-                
-                <div class="form-actions">
-                    <button type="button" class="btn-secondary" onclick="goBack()">
-                        <i class="fas fa-arrow-left"></i> Atrás
-                    </button>
-                    <button type="submit" class="btn-primary">
-                        <i class="fas fa-arrow-right"></i> Continuar
-                    </button>
-                </div>
-            </form>
         </div>
     </section>
 
@@ -86,90 +108,37 @@
 
     <!-- SECCIÓN DE RESULTADOS -->
     <section id="resultsSection" style="display: none;">
-        <div class="container">
-            <div id="resultsContent">
-                <!-- Resultados se renderizan aquí -->
+        <div class="results-container">
+            <div class="results-header">
+                <div class="results-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h2>Tu Perfil Cognitivo</h2>
+                <p class="results-subtitle">Análisis basado en tus respuestas</p>
+                <div class="scale-info">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Según las preguntas, califica de 1 a 5 tu respuesta, siendo 1 la calificación más baja.</span>
+                </div>
+            </div>
+            
+            <div id="resultsContent" class="results-content">
+                <!-- Contenido dinámico de resultados -->
+            </div>
+            
+            <div class="results-actions">
+                <button class="btn-secondary" onclick="retakeTest()">
+                    <i class="fas fa-redo"></i>
+                    <span>Realizar de Nuevo</span>
+                </button>
+                <button class="btn-primary" onclick="downloadResults()">
+                    <i class="fas fa-download"></i>
+                    <span>Descargar Resultados</span>
+                </button>
             </div>
         </div>
     </section>
 
     <!-- Scripts -->
     <script src="script.js"></script>
-    <script>
-        // Variables globales necesarias
-        let appState = null;
-        
-        // Inicialización cuando la página carga
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof AppState !== 'undefined') {
-                appState = new AppState();
-            } else if (typeof initializeApp === 'function') {
-                initializeApp();
-            }
-        });
-        
-        // Función para comenzar el test
-        function startTest() {
-            if (appState) {
-                appState.currentStep = 'form';
-            }
-            showSection('userFormSection');
-        }
-        
-        // Función para volver atrás
-        function goBack() {
-            if (appState && appState.currentStep === 'form') {
-                showSection('heroSection');
-                if (appState) appState.currentStep = 'hero';
-            } else if (confirm('¿Deseas cancelar el test?')) {
-                if (appState) appState.reset();
-                showSection('heroSection');
-            }
-        }
-
-        // Función para salir del test
-        function exitTest() {
-            if (confirm('¿Deseas cancelar el test? Se perderá todo el progreso.')) {
-                if (appState) appState.reset();
-                showSection('heroSection');
-            }
-        }
-
-        // Función para mostrar secciones
-        function showSection(sectionId) {
-            document.querySelectorAll('section').forEach(s => s.style.display = 'none');
-            const section = document.getElementById(sectionId);
-            if (section) {
-                section.style.display = 'block';
-            }
-        }
-
-        // Función de envío de formulario
-        function submitUserForm(event) {
-            event.preventDefault();
-            
-            const formData = {
-                nombre: document.getElementById('nombre').value,
-                email: document.getElementById('email').value,
-                edad: document.getElementById('edad').value,
-                profesion: document.getElementById('profesion').value
-            };
-            
-            // Guardar datos en appState si existe
-            if (appState && typeof appState.setUserData === 'function') {
-                appState.setUserData(formData);
-            }
-            
-            // Pasar a la sección del test
-            showSection('testSection');
-            
-            // Iniciar el test si la función existe
-            if (typeof startQuestionFlow === 'function') {
-                startQuestionFlow();
-            } else if (typeof renderCurrentQuestion === 'function') {
-                renderCurrentQuestion();
-            }
-        }
-    </script>
 </body>
 </html>

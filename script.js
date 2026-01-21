@@ -8,7 +8,8 @@
 // CONFIGURACIÓN
 // ==============================================
 const CONFIG = {
-    totalQuestions: 80,
+    totalQuestions: 40,
+    originalQuestions: 80,
     apiEndpoint: 'api.php',
     emailEndpoint: 'correo.php',
     redirectUrl: 'https://englishmyway.online/'
@@ -27,6 +28,7 @@ class AppState {
         this.results = {};
         this.scaleAnswers = []; // Para preguntas de escala 1-5
         this.learningAnswers = []; // Para preguntas SI/NO
+        this.selectedQuestions = []; // Preguntas seleccionadas aleatoriamente
     }
 
     reset() {
@@ -38,7 +40,77 @@ class AppState {
         this.startTime = null;
         this.scaleAnswers = [];
         this.learningAnswers = [];
+        this.selectedQuestions = [];
     }
+}
+
+// Función para seleccionar preguntas aleatorias balanceadas
+function selectBalancedQuestions() {
+    console.log('Seleccionando preguntas balanceadas...');
+    
+    // Si no hay preguntas definidas, usar algunas de ejemplo
+    if (!QUESTIONS || QUESTIONS.length === 0) {
+        console.warn('No hay preguntas definidas, usando preguntas de ejemplo');
+        return [];
+    }
+    
+    // Categorizar preguntas por tipo de inteligencia
+    const questionsByIntelligence = {
+        linguistic: [],
+        logical: [],
+        spatial: [],
+        musical: [],
+        kinesthetic: [],
+        interpersonal: [],
+        intrapersonal: [],
+        naturalist: [],
+        learning: [] // Para preguntas de estilos de aprendizaje
+    };
+    
+    // Agrupar preguntas por categoría
+    QUESTIONS.forEach((q, index) => {
+        if (q.intelligence && questionsByIntelligence[q.intelligence]) {
+            questionsByIntelligence[q.intelligence].push({...q, originalIndex: index});
+        } else if (q.type === 'yesno') {
+            questionsByIntelligence.learning.push({...q, originalIndex: index});
+        }
+    });
+    
+    const selectedQuestions = [];
+    
+    // Seleccionar proporcionalmente de cada categoría
+    const intelligenceKeys = Object.keys(questionsByIntelligence).filter(key => key !== 'learning');
+    const questionsPerIntelligence = Math.floor(30 / intelligenceKeys.length); // 30 para inteligencias
+    const learningQuestions = 10; // 10 para estilos de aprendizaje
+    
+    // Seleccionar preguntas de inteligencias múltiples
+    intelligenceKeys.forEach(intelligence => {
+        const available = questionsByIntelligence[intelligence];
+        if (available.length > 0) {
+            const shuffled = available.sort(() => Math.random() - 0.5);
+            selectedQuestions.push(...shuffled.slice(0, Math.min(questionsPerIntelligence, available.length)));
+        }
+    });
+    
+    // Seleccionar preguntas de estilos de aprendizaje
+    const learningAvailable = questionsByIntelligence.learning;
+    if (learningAvailable.length > 0) {
+        const learningShuffled = learningAvailable.sort(() => Math.random() - 0.5);
+        selectedQuestions.push(...learningShuffled.slice(0, Math.min(learningQuestions, learningAvailable.length)));
+    }
+    
+    // Si no se seleccionaron suficientes preguntas, completar con preguntas aleatorias
+    if (selectedQuestions.length < CONFIG.totalQuestions) {
+        const remaining = QUESTIONS.filter(q => !selectedQuestions.find(sq => sq.originalIndex === QUESTIONS.indexOf(q)));
+        const shuffledRemaining = remaining.sort(() => Math.random() - 0.5);
+        selectedQuestions.push(...shuffledRemaining.slice(0, CONFIG.totalQuestions - selectedQuestions.length));
+    }
+    
+    // Mezclar el orden final y limitar a totalQuestions
+    const finalQuestions = selectedQuestions.sort(() => Math.random() - 0.5).slice(0, CONFIG.totalQuestions);
+    
+    console.log(`Seleccionadas ${finalQuestions.length} preguntas de ${QUESTIONS.length} disponibles`);
+    return finalQuestions;
 }
 
 // ==============================================
@@ -425,17 +497,63 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initializeApp() {
-    const startBtn = document.getElementById('startTestBtn');
-    if (startBtn) {
-        startBtn.addEventListener('click', startTest);
-    }
+    console.log('Inicializando aplicación...');
     loadUserData();
+    
+    // Hacer las funciones globalmente disponibles
+    window.startTest = startTest;
+    window.goBack = goBack;  
+    window.exitTest = exitTest;
+    window.showSection = showSection;
+    window.submitUserForm = submitUserForm;
+    window.selectScaleAnswer = selectScaleAnswer;
+    window.selectYesNoAnswer = selectYesNoAnswer;
+    window.nextQuestion = nextQuestion;
+    window.previousQuestion = previousQuestion;
+    window.renderCurrentQuestion = renderCurrentQuestion;
+    window.startQuestionFlow = startQuestionFlow;
+    window.retakeTest = retakeTest;
+    window.downloadResults = downloadResults;
+    
+    console.log('Aplicación inicializada correctamente');
 }
 
 function loadUserData() {
     const saved = localStorage.getItem('userInfo');
     if (saved) {
         appState.userInfo = JSON.parse(saved);
+    }
+}
+
+// ==============================================
+// FUNCIONES DE NAVEGACIÓN
+// ==============================================
+function showSection(sectionId) {
+    console.log('Mostrando sección:', sectionId);
+    document.querySelectorAll('section').forEach(s => s.style.display = 'none');
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.style.display = 'block';
+        console.log('Sección mostrada correctamente:', sectionId);
+    } else {
+        console.error('Sección no encontrada:', sectionId);
+    }
+}
+
+function goBack() {
+    if (appState && appState.currentStep === 'form') {
+        showSection('heroSection');
+        if (appState) appState.currentStep = 'hero';
+    } else if (confirm('¿Deseas cancelar el test?')) {
+        if (appState) appState.reset();
+        showSection('heroSection');
+    }
+}
+
+function exitTest() {
+    if (confirm('¿Deseas cancelar el test? Se perderá todo el progreso.')) {
+        if (appState) appState.reset();
+        showSection('heroSection');
     }
 }
 
@@ -460,12 +578,26 @@ function submitUserForm(e) {
     appState.userInfo = formData;
     localStorage.setItem('userInfo', JSON.stringify(formData));
     
+    // Debug: verificar preguntas disponibles
+    console.log('Total de preguntas disponibles:', QUESTIONS.length);
+    console.log('Primeras 3 preguntas:', QUESTIONS.slice(0, 3));
+    
+    // Seleccionar preguntas aleatorias balanceadas
+    appState.selectedQuestions = selectBalancedQuestions();
+    
+    console.log('Preguntas seleccionadas:', appState.selectedQuestions.length);
+    console.log('Primera pregunta seleccionada:', appState.selectedQuestions[0]);
+    
     appState.currentStep = 'test';
     appState.startTime = Date.now();
     appState.currentQuestion = 0;
     
     showSection('testSection');
-    renderQuestion();
+    
+    // Esperar un momento antes de renderizar para asegurar que la sección esté visible
+    setTimeout(() => {
+        renderQuestion();
+    }, 100);
 }
 
 // Función alias para compatibilidad con HTML
@@ -479,25 +611,32 @@ function startQuestionFlow() {
 }
 
 function renderQuestion() {
-    if (appState.currentQuestion >= QUESTIONS.length) {
+    const selectedQuestions = appState.selectedQuestions.length > 0 ? appState.selectedQuestions : QUESTIONS;
+    
+    if (appState.currentQuestion >= selectedQuestions.length) {
         finishTest();
         return;
     }
     
-    const question = QUESTIONS[appState.currentQuestion];
+    const question = selectedQuestions[appState.currentQuestion];
     const container = document.getElementById('questionContainer');
+    
+    if (!container) {
+        console.error('Question container not found');
+        return;
+    }
     
     // Actualizar barra de progreso
     const progressBar = document.getElementById('progressBar');
     const progressText = document.getElementById('progressText');
     
     if (progressBar) {
-        const percentage = ((appState.currentQuestion + 1) / QUESTIONS.length) * 100;
+        const percentage = ((appState.currentQuestion + 1) / selectedQuestions.length) * 100;
         progressBar.style.width = `${percentage}%`;
     }
     
     if (progressText) {
-        progressText.textContent = `Pregunta ${appState.currentQuestion + 1} de ${QUESTIONS.length}`;
+        progressText.textContent = `Pregunta ${appState.currentQuestion + 1} de ${selectedQuestions.length}`;
     }
     
     let html = `
@@ -513,63 +652,68 @@ function renderQuestion() {
         html += '<div class="scale-options">';
         question.scale.forEach(value => {
             html += `
-                <button class="scale-button" data-value="${value}" onclick="selectScaleAnswer(${value})">
-                    <span class="scale-number">${value}</span>
-                </button>
+                <div class="scale-option">
+                    <input type="radio" id="scale_${value}" name="scaleAnswer" value="${value}" onchange="selectScaleAnswer(${value})">
+                    <label for="scale_${value}">${value}</label>
+                </div>
             `;
         });
         html += '</div>';
     } else if (question.type === 'yesno') {
         // SI/NO
         html += `
-            <button class="option-button yes-button" data-value="si" onclick="selectYesNoAnswer('si')">
-                <i class="fas fa-check"></i> SÍ
-            </button>
-            <button class="option-button no-button" data-value="no" onclick="selectYesNoAnswer('no')">
-                <i class="fas fa-times"></i> NO
-            </button>
+            <div class="boolean-options">
+                <div class="boolean-option">
+                    <input type="radio" id="yes_option" name="booleanAnswer" value="si" onchange="selectYesNoAnswer('si')">
+                    <label for="yes_option"><i class="fas fa-check"></i> SÍ</label>
+                </div>
+                <div class="boolean-option">
+                    <input type="radio" id="no_option" name="booleanAnswer" value="no" onchange="selectYesNoAnswer('no')">
+                    <label for="no_option"><i class="fas fa-times"></i> NO</label>
+                </div>
+            </div>
         `;
     }
     
     html += `
             </div>
-            
-            <div class="test-navigation">
-                ${appState.currentQuestion > 0 ? '<button class="btn btn-secondary" onclick="previousQuestion()"><i class="fas fa-arrow-left"></i> Anterior</button>' : ''}
-                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>
-                    ${appState.currentQuestion === QUESTIONS.length - 1 ? 'Finalizar' : 'Siguiente'} <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
         </div>
     `;
     
     container.innerHTML = html;
+    
+    // Debug: verificar que la pregunta se renderizó
+    console.log('Pregunta renderizada:', appState.currentQuestion + 1, question.question);
 }
 
 function selectScaleAnswer(value) {
     appState.scaleAnswers[appState.currentQuestion] = value;
-    document.getElementById('nextBtn').disabled = false;
     
-    // Visual feedback
-    document.querySelectorAll('.scale-button').forEach(btn => {
-        btn.classList.remove('selected');
-    });
-    event.target.closest('.scale-button').classList.add('selected');
+    // Debug
+    console.log('Respuesta escala:', value, 'para pregunta:', appState.currentQuestion + 1);
+    
+    // Avanzar automáticamente después de un pequeño delay
+    setTimeout(() => {
+        nextQuestion();
+    }, 500);
 }
 
 function selectYesNoAnswer(value) {
     appState.learningAnswers[appState.currentQuestion] = value;
-    document.getElementById('nextBtn').disabled = false;
     
-    // Visual feedback
-    document.querySelectorAll('.option-button').forEach(btn => {
-        btn.classList.remove('selected');
-    });
-    event.target.closest('.option-button').classList.add('selected');
+    // Debug
+    console.log('Respuesta SI/NO:', value, 'para pregunta:', appState.currentQuestion + 1);
+    
+    // Avanzar automáticamente después de un pequeño delay
+    setTimeout(() => {
+        nextQuestion();
+    }, 500);
 }
 
 function nextQuestion() {
-    if (appState.currentQuestion < QUESTIONS.length - 1) {
+    const selectedQuestions = appState.selectedQuestions.length > 0 ? appState.selectedQuestions : QUESTIONS;
+    
+    if (appState.currentQuestion < selectedQuestions.length - 1) {
         appState.currentQuestion++;
         renderQuestion();
     } else {
@@ -595,110 +739,218 @@ function finishTest() {
 // CÁLCULO DE RESULTADOS
 // ==============================================
 function calculateResults() {
-    // Calcular puntuaciones de inteligencias múltiples
+    const selectedQuestions = appState.selectedQuestions.length > 0 ? appState.selectedQuestions : QUESTIONS;
+    
+    // Inicializar contadores
     const intelligences = {
-        linguistic: 0,
-        logical: 0,
-        spatial: 0,
-        bodily: 0,
-        musical: 0,
-        interpersonal: 0,
-        intrapersonal: 0
+        linguistic: { score: 0, count: 0, questions: [] },
+        logical: { score: 0, count: 0, questions: [] },
+        spatial: { score: 0, count: 0, questions: [] },
+        musical: { score: 0, count: 0, questions: [] },
+        kinesthetic: { score: 0, count: 0, questions: [] },
+        interpersonal: { score: 0, count: 0, questions: [] },
+        intrapersonal: { score: 0, count: 0, questions: [] },
+        naturalist: { score: 0, count: 0, questions: [] }
     };
     
-    QUESTIONS.slice(0, 35).forEach((q, idx) => {
-        if (appState.scaleAnswers[idx]) {
-            intelligences[q.intelligence] += appState.scaleAnswers[idx];
+    const learningStyles = {
+        visual: 0,
+        auditory: 0,
+        kinesthetic: 0,
+        reading: 0
+    };
+    
+    // Procesar respuestas de escala (1-5)
+    selectedQuestions.forEach((question, idx) => {
+        if (question.type === 'scale' && appState.scaleAnswers[idx]) {
+            const intelligence = question.intelligence;
+            if (intelligence && intelligences[intelligence]) {
+                intelligences[intelligence].score += appState.scaleAnswers[idx];
+                intelligences[intelligence].count++;
+                intelligences[intelligence].questions.push({
+                    question: question.question,
+                    answer: appState.scaleAnswers[idx]
+                });
+            }
+        } else if (question.type === 'yesno' && appState.learningAnswers[idx]) {
+            // Mapear respuestas SI/NO a estilos de aprendizaje
+            if (appState.learningAnswers[idx] === 'si') {
+                if (question.question.includes('VER') || question.question.includes('VISUAL')) {
+                    learningStyles.visual++;
+                } else if (question.question.includes('ESCUCHAR') || question.question.includes('OÍR')) {
+                    learningStyles.auditory++;
+                } else if (question.question.includes('MOVER') || question.question.includes('TOCAR')) {
+                    learningStyles.kinesthetic++;
+                } else {
+                    learningStyles.reading++;
+                }
+            }
         }
     });
     
-    // Calcular estilos de aprendizaje
-    const learningStyles = {
-        active: 0,
-        reflective: 0,
-        theoretic: 0,
-        pragmatic: 0
-    };
+    // Calcular promedios y porcentajes
+    const processedIntelligences = {};
+    Object.entries(intelligences).forEach(([key, data]) => {
+        if (data.count > 0) {
+            const average = data.score / data.count;
+            processedIntelligences[key] = {
+                average: average,
+                percentage: (average / 5) * 100,
+                total: data.score,
+                questions: data.count,
+                details: data.questions
+            };
+        }
+    });
     
-    // Mapear respuestas a estilos de aprendizaje
-    // Preguntas 35-44: Estilo Activo
-    // Preguntas 45-54: Estilo Reflexivo
-    // Preguntas 55-64: Estilo Teórico
-    // Preguntas 65-74: Estilo Pragmático
+    // Identificar fortalezas principales
+    const sortedIntelligences = Object.entries(processedIntelligences)
+        .sort(([,a], [,b]) => b.average - a.average)
+        .slice(0, 3);
     
-    for (let i = 0; i < 10; i++) {
-        if (appState.learningAnswers[35 + i] === 'si') learningStyles.active++;
-        if (appState.learningAnswers[45 + i] === 'si') learningStyles.reflective++;
-        if (appState.learningAnswers[55 + i] === 'si') learningStyles.theoretic++;
-        if (appState.learningAnswers[65 + i] === 'si') learningStyles.pragmatic++;
-    }
+    const dominantLearningStyle = Object.entries(learningStyles)
+        .sort(([,a], [,b]) => b - a)[0];
     
     appState.results = {
-        intelligences,
+        intelligences: processedIntelligences,
         learningStyles,
-        totalTime: Date.now() - appState.startTime
+        topIntelligences: sortedIntelligences,
+        dominantStyle: dominantLearningStyle,
+        totalTime: Date.now() - appState.startTime,
+        completionDate: new Date().toLocaleDateString('es-ES')
     };
+    
+    displayResults();
 }
 
 function displayResults() {
     const container = document.getElementById('resultsContent');
+    const { topIntelligences, dominantStyle, completionDate } = appState.results;
     
     let html = `
-        <div class="results-header">
-            <h2>Resultados de tu Análisis</h2>
-            <p>Hola ${appState.userInfo.nombre}, aquí están tus resultados:</p>
+        <div class="results-summary">
+            <div class="user-info">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                    <h3>${appState.userInfo.nombre}</h3>
+                    <p>${appState.userInfo.profesion || 'Participante'} • ${completionDate}</p>
+                </div>
+            </div>
         </div>
         
-        <div class="results-sections">
-            <div class="results-card">
-                <h3><i class="fas fa-brain"></i> Inteligencias Múltiples</h3>
-                <div class="intelligence-results">
+        <div class="strengths-section">
+            <h3 class="section-title">
+                <i class="fas fa-star"></i>
+                Tus Principales Fortalezas
+            </h3>
+            <div class="strengths-grid">
     `;
     
-    Object.entries(appState.results.intelligences).forEach(([key, value]) => {
-        const percentage = (value / 25) * 100;
+    // Top 3 inteligencias
+    topIntelligences.forEach(([intelligence, data], index) => {
+        const rank = index + 1;
+        const icon = getIntelligenceIcon(intelligence);
+        const name = formatIntelligenceName(intelligence);
+        const description = getIntelligenceDescription(intelligence);
+        
         html += `
-            <div class="intelligence-item">
-                <span class="intelligence-name">${formatIntelligenceName(key)}</span>
-                <div class="progress-bar-small">
-                    <div class="progress-fill" style="width: ${percentage}%"></div>
+            <div class="strength-card rank-${rank}">
+                <div class="strength-rank">${rank}</div>
+                <div class="strength-icon">
+                    <i class="${icon}"></i>
                 </div>
-                <span class="intelligence-score">${value}/25</span>
+                <div class="strength-content">
+                    <h4>${name}</h4>
+                    <p>${description}</p>
+                    <div class="strength-score">
+                        <div class="score-bar">
+                            <div class="score-fill" style="width: ${data.percentage}%"></div>
+                        </div>
+                        <span class="score-value">${data.average.toFixed(1)}/5</span>
+                    </div>
+                </div>
             </div>
         `;
     });
     
     html += `
+            </div>
+        </div>
+        
+        <div class="learning-section">
+            <h3 class="section-title">
+                <i class="fas fa-graduation-cap"></i>
+                Tu Estilo de Aprendizaje Dominante
+            </h3>
+            <div class="learning-card">
+                <div class="learning-icon">
+                    <i class="${getLearningStyleIcon(dominantStyle[0])}"></i>
+                </div>
+                <div class="learning-content">
+                    <h4>${formatLearningStyle(dominantStyle[0])}</h4>
+                    <p>${getLearningStyleDescription(dominantStyle[0])}</p>
+                    <div class="learning-percentage">
+                        ${Math.round((dominantStyle[1] / 10) * 100)}% de preferencia
+                    </div>
                 </div>
             </div>
+        </div>
+        
+        <div class="detailed-analysis">
+            <h3 class="section-title">
+                <i class="fas fa-chart-bar"></i>
+                Análisis Detallado
+            </h3>
+            <div class="analysis-grid">
+    `;
+    
+    // Mostrar todas las inteligencias evaluadas
+    Object.entries(appState.results.intelligences).forEach(([intelligence, data]) => {
+        if (data.questions > 0) {
+            const name = formatIntelligenceName(intelligence);
+            const icon = getIntelligenceIcon(intelligence);
             
-            <div class="results-card">
-                <h3><i class="fas fa-graduation-cap"></i> Estilos de Aprendizaje</h3>
-                <div class="learning-results">
-    `;
-    
-    Object.entries(appState.results.learningStyles).forEach(([key, value]) => {
-        const percentage = (value / 11) * 100; // Aprox 11 preguntas por estilo
-        html += `
-            <div class="learning-item">
-                <span class="learning-name">${formatLearningStyle(key)}</span>
-                <div class="progress-bar-small">
-                    <div class="progress-fill" style="width: ${percentage}%"></div>
+            html += `
+                <div class="analysis-item">
+                    <div class="analysis-header">
+                        <i class="${icon}"></i>
+                        <span>${name}</span>
+                    </div>
+                    <div class="analysis-bar">
+                        <div class="bar-fill" style="width: ${data.percentage}%"></div>
+                    </div>
+                    <div class="analysis-score">${data.average.toFixed(1)}</div>
                 </div>
-                <span class="learning-score">${value} respuestas</span>
-            </div>
-        `;
+            `;
+        }
     });
     
     html += `
-                </div>
             </div>
         </div>
         
-        <div class="results-actions">
-            <button class="btn btn-primary" onclick="goToHome()">
-                <i class="fas fa-home"></i> Ir a Inicio
-            </button>
+        <div class="recommendations">
+            <h3 class="section-title">
+                <i class="fas fa-lightbulb"></i>
+                Recomendaciones Personalizadas
+            </h3>
+            <div class="recommendations-content">
+                ${generateRecommendations()}
+            </div>
+        </div>
+    `;
+    
+    container.innerHTML = html;
+    
+    // Animar las barras de progreso
+    setTimeout(() => {
+        document.querySelectorAll('.score-fill, .bar-fill').forEach(bar => {
+            bar.style.transition = 'width 1.5s ease-out';
+        });
+    }, 100);
+}
             <button class="btn btn-secondary" onclick="downloadResults()">
                 <i class="fas fa-download"></i> Descargar Resultados
             </button>
@@ -783,7 +1035,83 @@ function downloadResults() {
     link.click();
 }
 
-function showSection(sectionId) {
-    document.querySelectorAll('section').forEach(s => s.style.display = 'none');
-    document.getElementById(sectionId).style.display = 'block';
+// Funciones auxiliares para resultados
+function getIntelligenceIcon(intelligence) {
+    const icons = {
+        linguistic: 'fas fa-book',
+        logical: 'fas fa-calculator',
+        spatial: 'fas fa-cube',
+        musical: 'fas fa-music',
+        kinesthetic: 'fas fa-running',
+        interpersonal: 'fas fa-users',
+        intrapersonal: 'fas fa-user-circle',
+        naturalist: 'fas fa-leaf'
+    };
+    return icons[intelligence] || 'fas fa-brain';
+}
+
+function getLearningStyleIcon(style) {
+    const icons = {
+        visual: 'fas fa-eye',
+        auditory: 'fas fa-ear-listen',
+        kinesthetic: 'fas fa-hand',
+        reading: 'fas fa-book-open'
+    };
+    return icons[style] || 'fas fa-graduation-cap';
+}
+
+function getIntelligenceDescription(intelligence) {
+    const descriptions = {
+        linguistic: 'Facilidad con las palabras, lectura y comunicación',
+        logical: 'Habilidad para resolver problemas lógicos y matemáticos',
+        spatial: 'Capacidad para visualizar y manipular espacios',
+        musical: 'Sensibilidad hacia ritmos, tonos y melodías',
+        kinesthetic: 'Habilidad para usar el cuerpo y movimiento',
+        interpersonal: 'Facilidad para relacionarse con otros',
+        intrapersonal: 'Conocimiento y comprensión de uno mismo',
+        naturalist: 'Conexión con la naturaleza y seres vivos'
+    };
+    return descriptions[intelligence] || 'Habilidad cognitiva especial';
+}
+
+function getLearningStyleDescription(style) {
+    const descriptions = {
+        visual: 'Aprendes mejor viendo imágenes, diagramas y contenido visual',
+        auditory: 'Aprendes mejor escuchando explicaciones y discusiones',
+        kinesthetic: 'Aprendes mejor haciendo y experimentando',
+        reading: 'Aprendes mejor leyendo y escribiendo información'
+    };
+    return descriptions[style] || 'Estilo de aprendizaje preferido';
+}
+
+function generateRecommendations() {
+    const { topIntelligences, dominantStyle } = appState.results;
+    const topIntelligence = topIntelligences[0][0];
+    
+    const recommendations = {
+        linguistic: '• Practica escritura creativa\n• Lee libros variados\n• Participa en debates',
+        logical: '• Resuelve puzzles matemáticos\n• Aprende programación\n• Analiza datos y patrones',
+        spatial: '• Practica dibujo y diseño\n• Usa mapas mentales\n• Juega juegos de construcción',
+        musical: '• Aprende un instrumento\n• Escucha música variada\n• Crea ritmos y melodías',
+        kinesthetic: '• Realiza actividad física regular\n• Aprende haciendo\n• Usa material manipulativo',
+        interpersonal: '• Participa en actividades grupales\n• Practica liderazgo\n• Desarrolla empatía',
+        intrapersonal: '• Practica mindfulness\n• Lleva un diario personal\n• Reflexiona sobre tus metas',
+        naturalist: '• Pasa tiempo en la naturaleza\n• Estudia ciencias naturales\n• Cultiva plantas'
+    };
+    
+    return `
+        <div class="recommendation-card">
+            <h4>Para potenciar tu ${formatIntelligenceName(topIntelligence)}</h4>
+            <div class="recommendation-text">
+                ${recommendations[topIntelligence] || '• Continúa explorando tus fortalezas'}
+            </div>
+        </div>
+    `;
+}
+
+function retakeTest() {
+    if (confirm('¿Estás seguro de que quieres realizar el test de nuevo?')) {
+        appState.reset();
+        showSection('heroSection');
+    }
 }
