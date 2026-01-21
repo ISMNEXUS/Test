@@ -2,30 +2,45 @@
 
 ## 🎯 Prueba Rápida en el Servidor
 
-### Paso 1: Abre la Aplicación
+### OPCIÓN 1: Usar archivo de prueba (MÁS FÁCIL)
+1. Abre `test-funcionalidad.html` en tu navegador
+2. Verás una consola integrada en la página
+3. Haz clic en "Probar Botón Comenzar Test"
+4. **Debe mostrar**: ✅ ¡ÉXITO! en verde
+
+### OPCIÓN 2: Probar directamente en index.html
+
+#### Paso 1: Abre la Aplicación
 1. Sube todos los archivos al servidor
 2. Abre `index.html` en el navegador
 3. Presiona **F12** para abrir la Consola del Navegador
 
-### Paso 2: Verifica la Consola (debe mostrar estos mensajes en orden)
+#### Paso 2: Verifica la Consola (debe mostrar estos mensajes en orden)
 
 ```
 🚀 Script cargado correctamente
 🔧 Inicializando aplicación...
 📦 Iniciando aplicación...
+🎯 Configurando event listeners...
+✅ Event listener agregado: startTestBtn
+⚠️ No se encontró userForm (se agregará después)
+⚠️ No se encontró goBackBtn (se agregará después)
+⚠️ No se encontró exitTestBtn (se agregará después)
+⚠️ No se encontró retakeTestBtn (se agregará después)
+⚠️ No se encontró downloadResultsBtn (se agregará después)
+✅ Configuración de event listeners completada
 ✅ Aplicación inicializada correctamente
 ✅ Total de preguntas: 80
-✅ window.startTest definida: function
 ✅ Inicialización completada exitosamente
-✅ Función disponible: startTest
-✅ Función disponible: showSection
-✅ Función disponible: submitUserForm
 ```
 
-### Paso 3: Prueba el Botón "Comenzar Test"
+**NOTA**: Los warnings (⚠️) son normales, esos botones solo existen en otras secciones.
+
+#### Paso 3: Prueba el Botón "Comenzar Test"
 1. Haz clic en el botón **"Comenzar Test"**
 2. **Debe aparecer** en la consola:
    ```
+   🖱️ Click en botón Comenzar Test
    🚀 Iniciando test...
    📍 Mostrando sección: userFormSection
       Total secciones encontradas: 4
@@ -48,28 +63,30 @@
 
 ### El botón no hace nada
 **Síntoma**: Haces clic y no pasa nada  
-**Diagnóstico**: Abre la consola (F12) y busca mensajes en rojo  
+**Diagnóstico**: Abre la consola (F12) y busca mensajes  
 **Solución**: 
+- Si NO ves `🖱️ Click en botón Comenzar Test` → El event listener no se agregó
+  - Verifica que veas: `✅ Event listener agregado: startTestBtn`
+  - Si no lo ves, recarga con Ctrl+F5
+- Si ves el click pero no pasa nada → Revisa errores en rojo en la consola
 - Si ves `❌ appState no está definido` → Recarga con Ctrl+F5
-- Si no ves ningún mensaje → Verifica que `script.js` esté en el servidor
-- Si ves error de CORS → Asegúrate de acceder vía HTTP (no file://)
+
+### No veo los mensajes de inicialización
+**Síntoma**: La consola está vacía o no muestra los logs esperados
+**Diagnóstico**: script.js no se está cargando  
+**Solución**:
+- Verifica que `script.js` esté en el servidor
+- Verifica la ruta en el HTML: `<script src="script.js"></script>`
+- Abre la pestaña "Network" en F12 y recarga, verifica que script.js se descargue
+- Si da error 404, el archivo no está en el servidor
 
 ### Aparece alert de error
 **Síntoma**: Sale un popup con mensaje de error  
 **Diagnóstico**: Lee el mensaje completo  
 **Solución**:
-- "Error al inicializar" → Revisa la consola, puede haber error de sintaxis
+- "Error al inicializar" → Revisa la consola, hay error de sintaxis
 - "appState no está definido" → Recarga la página
-
-### No se ve el formulario
-**Síntoma**: Haces clic pero sigue en la página principal  
-**Diagnóstico**: Abre consola y busca `❌ Sección no encontrada`  
-**Solución**: Verifica que `index.html` tenga la sección `userFormSection`
-
-### Las preguntas no aparecen
-**Síntoma**: El test se inicia pero no hay preguntas  
-**Diagnóstico**: Busca en consola `Total de preguntas: 80`  
-**Solución**: Si muestra 0 o menos de 80, hay problema con el array QUESTIONS
+- "Sección no encontrada" → Verifica que index.html tenga todas las secciones
 
 ## 🔍 Comandos de Depuración en la Consola
 
@@ -82,10 +99,24 @@ typeof QUESTIONS         // Debe retornar "object"
 QUESTIONS.length        // Debe retornar 80
 typeof appState         // Debe retornar "object"
 
+// Verificar botones
+document.getElementById('startTestBtn')  // Debe retornar el elemento button
+
 // Probar funciones manualmente
 window.startTest()      // Debe mostrar el formulario
 window.showSection('heroSection')  // Debe volver al inicio
+
+// Simular click en el botón
+document.getElementById('startTestBtn').click()  // Debe ejecutar startTest
 ```
+
+## 🧪 Usar el Archivo de Prueba
+
+Abre `test-funcionalidad.html` para una prueba más visual:
+1. Carga el archivo en el navegador
+2. Muestra una consola integrada en la página
+3. Botón de prueba con feedback visual
+4. No necesitas abrir F12, todo está en la página
 
 ## 📊 Flujo Esperado
 
