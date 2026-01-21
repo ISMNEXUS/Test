@@ -3,8 +3,16 @@
 -- Solo tablas esenciales sin funciones avanzadas
 -- ============================================
 
+-- Usar la base de datos existente
+USE u527555083_testenglish;
+
+-- Eliminar tablas existentes si existen (para evitar duplicados)
+DROP TABLE IF EXISTS test_answers;
+DROP TABLE IF EXISTS intelligence_scores;
+DROP TABLE IF EXISTS cognitive_tests;
+
 -- Tabla principal para almacenar información de los tests
-CREATE TABLE IF NOT EXISTS cognitive_tests (
+CREATE TABLE cognitive_tests (
     id INT AUTO_INCREMENT PRIMARY KEY,
     test_id VARCHAR(50) UNIQUE NOT NULL,
     nombre VARCHAR(100) NOT NULL,
