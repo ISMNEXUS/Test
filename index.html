@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Test de Análisis Cognitivo - Evalúa tus habilidades cognitivas de manera interactiva">
+    <meta name="keywords" content="test cognitivo, análisis mental, evaluación cognitiva, inteligencias múltiples">
+    <title>Test de Análisis Cognitivo | English My Way</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-brain"></i>
+                    <span>English My Way</span>
+                </div>
+                <div class="nav-menu">
+                    <div class="nav-links">
+                        <a href="#hero" class="nav-link">Inicio</a>
+                        <a href="#about" class="nav-link">Acerca de</a>
+                        <a href="#contact" class="nav-link">Contacto</a>
+                    </div>
+                    <button class="nav-toggle" aria-label="Menú" id="navToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <i class="fas fa-brain hero-icon"></i>
+                        Test de Análisis Cognitivo
+                    </h1>
+                    <p class="hero-description">
+                        Descubre y evalúa tus diferentes tipos de inteligencia a través de nuestro test interactivo y dinámico.
+                    </p>
+                    <button class="hero-cta" id="startTestBtn" type="button" aria-describedby="hero-description">
+                        <i class="fas fa-play" aria-hidden="true"></i>
+                        <span>Comenzar Test</span>
+                        <div class="button-glow"></div>
+                    </button>
+                </div>
+                <div class="hero-visual">
+                    <div class="brain-animation">
+                        <div class="brain-part brain-left"></div>
+                        <div class="brain-part brain-right"></div>
+                        <div class="neural-network">
+                            <div class="neuron" style="--delay: 0s"></div>
+                            <div class="neuron" style="--delay: 0.5s"></div>
+                            <div class="neuron" style="--delay: 1s"></div>
+                            <div class="neuron" style="--delay: 1.5s"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- User Information Form -->
+        <section class="user-form-section" id="userForm" style="display: none;">
+            <div class="container">
+                <div class="form-wrapper">
+                    <h2 class="section-title">
+                        <i class="fas fa-user"></i>
+                        Información Personal
+                    </h2>
+                    <form class="user-form" id="personalInfoForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="nombre" class="form-label">
+                                    <i class="fas fa-user" aria-hidden="true"></i>
+                                    Nombre Completo
+                                    <span class="required-indicator" aria-label="requerido">*</span>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="nombre" 
+                                    name="nombre" 
+                                    class="form-input" 
+                                    required
+                                    placeholder="Ingresa tu nombre completo"
+                                >
+                                <span class="form-error" id="nombre-error"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" class="form-label">
+                                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                                    Correo Electrónico
+                                    <span class="required-indicator" aria-label="requerido">*</span>
+                                </label>
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    name="email" 
+                                    class="form-input" 
+                                    required
+                                    placeholder="ejemplo@correo.com"
+                                >
+                                <span class="form-error" id="email-error"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edad" class="form-label">
+                                    <i class="fas fa-calendar"></i>
+                                    Edad
+                                </label>
+                                <input 
+                                    type="number" 
+                                    id="edad" 
+                                    name="edad" 
+                                    class="form-input" 
+                                    min="10" 
+                                    max="100"
+                                    placeholder="Ej: 25"
+                                >
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="profesion" class="form-label">
+                                    <i class="fas fa-briefcase"></i>
+                                    Profesión/Ocupación
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="profesion" 
+                                    name="profesion" 
+                                    class="form-input"
+                                    placeholder="Ej: Estudiante, Ingeniero, etc."
+                                >
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="celular" class="form-label">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    Teléfono Celular
+                                </label>
+                                <input 
+                                    type="tel" 
+                                    id="celular" 
+                                    name="celular" 
+                                    class="form-input"
+                                    placeholder="Ej: +57 300 123 4567"
+                                >
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="sede" class="form-label">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Sede/Ciudad
+                                </label>
+                                <select id="sede" name="sede" class="form-input">
+                                    <option value="">Selecciona una ciudad</option>
+                                    <option value="bogota">Bogotá</option>
+                                    <option value="medellin">Medellín</option>
+                                    <option value="cali">Cali</option>
+                                    <option value="barranquilla">Barranquilla</option>
+                                    <option value="cartagena">Cartagena</option>
+                                    <option value="bucaramanga">Bucaramanga</option>
+                                    <option value="otra">Otra</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="backToHero">
+                                <i class="fas fa-arrow-left"></i>
+                                Regresar
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="continueToTest">
+                                <i class="fas fa-arrow-right"></i>
+                                Continuar al Test
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cognitive Test Section -->
+        <section class="test-section" id="testSection" style="display: none;">
+            <div class="container">
+                <div class="test-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-brain"></i>
+                        Test Cognitivo Interactivo
+                    </h2>
+                    <div class="test-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <span class="progress-text" id="progressText">Pregunta 1 de 40</span>
+                    </div>
+                </div>
+                
+                <div class="test-content" id="testContent">
+                    <!-- Las preguntas se cargarán dinámicamente aquí -->
+                </div>
+                
+                <div class="test-navigation">
+                    <button type="button" class="btn btn-secondary" id="prevQuestion" style="display: none;">
+                        <i class="fas fa-arrow-left"></i>
+                        Anterior
+                    </button>
+                    <button type="button" class="btn btn-primary" id="nextQuestion">
+                        <i class="fas fa-arrow-right"></i>
+                        Siguiente
+                    </button>
+                    <button type="button" class="btn btn-success" id="finishTest" style="display: none;">
+                        <i class="fas fa-check"></i>
+                        Finalizar Test
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section" id="resultsSection" style="display: none;">
+            <div class="container">
+                <div class="results-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-chart-bar"></i>
+                        Tus Resultados
+                    </h2>
+                    <p class="results-subtitle">Análisis detallado de tus inteligencias múltiples</p>
+                </div>
+                
+                <div class="results-content">
+                    <div class="results-chart">
+                        <canvas id="resultsChart" width="400" height="300"></canvas>
+                    </div>
+                    
+                    <div class="results-details" id="resultsDetails">
+                        <!-- Los detalles se cargarán dinámicamente -->
+                    </div>
+                </div>
+                
+                <div class="results-actions">
+                    <button type="button" class="btn btn-primary" id="downloadResults">
+                        <i class="fas fa-download"></i>
+                        Descargar Resultados
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="retakeTest">
+                        <i class="fas fa-redo"></i>
+                        Tomar Test de Nuevo
+                    </button>
+                    <button type="button" class="btn btn-success" id="shareResults">
+                        <i class="fas fa-share"></i>
+                        Compartir Resultados
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>English My Way</h3>
+                    <p>Desarrollando el potencial cognitivo a través de la educación personalizada.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <p><i class="fas fa-envelope"></i> info@englishmyway.com</p>
+                    <p><i class="fas fa-phone"></i> +57 300 123 4567</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="#privacy">Política de Privacidad</a></li>
+                        <li><a href="#terms">Términos y Condiciones</a></li>
+                        <li><a href="#about">Acerca de Nosotros</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 English My Way. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner" style="display: none;">
+        <div class="spinner">
+            <i class="fas fa-brain"></i>
+        </div>
+        <p>Procesando información...</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
