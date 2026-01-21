@@ -484,16 +484,27 @@ function setupEventListeners() {
 }
 
 function showSection(sectionId) {
-    const sections = document.querySelectorAll('.section');
-    sections.forEach(section => {
-        section.classList.remove('active');
+    console.log('📍 showSection llamada con:', sectionId);
+    
+    // Ocultar todas las secciones
+    const allSections = document.querySelectorAll('section');
+    console.log('   Total de secciones encontradas:', allSections.length);
+    
+    allSections.forEach(section => {
+        section.style.display = 'none';
     });
     
+    // Mostrar la sección solicitada
     const targetSection = document.getElementById(sectionId);
     if (targetSection) {
-        targetSection.classList.add('active');
+        targetSection.style.display = 'block';
         appState.currentStep = sectionId;
-        console.log('Mostrando sección:', sectionId);
+        console.log('✅ Sección mostrada:', sectionId);
+    } else {
+        console.error('❌ Sección no encontrada:', sectionId);
+        console.log('   Secciones disponibles:', 
+            Array.from(allSections).map(s => s.id).filter(id => id)
+        );
     }
 }
 
@@ -927,4 +938,14 @@ function exitTest() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', initializeApp);
+// Inicialización cuando el DOM está listo
+console.log('🔧 Registrando DOMContentLoaded...');
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔧 DOMContentLoaded disparado');
+    try {
+        initializeApp();
+        console.log('✅ Inicialización completada exitosamente');
+    } catch (error) {
+        console.error('❌ Error durante la inicialización:', error);
+    }
+});
