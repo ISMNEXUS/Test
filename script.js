@@ -444,8 +444,7 @@ function loadUserData() {
 // ==============================================
 function startTest() {
     appState.currentStep = 'form';
-    showSection('userForm');
-    document.getElementById('hero').style.display = 'none';
+    showSection('userFormSection');
 }
 
 function submitUserForm(e) {
@@ -469,6 +468,16 @@ function submitUserForm(e) {
     renderQuestion();
 }
 
+// Función alias para compatibilidad con HTML
+function renderCurrentQuestion() {
+    renderQuestion();
+}
+
+// Función para inicializar el flujo de preguntas
+function startQuestionFlow() {
+    renderQuestion();
+}
+
 function renderQuestion() {
     if (appState.currentQuestion >= QUESTIONS.length) {
         finishTest();
@@ -478,19 +487,23 @@ function renderQuestion() {
     const question = QUESTIONS[appState.currentQuestion];
     const container = document.getElementById('questionContainer');
     
+    // Actualizar barra de progreso
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    
+    if (progressBar) {
+        const percentage = ((appState.currentQuestion + 1) / QUESTIONS.length) * 100;
+        progressBar.style.width = `${percentage}%`;
+    }
+    
+    if (progressText) {
+        progressText.textContent = `Pregunta ${appState.currentQuestion + 1} de ${QUESTIONS.length}`;
+    }
+    
     let html = `
-        <div class="question-container">
-            <div class="question-header">
-                <div class="question-progress">
-                    <span class="progress-text">Pregunta ${appState.currentQuestion + 1} de ${QUESTIONS.length}</span>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${((appState.currentQuestion + 1) / QUESTIONS.length) * 100}%"></div>
-                    </div>
-                </div>
-                <div class="question-category">${question.category}</div>
-            </div>
-            
-            <div class="question-text">${question.question}</div>
+        <div class="question-content">
+            <div class="question-category">${question.category}</div>
+            <h3 class="question-text">${question.question}</h3>
             
             <div class="options-container">
     `;

@@ -3,124 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Test de Inteligencias Múltiples y Estilos de Aprendizaje">
-    <meta name="keywords" content="test inteligencias, estilos aprendizaje, análisis cognitivo">
-    <title>Test de Inteligencias Múltiples | English My Way</title>
-    
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles.css">
-    
-    <!-- Font Awesome -->
+    <title>Test de Inteligencias Múltiples - English My Way</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <main class="main">
-        <!-- HERO SECTION -->
-        <section id="hero">
-            <div class="hero-container">
-                <div class="brand-badge">
-                    <i class="fas fa-brain"></i>
-                    <span>English My Way</span>
+    <!-- SECCIÓN HERO -->
+    <section id="heroSection" class="section-visible">
+        <div class="hero">
+            <div class="brand-badge">
+                <i class="fas fa-brain"></i>
+                <span>English My Way</span>
+            </div>
+            <h1>Descubre tu Perfil Cognitivo</h1>
+            <p>Un test integral de 80 preguntas para identificar tus inteligencias múltiples y estilos de aprendizaje</p>
+            <button onclick="startTest()" class="btn-primary">
+                <i class="fas fa-play"></i> Comenzar Test
+            </button>
+        </div>
+    </section>
+
+    <!-- FORMULARIO DE USUARIO -->
+    <section id="userFormSection" style="display: none;">
+        <div class="container">
+            <div class="form-header">
+                <h2>Información Personal</h2>
+                <p>Por favor completa tus datos antes de comenzar</p>
+            </div>
+            
+            <form onsubmit="submitUserForm(event)">
+                <div class="form-group">
+                    <label for="nombre">Nombre Completo *</label>
+                    <input type="text" id="nombre" name="nombre" required>
                 </div>
-                <h1 class="hero-title">Test de Inteligencias Múltiples</h1>
-                <p class="hero-description">
-                    Descubre tu perfil de inteligencias y estilos de aprendizaje con este análisis científico de 80 preguntas.
-                </p>
-                <button class="btn btn-primary" id="startTestBtn" type="button">
-                    <i class="fas fa-play"></i> Comenzar Test
+                
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edad">Edad</label>
+                    <input type="number" id="edad" name="edad" min="1" max="120">
+                </div>
+                
+                <div class="form-group">
+                    <label for="profesion">Profesión</label>
+                    <input type="text" id="profesion" name="profesion">
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="goBack()">
+                        <i class="fas fa-arrow-left"></i> Atrás
+                    </button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-arrow-right"></i> Continuar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DEL TEST -->
+    <section id="testSection" style="display: none;">
+        <div class="container">
+            <div class="progress-bar-container">
+                <div id="progressBar" class="progress-bar" style="width: 0%"></div>
+            </div>
+            
+            <div class="question-header">
+                <span id="progressText">Pregunta 1 de 80</span>
+                <button class="btn-icon" onclick="exitTest()">
+                    <i class="fas fa-times"></i>
                 </button>
             </div>
-        </section>
-
-        <!-- FORMULARIO DE USUARIO -->
-        <section id="userForm" style="display: none;">
-            <div class="form-wrapper">
-                <div class="form-header">
-                    <h2>Información Personal</h2>
-                    <p>Necesitamos algunos datos básicos para personalizar tu experiencia</p>
-                </div>
-                <form class="user-form" id="personalInfoForm" onsubmit="submitUserForm(event)">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="nombre" class="form-label">
-                                <i class="fas fa-user"></i> Nombre Completo
-                            </label>
-                            <input 
-                                type="text" 
-                                id="nombre" 
-                                name="nombre" 
-                                class="form-input" 
-                                required
-                                placeholder="Tu nombre completo"
-                            >
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email" class="form-label">
-                                <i class="fas fa-envelope"></i> Email
-                            </label>
-                            <input 
-                                type="email" 
-                                id="email" 
-                                name="email" 
-                                class="form-input" 
-                                required
-                                placeholder="tu@email.com"
-                            >
-                        </div>
-
-                        <div class="form-group">
-                            <label for="edad" class="form-label">
-                                <i class="fas fa-calendar"></i> Edad
-                            </label>
-                            <input 
-                                type="number" 
-                                id="edad" 
-                                name="edad" 
-                                class="form-input" 
-                                placeholder="Tu edad"
-                            >
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="profesion" class="form-label">
-                                <i class="fas fa-briefcase"></i> Profesión
-                            </label>
-                            <input 
-                                type="text" 
-                                id="profesion" 
-                                name="profesion" 
-                                class="form-input" 
-                                placeholder="Tu profesión"
-                            >
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" onclick="goBack()">
-                            <i class="fas fa-arrow-left"></i> Atrás
-                        </button>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-arrow-right"></i> Continuar
-                        </button>
-                    </div>
-                </form>
+            
+            <div id="questionContainer" class="question-card">
+                <!-- Pregunta se renderiza aquí -->
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- SECCIÓN DE TEST -->
-        <section id="testSection" style="display: none;">
-            <div id="questionContainer"></div>
-        </section>
-
-        <!-- SECCIÓN DE RESULTADOS -->
-        <section id="resultsSection" style="display: none;">
-            <div class="results-summary">
-                <div id="resultsContent"></div>
+    <!-- SECCIÓN DE RESULTADOS -->
+    <section id="resultsSection" style="display: none;">
+        <div class="container">
+            <div id="resultsContent">
+                <!-- Resultados se renderizan aquí -->
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <script src="script_v3.js"></script>
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script>
+        // Variables globales necesarias
+        let appState = null;
+        
+        // Inicialización cuando la página carga
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof AppState !== 'undefined') {
+                appState = new AppState();
+            } else if (typeof initializeApp === 'function') {
+                initializeApp();
+            }
+        });
+        
+        // Función para comenzar el test
+        function startTest() {
+            if (appState) {
+                appState.currentStep = 'form';
+            }
+            showSection('userFormSection');
+        }
+        
+        // Función para volver atrás
+        function goBack() {
+            if (appState && appState.currentStep === 'form') {
+                showSection('heroSection');
+                if (appState) appState.currentStep = 'hero';
+            } else if (confirm('¿Deseas cancelar el test?')) {
+                if (appState) appState.reset();
+                showSection('heroSection');
+            }
+        }
+
+        // Función para salir del test
+        function exitTest() {
+            if (confirm('¿Deseas cancelar el test? Se perderá todo el progreso.')) {
+                if (appState) appState.reset();
+                showSection('heroSection');
+            }
+        }
+
+        // Función para mostrar secciones
+        function showSection(sectionId) {
+            document.querySelectorAll('section').forEach(s => s.style.display = 'none');
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.style.display = 'block';
+            }
+        }
+
+        // Función de envío de formulario
+        function submitUserForm(event) {
+            event.preventDefault();
+            
+            const formData = {
+                nombre: document.getElementById('nombre').value,
+                email: document.getElementById('email').value,
+                edad: document.getElementById('edad').value,
+                profesion: document.getElementById('profesion').value
+            };
+            
+            // Guardar datos en appState si existe
+            if (appState && typeof appState.setUserData === 'function') {
+                appState.setUserData(formData);
+            }
+            
+            // Pasar a la sección del test
+            showSection('testSection');
+            
+            // Iniciar el test si la función existe
+            if (typeof startQuestionFlow === 'function') {
+                startQuestionFlow();
+            } else if (typeof renderCurrentQuestion === 'function') {
+                renderCurrentQuestion();
+            }
+        }
+    </script>
 </body>
 </html>
