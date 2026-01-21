@@ -511,7 +511,7 @@ function initializeApp() {
     // Cargar datos guardados
     loadUserData();
     
-    // Registrar funciones globalmente
+    // Registrar funciones globalmente (para uso programático y desde consola)
     window.startTest = startTest;
     window.goBack = goBack;  
     window.exitTest = exitTest;
@@ -524,19 +524,74 @@ function initializeApp() {
     window.retakeTest = retakeTest;
     window.downloadResults = downloadResults;
     
+    // Configurar event listeners de los botones
+    setupEventListeners();
+    
     console.log('✅ Aplicación inicializada correctamente');
     console.log('✅ Total de preguntas:', QUESTIONS.length);
-    console.log('✅ window.startTest definida:', typeof window.startTest);
+}
+
+function setupEventListeners() {
+    console.log('🎯 Configurando event listeners...');
     
-    // Verificar que todas las funciones críticas estén disponibles
-    const criticalFunctions = ['startTest', 'showSection', 'submitUserForm'];
-    criticalFunctions.forEach(func => {
-        if (typeof window[func] !== 'function') {
-            console.error(`❌ Función crítica no disponible: ${func}`);
-        } else {
-            console.log(`✅ Función disponible: ${func}`);
-        }
-    });
+    // Botón principal "Comenzar Test"
+    const startBtn = document.getElementById('startTestBtn');
+    if (startBtn) {
+        startBtn.addEventListener('click', function() {
+            console.log('🖱️ Click en botón Comenzar Test');
+            startTest();
+        });
+        console.log('✅ Event listener agregado: startTestBtn');
+    } else {
+        console.error('❌ No se encontró el botón startTestBtn');
+    }
+    
+    // Formulario de usuario
+    const userForm = document.getElementById('userForm');
+    if (userForm) {
+        userForm.addEventListener('submit', submitUserForm);
+        console.log('✅ Event listener agregado: userForm');
+    } else {
+        console.warn('⚠️ No se encontró userForm (se agregará después)');
+    }
+    
+    // Botón "Volver" del formulario
+    const goBackBtn = document.getElementById('goBackBtn');
+    if (goBackBtn) {
+        goBackBtn.addEventListener('click', goBack);
+        console.log('✅ Event listener agregado: goBackBtn');
+    } else {
+        console.warn('⚠️ No se encontró goBackBtn (se agregará después)');
+    }
+    
+    // Botón "Salir" del test
+    const exitBtn = document.getElementById('exitTestBtn');
+    if (exitBtn) {
+        exitBtn.addEventListener('click', exitTest);
+        console.log('✅ Event listener agregado: exitTestBtn');
+    } else {
+        console.warn('⚠️ No se encontró exitTestBtn (se agregará después)');
+    }
+    
+    // Botón "Realizar de Nuevo"
+    const retakeBtn = document.getElementById('retakeTestBtn');
+    if (retakeBtn) {
+        retakeBtn.addEventListener('click', retakeTest);
+        console.log('✅ Event listener agregado: retakeTestBtn');
+    } else {
+        console.warn('⚠️ No se encontró retakeTestBtn (se agregará después)');
+    }
+    
+    // Botón "Descargar Resultados"
+    const downloadBtn = document.getElementById('downloadResultsBtn');
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', downloadResults);
+        console.log('✅ Event listener agregado: downloadResultsBtn');
+    } else {
+        console.warn('⚠️ No se encontró downloadResultsBtn (se agregará después)');
+    }
+    
+    console.log('✅ Configuración de event listeners completada');
 }
 
 function loadUserData() {

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Botón</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 50px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .btn-test {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .btn-test:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .console-output {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+        .log-line {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Prueba de Funcionalidad - Test de Inteligencias</h1>
+    
+    <div class="test-section">
+        <h2>Instrucciones</h2>
+        <ol>
+            <li>Abre la consola del navegador (F12)</li>
+            <li>Haz clic en "Probar Botón Comenzar Test"</li>
+            <li>Verifica los mensajes en la consola y en esta página</li>
+        </ol>
+    </div>
+    
+    <div class="test-section">
+        <h2>Prueba de Botón</h2>
+        <button id="testBtn" class="btn-test">
+            🧪 Probar Botón "Comenzar Test"
+        </button>
+        <div id="testResult" class="result" style="display: none;"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Consola de Depuración</h2>
+        <button onclick="clearConsole()" style="background-color: #ff6b6b; color: white; border: none; padding: 10px 20px; border-radius: 5px;">
+            Limpiar Consola
+        </button>
+        <div id="consoleOutput" class="console-output"></div>
+    </div>
+    
+    <script>
+        // Interceptar console.log para mostrarlo en la página
+        const consoleOutput = document.getElementById('consoleOutput');
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        function addToConsole(message, type = 'log') {
+            const line = document.createElement('div');
+            line.className = 'log-line';
+            line.style.color = type === 'error' ? '#ff6b6b' : type === 'warn' ? '#ffd93d' : '#d4d4d4';
+            line.textContent = `${new Date().toLocaleTimeString()} - ${message}`;
+            consoleOutput.appendChild(line);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addToConsole(args.join(' '), 'log');
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addToConsole(args.join(' '), 'error');
+        };
+        
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            addToConsole(args.join(' '), 'warn');
+        };
+        
+        function clearConsole() {
+            consoleOutput.innerHTML = '';
+            console.log('Consola limpiada');
+        }
+        
+        console.log('=== PRUEBA DE FUNCIONALIDAD INICIADA ===');
+    </script>
+    
+    <script src="script.js"></script>
+    
+    <script>
+        // Esperar a que todo se cargue
+        window.addEventListener('load', function() {
+            console.log('✅ Página completamente cargada');
+            
+            // Verificar que script.js se cargó
+            if (typeof QUESTIONS !== 'undefined') {
+                console.log('✅ script.js cargado correctamente');
+                console.log('✅ QUESTIONS.length:', QUESTIONS.length);
+            } else {
+                console.error('❌ script.js NO se cargó correctamente');
+            }
+            
+            // Verificar window.startTest
+            if (typeof window.startTest === 'function') {
+                console.log('✅ window.startTest está definida');
+            } else {
+                console.error('❌ window.startTest NO está definida');
+            }
+            
+            // Configurar botón de prueba
+            const testBtn = document.getElementById('testBtn');
+            const testResult = document.getElementById('testResult');
+            
+            testBtn.addEventListener('click', function() {
+                console.log('🖱️ Click en botón de prueba');
+                testResult.style.display = 'block';
+                
+                try {
+                    // Probar si startTest existe
+                    if (typeof window.startTest === 'function') {
+                        console.log('✅ Llamando a window.startTest()...');
+                        window.startTest();
+                        testResult.className = 'result success';
+                        testResult.innerHTML = `
+                            <strong>✅ ¡ÉXITO!</strong><br>
+                            La función startTest() se ejecutó correctamente.<br>
+                            Revisa la consola para ver los logs detallados.
+                        `;
+                        console.log('✅ startTest() ejecutada exitosamente');
+                    } else {
+                        throw new Error('startTest no está definida');
+                    }
+                } catch (error) {
+                    console.error('❌ Error al ejecutar startTest:', error);
+                    testResult.className = 'result error';
+                    testResult.innerHTML = `
+                        <strong>❌ ERROR</strong><br>
+                        ${error.message}<br>
+                        Revisa la consola para más detalles.
+                    `;
+                }
+            });
+            
+            console.log('✅ Botón de prueba configurado');
+            console.log('=== SISTEMA LISTO PARA PRUEBAS ===');
+        });
+    </script>
+</body>
+</html>
