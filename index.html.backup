@@ -94,7 +94,7 @@
             </div>
             
             <div class="question-header">
-                <span id="progressText">Pregunta 1 de 40</span>
+                <span id="progressText">Pregunta 1 de 80</span>
                 <button id="exitTestBtn" class="btn-icon">
                     <i class="fas fa-times"></i>
                 </button>
