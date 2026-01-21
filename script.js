@@ -30,7 +30,8 @@ class AppState {
     }
 }
 
-const state = new AppState();
+const appState = new AppState();
+window.appState = appState;
 
 const QUESTIONS = [
     {
@@ -391,7 +392,7 @@ function loadUserData() {
         const savedData = localStorage.getItem('testUserData');
         if (savedData) {
             const data = JSON.parse(savedData);
-            state.userInfo = data;
+            appState.userInfo = data;
             console.log('Datos de usuario cargados desde localStorage');
         }
     } catch (error) {
@@ -400,8 +401,11 @@ function loadUserData() {
 }
 
 function initializeApp() {
+    console.log('📦 Iniciando aplicación...');
+    
     loadUserData();
     
+    console.log('🎯 Registrando funciones en window...');
     window.startTest = startTest;
     window.goBack = goBack;
     window.exitTest = exitTest;
@@ -413,48 +417,70 @@ function initializeApp() {
     window.previousQuestion = previousQuestion;
     window.retakeTest = retakeTest;
     window.downloadResults = downloadResults;
+    console.log('✅ Funciones registradas en window');
     
+    console.log('🎯 Configurando event listeners...');
     setupEventListeners();
     
     console.log('✅ Aplicación inicializada correctamente');
+    console.log('✅ Total de preguntas:', QUESTIONS.length);
 }
 
 function setupEventListeners() {
+    console.log('   Buscando botones...');
+    
     const startTestBtn = document.getElementById('startTestBtn');
     if (startTestBtn) {
-        startTestBtn.addEventListener('click', startTest);
-        console.log('✅ startTestBtn listener agregado');
+        startTestBtn.addEventListener('click', () => {
+            console.log('🖱️ Click detectado en startTestBtn');
+            startTest();
+        });
+        console.log('   ✅ Event listener agregado: startTestBtn');
+    } else {
+        console.warn('   ⚠️ No se encontró: startTestBtn');
     }
     
     const userForm = document.getElementById('userForm');
     if (userForm) {
         userForm.addEventListener('submit', submitUserForm);
-        console.log('✅ userForm listener agregado');
+        console.log('   ✅ Event listener agregado: userForm');
+    } else {
+        console.warn('   ⚠️ No se encontró: userForm');
     }
     
     const goBackBtn = document.getElementById('goBackBtn');
     if (goBackBtn) {
         goBackBtn.addEventListener('click', goBack);
-        console.log('✅ goBackBtn listener agregado');
+        console.log('   ✅ Event listener agregado: goBackBtn');
+    } else {
+        console.warn('   ⚠️ No se encontró: goBackBtn');
     }
     
     const exitTestBtn = document.getElementById('exitTestBtn');
     if (exitTestBtn) {
         exitTestBtn.addEventListener('click', exitTest);
-        console.log('✅ exitTestBtn listener agregado');
+        console.log('   ✅ Event listener agregado: exitTestBtn');
+    } else {
+        console.warn('   ⚠️ No se encontró: exitTestBtn');
     }
     
     const retakeTestBtn = document.getElementById('retakeTestBtn');
     if (retakeTestBtn) {
         retakeTestBtn.addEventListener('click', retakeTest);
-        console.log('✅ retakeTestBtn listener agregado');
+        console.log('   ✅ Event listener agregado: retakeTestBtn');
+    } else {
+        console.warn('   ⚠️ No se encontró: retakeTestBtn');
     }
     
     const downloadResultsBtn = document.getElementById('downloadResultsBtn');
     if (downloadResultsBtn) {
         downloadResultsBtn.addEventListener('click', downloadResults);
-        console.log('✅ downloadResultsBtn listener agregado');
+        console.log('   ✅ Event listener agregado: downloadResultsBtn');
+    } else {
+        console.warn('   ⚠️ No se encontró: downloadResultsBtn');
     }
+    
+    console.log('✅ Configuración de event listeners completada');
 }
 
 function showSection(sectionId) {
@@ -466,41 +492,52 @@ function showSection(sectionId) {
     const targetSection = document.getElementById(sectionId);
     if (targetSection) {
         targetSection.classList.add('active');
-        state.currentStep = sectionId;
+        appState.currentStep = sectionId;
         console.log('Mostrando sección:', sectionId);
     }
 }
 
 function startTest() {
-    console.log('Iniciando test...');
-    showSection('userInfo');
+    console.log('🚀 Iniciando test...');
+    try {
+        console.log('   Mostrando sección userFormSection');
+        showSection('userFormSection');
+        console.log('✅ Test iniciado correctamente');
+    } catch (error) {
+        console.error('❌ Error al iniciar test:', error);
+    }
 }
 
 function submitUserForm(e) {
     e.preventDefault();
     
-    const name = document.getElementById('userName').value.trim();
-    const email = document.getElementById('userEmail').value.trim();
-    const age = document.getElementById('userAge').value.trim();
-    const gender = document.getElementById('userGender').value;
+    console.log('📝 Procesando formulario...');
     
-    if (!name || !email || !age || !gender) {
-        alert('Por favor, completa todos los campos');
+    const name = document.getElementById('nombre').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const age = document.getElementById('edad').value.trim();
+    const profession = document.getElementById('profesion').value.trim();
+    
+    if (!name || !email) {
+        alert('Por favor, completa al menos el nombre y email');
         return;
     }
     
-    state.userInfo = { name, email, age, gender };
+    console.log('✅ Datos del formulario válidos');
+    appState.userInfo = { name, email, age, profession };
     
     try {
-        localStorage.setItem('testUserData', JSON.stringify(state.userInfo));
+        localStorage.setItem('testUserData', JSON.stringify(appState.userInfo));
+        console.log('✅ Datos guardados en localStorage');
     } catch (error) {
         console.error('Error al guardar datos en localStorage:', error);
     }
     
-    state.selectedQuestions = selectBalancedQuestions();
-    state.currentQuestion = 0;
-    state.answers = [];
-    state.startTime = Date.now();
+    console.log('🎲 Seleccionando preguntas balanceadas...');
+    appState.selectedQuestions = selectBalancedQuestions();
+    appState.currentQuestion = 0;
+    appState.answers = [];
+    appState.startTime = Date.now();
     
     showSection('test');
     renderQuestion();
@@ -526,9 +563,9 @@ function selectBalancedQuestions() {
 }
 
 function renderQuestion() {
-    const question = state.selectedQuestions[state.currentQuestion];
+    const question = appState.selectedQuestions[appState.currentQuestion];
     
-    document.getElementById('questionNumber').textContent = state.currentQuestion + 1;
+    document.getElementById('questionNumber').textContent = appState.currentQuestion + 1;
     document.getElementById('totalQuestions').textContent = CONFIG.totalQuestions;
     document.getElementById('questionCategory').textContent = question.category;
     document.getElementById('questionText').textContent = question.question;
@@ -570,20 +607,20 @@ function renderQuestion() {
     
     const prevBtn = document.getElementById('prevBtn');
     if (prevBtn) {
-        prevBtn.style.display = state.currentQuestion === 0 ? 'none' : 'block';
+        prevBtn.style.display = appState.currentQuestion === 0 ? 'none' : 'block';
     }
     
     const progressBar = document.getElementById('progressBar');
     if (progressBar) {
-        const progress = ((state.currentQuestion + 1) / CONFIG.totalQuestions) * 100;
+        const progress = ((appState.currentQuestion + 1) / CONFIG.totalQuestions) * 100;
         progressBar.style.width = progress + '%';
     }
 }
 
 function selectScaleAnswer(value) {
-    const question = state.selectedQuestions[state.currentQuestion];
-    state.answers[state.currentQuestion] = {
-        questionIndex: state.currentQuestion,
+    const question = appState.selectedQuestions[appState.currentQuestion];
+    appState.answers[appState.currentQuestion] = {
+        questionIndex: appState.currentQuestion,
         question: question.question,
         answer: value,
         type: question.type,
@@ -595,9 +632,9 @@ function selectScaleAnswer(value) {
 }
 
 function selectYesNoAnswer(value) {
-    const question = state.selectedQuestions[state.currentQuestion];
-    state.answers[state.currentQuestion] = {
-        questionIndex: state.currentQuestion,
+    const question = appState.selectedQuestions[appState.currentQuestion];
+    appState.answers[appState.currentQuestion] = {
+        questionIndex: appState.currentQuestion,
         question: question.question,
         answer: value ? 1 : 0,
         type: question.type,
@@ -609,8 +646,8 @@ function selectYesNoAnswer(value) {
 }
 
 function nextQuestion() {
-    if (state.currentQuestion < CONFIG.totalQuestions - 1) {
-        state.currentQuestion++;
+    if (appState.currentQuestion < CONFIG.totalQuestions - 1) {
+        appState.currentQuestion++;
         renderQuestion();
     } else {
         calculateResults();
@@ -619,8 +656,8 @@ function nextQuestion() {
 }
 
 function previousQuestion() {
-    if (state.currentQuestion > 0) {
-        state.currentQuestion--;
+    if (appState.currentQuestion > 0) {
+        appState.currentQuestion--;
         renderQuestion();
     }
 }
@@ -654,7 +691,7 @@ function calculateResults() {
         pragmatic: 0
     };
     
-    state.answers.forEach(answer => {
+    appState.answers.forEach(answer => {
         if (answer.intelligence) {
             scores[answer.intelligence] += answer.answer;
             counts[answer.intelligence]++;
@@ -671,17 +708,17 @@ function calculateResults() {
         }
     }
     
-    state.results = {
+    appState.results = {
         scores,
         timestamp: new Date().toISOString(),
-        duration: Math.round((Date.now() - state.startTime) / 1000)
+        duration: Math.round((Date.now() - appState.startTime) / 1000)
     };
 }
 
 function showResults() {
     showSection('results');
     
-    const scores = state.results.scores;
+    const scores = appState.results.scores;
     
     const intelligences = [
         { key: 'linguistic', label: 'Lingüística' },
@@ -739,7 +776,7 @@ function createRadarChart() {
     if (!canvas || !window.Chart) return;
     
     const ctx = canvas.getContext('2d');
-    const scores = state.results.scores;
+    const scores = appState.results.scores;
     
     new Chart(ctx, {
         type: 'radar',
@@ -773,7 +810,7 @@ function createRadarChart() {
 }
 
 function generateRecommendations() {
-    const scores = state.results.scores;
+    const scores = appState.results.scores;
     
     const intelligences = [
         { key: 'linguistic', label: 'Lingüística', recommendation: 'Lee libros, escribe diarios, participa en debates.' },
@@ -806,9 +843,9 @@ function generateRecommendations() {
 
 function downloadResults() {
     const results = {
-        userInfo: state.userInfo,
-        results: state.results,
-        answers: state.answers
+        userInfo: appState.userInfo,
+        results: appState.results,
+        answers: appState.answers
     };
     
     const dataStr = JSON.stringify(results, null, 2);
@@ -817,22 +854,22 @@ function downloadResults() {
     
     const link = document.createElement('a');
     link.href = url;
-    link.download = `resultados-${state.userInfo.name}-${Date.now()}.json`;
+    link.download = `resultados-${appState.userInfo.name}-${Date.now()}.json`;
     link.click();
     
     URL.revokeObjectURL(url);
 }
 
 function retakeTest() {
-    state.reset();
+    appState.reset();
     showSection('hero');
 }
 
 function saveToDatabase() {
     const data = {
-        userInfo: state.userInfo,
-        results: state.results,
-        answers: state.answers
+        userInfo: appState.userInfo,
+        results: appState.results,
+        answers: appState.answers
     };
     
     fetch(CONFIG.apiEndpoint, {
@@ -853,8 +890,8 @@ function saveToDatabase() {
 
 function sendEmail() {
     const data = {
-        userInfo: state.userInfo,
-        results: state.results
+        userInfo: appState.userInfo,
+        results: appState.results
     };
     
     fetch(CONFIG.emailEndpoint, {
@@ -874,7 +911,7 @@ function sendEmail() {
 }
 
 function goBack() {
-    if (state.currentStep === 'test') {
+    if (appState.currentStep === 'test') {
         if (confirm('¿Estás seguro de que quieres volver? Perderás tu progreso.')) {
             showSection('userInfo');
         }
@@ -885,7 +922,7 @@ function goBack() {
 
 function exitTest() {
     if (confirm('¿Estás seguro de que quieres salir? Perderás todo tu progreso.')) {
-        state.reset();
+        appState.reset();
         showSection('hero');
     }
 }
