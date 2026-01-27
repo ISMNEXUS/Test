@@ -1015,11 +1015,11 @@ section {
 
 /* Resumen de usuario */
 .results-summary {
-    background: var(--white);
+    background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
     border-radius: 1.5rem;
     padding: 2rem;
     box-shadow: var(--shadow-md);
-    border: 1px solid var(--gray-100);
+    border: 1px solid #3b82f6;
 }
 
 .user-info {
@@ -1054,11 +1054,11 @@ section {
 
 /* Sección de fortalezas */
 .strengths-section {
-    background: var(--white);
+    background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
     border-radius: 1.5rem;
     padding: 2.5rem;
     box-shadow: var(--shadow-md);
-    border: 1px solid var(--gray-100);
+    border: 1px solid #3b82f6;
 }
 
 .section-title {
@@ -1195,11 +1195,11 @@ section {
 
 /* Sección de estilo de aprendizaje */
 .learning-section {
-    background: var(--white);
+    background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
     border-radius: 1.5rem;
     padding: 2.5rem;
     box-shadow: var(--shadow-md);
-    border: 1px solid var(--gray-100);
+    border: 1px solid #3b82f6;
 }
 
 .learning-card {
@@ -1252,11 +1252,11 @@ section {
 
 /* Análisis detallado */
 .detailed-analysis {
-    background: var(--white);
+    background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
     border-radius: 1.5rem;
     padding: 2.5rem;
     box-shadow: var(--shadow-md);
-    border: 1px solid var(--gray-100);
+    border: 1px solid #3b82f6;
 }
 
 .analysis-grid {
@@ -1315,11 +1315,11 @@ section {
 
 /* Recomendaciones */
 .recommendations {
-    background: var(--white);
+    background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
     border-radius: 1.5rem;
     padding: 2.5rem;
     box-shadow: var(--shadow-md);
-    border: 1px solid var(--gray-100);
+    border: 1px solid #3b82f6;
 }
 
 .recommendation-card {
