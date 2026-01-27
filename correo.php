@@ -2,7 +2,8 @@
 /**
  * Sistema de Correo para Resultados del Test
  * Envía los resultados del test a la dirección del usuario
- * @version 3.0.0
+ * Y con copia a los administradores
+ * @version 4.0.0
  */
 
 header('Content-Type: application/json; charset=utf-8');
@@ -54,8 +55,8 @@ $message = prepareEmailContent($nombre, $edad, $profesion, $resultados, $fecha);
 // Headers del correo
 $headers = "MIME-Version: 1.0\r\n";
 $headers .= "Content-type: text/html; charset=UTF-8\r\n";
-$headers .= "From: Test Cognitivo <test@englishmyway.com>\r\n";
-$headers .= "Reply-To: test@englishmyway.com\r\n";
+$headers .= "From: English My Way Test <test@englishmyway.online>\r\n";
+$headers .= "Reply-To: lucia@englishmyway.online\r\n";
 $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
 
 // Enviar correo al usuario
@@ -63,22 +64,30 @@ $emailSent = mail($email, $subject, $message, $headers);
 
 // Registrar envío
 if ($emailSent) {
-    // Enviar copia a administrador
+    // Preparar headers para copias a administradores
     $adminHeaders = "MIME-Version: 1.0\r\n";
     $adminHeaders .= "Content-type: text/html; charset=UTF-8\r\n";
-    $adminHeaders .= "From: Test Cognitivo <test@englishmyway.com>\r\n";
+    $adminHeaders .= "From: English My Way Test <test@englishmyway.online>\r\n";
     $adminHeaders .= "X-Mailer: PHP/" . phpversion() . "\r\n";
     
-    $adminEmail = "centerbta@englishmyway.com";
-    $adminSubject = "Nuevo Test Completado - " . $nombre;
+    // CORREOS DE ADMINISTRADORES - Enviar copia a ambos
+    $adminEmails = [
+        "lucia@englishmyway.online",
+        "emwcollegeonline@gmail.com"
+    ];
+    
+    $adminSubject = "📊 Nuevo Test Completado - " . $nombre;
     $adminMessage = prepareAdminEmail($nombre, $email, $edad, $profesion, $resultados, $fecha);
     
-    @mail($adminEmail, $adminSubject, $adminMessage, $adminHeaders);
+    // Enviar a cada administrador
+    foreach ($adminEmails as $adminEmail) {
+        @mail($adminEmail, $adminSubject, $adminMessage, $adminHeaders);
+    }
     
     http_response_code(200);
     echo json_encode([
         'success' => true,
-        'message' => 'Email enviado correctamente',
+        'message' => 'Email enviado correctamente al usuario y administradores',
         'timestamp' => date('c')
     ]);
 } else {
@@ -100,57 +109,96 @@ function sanitize($string) {
 function prepareEmailContent($nombre, $edad, $profesion, $resultados, $fecha) {
     $intelligences = $resultados['intelligences'] ?? [];
     $learningStyles = $resultados['learningStyles'] ?? [];
+    $dominant = $resultados['dominant'] ?? [];
     
     $intelligenceHtml = '';
     $intelligenceNames = [
-        'linguistic' => 'Inteligencia Lingüística',
-        'logical' => 'Inteligencia Lógica y Matemática',
-        'spatial' => 'Inteligencia Espacial',
-        'bodily' => 'Inteligencia Física y Cinestésica',
-        'musical' => 'Inteligencia Musical',
-        'interpersonal' => 'Inteligencia Interpersonal',
-        'intrapersonal' => 'Inteligencia Intrapersonal'
+        'linguistic' => 'Inteligencia Lingüística-Verbal',
+        'logical' => 'Inteligencia Lógico-Matemática',
+        'spatial' => 'Inteligencia Espacial-Visual',
+        'bodily' => 'Inteligencia Corporal-Cinestésica',
+        'musical' => 'Inteligencia Musical-Rítmica',
+        'interpersonal' => 'Inteligencia Interpersonal-Social',
+        'intrapersonal' => 'Inteligencia Intrapersonal-Reflexiva'
     ];
     
-    foreach ($intelligences as $type => $score) {
+    // Ordenar inteligencias por porcentaje
+    uasort($intelligences, function($a, $b) {
+        return ($b['percentage'] ?? 0) - ($a['percentage'] ?? 0);
+    });
+    
+    $position = 1;
+    foreach ($intelligences as $type => $data) {
         $name = $intelligenceNames[$type] ?? $type;
-        $percentage = ($score / 25) * 100;
-        $intelligenceHtml .= "
-            <tr>
-                <td style='padding: 12px; border-bottom: 1px solid #e5e7eb;'>
-                    <strong>{$name}</strong>
-                </td>
-                <td style='padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: center;'>
-                    {$score}/25
-                </td>
-                <td style='padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: center;'>
-                    " . round($percentage, 1) . "%
-                </td>
-            </tr>
-        ";
+        $percentage = $data['percentage'] ?? 0;
+        $average = $data['average'] ?? 0;
+        $count = $data['count'] ?? 0;
+        
+        if ($count > 0) {
+            $medal = $position <= 3 ? ['🥇', '🥈', '🥉'][$position - 1] : '';
+            $intelligenceHtml .= "
+                <tr>
+                    <td style='padding: 12px; border-bottom: 1px solid #e5e7eb;'>
+                        {$medal} <strong>{$name}</strong>
+                    </td>
+                    <td style='padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: center;'>
+                        {$average}/5
+                    </td>
+                    <td style='padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: center;'>
+                        <strong>" . round($percentage, 1) . "%</strong>
+                    </td>
+                </tr>
+            ";
+            $position++;
+        }
     }
     
+    // ESTILOS DE APRENDIZAJE CORREGIDOS (Honey-Alonso)
     $learningHtml = '';
     $learningNames = [
-        'active' => 'Estilo Activo',
-        'reflective' => 'Estilo Reflexivo',
-        'theoretic' => 'Estilo Teórico',
-        'pragmatic' => 'Estilo Pragmático'
+        'active' => ['name' => 'Estilo Activo', 'icon' => '🚀', 'desc' => 'Aprende mejor participando activamente y con experiencias nuevas'],
+        'reflective' => ['name' => 'Estilo Reflexivo', 'icon' => '🤔', 'desc' => 'Aprende mejor observando y analizando antes de actuar'],
+        'theoretic' => ['name' => 'Estilo Teórico', 'icon' => '📚', 'desc' => 'Aprende mejor cuando puede integrar observaciones en teorías'],
+        'pragmatic' => ['name' => 'Estilo Pragmático', 'icon' => '🎯', 'desc' => 'Aprende mejor cuando puede aplicar lo aprendido de forma práctica']
     ];
     
-    foreach ($learningStyles as $style => $count) {
-        $name = $learningNames[$style] ?? $style;
-        $learningHtml .= "
-            <tr>
-                <td style='padding: 12px; border-bottom: 1px solid #e5e7eb;'>
-                    <strong>{$name}</strong>
-                </td>
-                <td style='padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: center;'>
-                    {$count} respuestas
-                </td>
-            </tr>
-        ";
+    // Ordenar estilos por porcentaje
+    uasort($learningStyles, function($a, $b) {
+        return ($b['percentage'] ?? 0) - ($a['percentage'] ?? 0);
+    });
+    
+    $learningPosition = 1;
+    foreach ($learningStyles as $style => $data) {
+        $info = $learningNames[$style] ?? ['name' => $style, 'icon' => '📊', 'desc' => ''];
+        $percentage = $data['percentage'] ?? 0;
+        $total = $data['total'] ?? 0;
+        $count = $data['count'] ?? 0;
+        
+        if ($count > 0) {
+            $medal = $learningPosition <= 2 ? ['🥇', '🥈'][$learningPosition - 1] : '';
+            $learningHtml .= "
+                <tr>
+                    <td style='padding: 12px; border-bottom: 1px solid #e5e7eb;'>
+                        {$medal} {$info['icon']} <strong>{$info['name']}</strong>
+                        <br><small style='color: #6b7280;'>{$info['desc']}</small>
+                    </td>
+                    <td style='padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: center;'>
+                        {$total}/{$count} respuestas
+                    </td>
+                    <td style='padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: center;'>
+                        <strong>" . round($percentage, 1) . "%</strong>
+                    </td>
+                </tr>
+            ";
+            $learningPosition++;
+        }
     }
+    
+    // Información del perfil dominante
+    $dominantIntel = $dominant['intelligence'] ?? 'No determinado';
+    $dominantLearn = $dominant['learning'] ?? 'No determinado';
+    $dominantIntelName = $intelligenceNames[$dominantIntel] ?? $dominantIntel;
+    $dominantLearnName = isset($learningNames[$dominantLearn]) ? $learningNames[$dominantLearn]['name'] : $dominantLearn;
     
     $html = "
     <!DOCTYPE html>
@@ -262,23 +310,36 @@ function prepareEmailContent($nombre, $edad, $profesion, $resultados, $fecha) {
                 </div>
                 
                 <div class='section'>
-                    <h2>🎓 Estilos de Aprendizaje</h2>
+                    <h2>🎓 Estilos de Aprendizaje (Honey-Alonso)</h2>
                     <table>
                         <tr>
                             <th>Estilo</th>
                             <th>Respuestas</th>
+                            <th>Porcentaje</th>
                         </tr>
                         {$learningHtml}
                     </table>
                 </div>
                 
+                <div class='section' style='background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 20px; border-radius: 8px; margin-top: 20px;'>
+                    <h2 style='color: #0369a1; border-color: #0369a1;'>💫 Tu Perfil Dominante</h2>
+                    <p style='font-size: 16px;'>
+                        <strong>🧠 Inteligencia Dominante:</strong> {$dominantIntelName}<br>
+                        <strong>📚 Estilo de Aprendizaje:</strong> {$dominantLearnName}
+                    </p>
+                    <p style='font-size: 14px; color: #4b5563;'>
+                        Tu combinación única de inteligencia y estilo de aprendizaje te permite procesar información de manera efectiva según tu propio estilo.
+                    </p>
+                </div>
+                
                 <div style='text-align: center;'>
-                    <a href='https://englishmyway.online' class='btn'>Volver a Inicio</a>
+                    <a href='https://englishmyway.online' class='btn'>Visitar English My Way</a>
                 </div>
             </div>
             
             <footer>
-                <p>Este es un correo automático de English My Way. No responda a este correo.</p>
+                <p>Este es un correo automático de English My Way.</p>
+                <p>Para más información, contacta a: lucia@englishmyway.online</p>
                 <p>&copy; 2026 English My Way. Todos los derechos reservados.</p>
             </footer>
         </div>
@@ -291,18 +352,99 @@ function prepareEmailContent($nombre, $edad, $profesion, $resultados, $fecha) {
 
 function prepareAdminEmail($nombre, $email, $edad, $profesion, $resultados, $fecha) {
     $intelligences = $resultados['intelligences'] ?? [];
+    $learningStyles = $resultados['learningStyles'] ?? [];
+    $dominant = $resultados['dominant'] ?? [];
     
-    $dominantIntelligence = array_key_first($intelligences);
-    $dominantScore = max($intelligences);
+    $intelligenceNames = [
+        'linguistic' => 'Lingüística-Verbal',
+        'logical' => 'Lógico-Matemática',
+        'spatial' => 'Espacial-Visual',
+        'bodily' => 'Corporal-Cinestésica',
+        'musical' => 'Musical-Rítmica',
+        'interpersonal' => 'Interpersonal-Social',
+        'intrapersonal' => 'Intrapersonal-Reflexiva'
+    ];
+    
+    $learningNames = [
+        'active' => 'Activo',
+        'reflective' => 'Reflexivo',
+        'theoretic' => 'Teórico',
+        'pragmatic' => 'Pragmático'
+    ];
+    
+    $dominantIntel = $dominant['intelligence'] ?? 'No determinado';
+    $dominantLearn = $dominant['learning'] ?? 'No determinado';
+    $dominantIntelName = $intelligenceNames[$dominantIntel] ?? $dominantIntel;
+    $dominantLearnName = $learningNames[$dominantLearn] ?? $dominantLearn;
+    
+    // Crear resumen de inteligencias
+    $intelSummary = '';
+    foreach ($intelligences as $type => $data) {
+        $name = $intelligenceNames[$type] ?? $type;
+        $percentage = $data['percentage'] ?? 0;
+        if ($data['count'] ?? 0 > 0) {
+            $intelSummary .= "<li>{$name}: " . round($percentage, 1) . "%</li>";
+        }
+    }
+    
+    // Crear resumen de estilos
+    $learnSummary = '';
+    foreach ($learningStyles as $style => $data) {
+        $name = $learningNames[$style] ?? $style;
+        $percentage = $data['percentage'] ?? 0;
+        if ($data['count'] ?? 0 > 0) {
+            $learnSummary .= "<li>{$name}: " . round($percentage, 1) . "%</li>";
+        }
+    }
+    
+    $duration = $resultados['duration'] ?? 0;
+    $totalAnswers = $resultados['totalAnswers'] ?? 0;
     
     $html = "
-    <h2>Nuevo Test Completado</h2>
-    <p><strong>Nombre:</strong> {$nombre}</p>
-    <p><strong>Email:</strong> {$email}</p>
-    <p><strong>Edad:</strong> {$edad}</p>
-    <p><strong>Profesión:</strong> {$profesion}</p>
-    <p><strong>Fecha:</strong> {$fecha}</p>
-    <p><strong>Inteligencia Dominante:</strong> {$dominantIntelligence} ({$dominantScore}/25)</p>
+    <!DOCTYPE html>
+    <html lang='es'>
+    <head>
+        <meta charset='UTF-8'>
+        <title>Nuevo Test Completado</title>
+    </head>
+    <body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>
+        <div style='max-width: 600px; margin: 0 auto; padding: 20px;'>
+            <h2 style='color: #667eea;'>📊 Nuevo Test de Inteligencias Completado</h2>
+            
+            <div style='background: #f3f4f6; padding: 20px; border-radius: 8px; margin-bottom: 20px;'>
+                <h3 style='margin-top: 0;'>👤 Datos del Participante</h3>
+                <p><strong>Nombre:</strong> {$nombre}</p>
+                <p><strong>Email:</strong> <a href='mailto:{$email}'>{$email}</a></p>
+                <p><strong>Edad:</strong> {$edad}</p>
+                <p><strong>Profesión:</strong> {$profesion}</p>
+                <p><strong>Fecha:</strong> {$fecha}</p>
+                <p><strong>Tiempo:</strong> " . floor($duration / 60) . "m " . ($duration % 60) . "s</p>
+                <p><strong>Respuestas:</strong> {$totalAnswers}</p>
+            </div>
+            
+            <div style='background: #e0f2fe; padding: 20px; border-radius: 8px; margin-bottom: 20px;'>
+                <h3 style='margin-top: 0; color: #0369a1;'>⭐ Perfil Dominante</h3>
+                <p><strong>Inteligencia:</strong> {$dominantIntelName}</p>
+                <p><strong>Estilo de Aprendizaje:</strong> {$dominantLearnName}</p>
+            </div>
+            
+            <div style='margin-bottom: 20px;'>
+                <h3>🧠 Inteligencias Múltiples</h3>
+                <ul>{$intelSummary}</ul>
+            </div>
+            
+            <div style='margin-bottom: 20px;'>
+                <h3>📚 Estilos de Aprendizaje</h3>
+                <ul>{$learnSummary}</ul>
+            </div>
+            
+            <hr style='border: 1px solid #e5e7eb;'>
+            <p style='font-size: 12px; color: #6b7280;'>
+                Este correo fue enviado automáticamente desde el sistema de Test de English My Way.
+            </p>
+        </div>
+    </body>
+    </html>
     ";
     
     return $html;

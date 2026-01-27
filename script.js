@@ -781,23 +781,23 @@ function previousQuestion() {
 function calculateResults() {
     console.log('📊 Calculando resultados...');
     
-    // Inicializar contadores para inteligencias y estilos
+    // Inicializar contadores para inteligencias
     const intelligenceScores = {
-        linguistic: { total: 0, count: 0, percentage: 0 },
-        logical: { total: 0, count: 0, percentage: 0 },
-        spatial: { total: 0, count: 0, percentage: 0 },
-        bodily: { total: 0, count: 0, percentage: 0 },
-        musical: { total: 0, count: 0, percentage: 0 },
-        interpersonal: { total: 0, count: 0, percentage: 0 },
-        intrapersonal: { total: 0, count: 0, percentage: 0 },
-        naturalist: { total: 0, count: 0, percentage: 0 }
+        linguistic: { total: 0, count: 0, percentage: 0, maxPossible: 0 },
+        logical: { total: 0, count: 0, percentage: 0, maxPossible: 0 },
+        spatial: { total: 0, count: 0, percentage: 0, maxPossible: 0 },
+        bodily: { total: 0, count: 0, percentage: 0, maxPossible: 0 },
+        musical: { total: 0, count: 0, percentage: 0, maxPossible: 0 },
+        interpersonal: { total: 0, count: 0, percentage: 0, maxPossible: 0 },
+        intrapersonal: { total: 0, count: 0, percentage: 0, maxPossible: 0 }
     };
     
+    // Estilos de aprendizaje REALES según las preguntas del test
     const learningScores = {
-        visual: { total: 0, count: 0, percentage: 0 },
-        auditory: { total: 0, count: 0, percentage: 0 },
-        kinesthetic: { total: 0, count: 0, percentage: 0 },
-        readwrite: { total: 0, count: 0, percentage: 0 }
+        active: { total: 0, count: 0, percentage: 0, description: 'Activo' },
+        reflective: { total: 0, count: 0, percentage: 0, description: 'Reflexivo' },
+        theoretic: { total: 0, count: 0, percentage: 0, description: 'Teórico' },
+        pragmatic: { total: 0, count: 0, percentage: 0, description: 'Pragmático' }
     };
     
     // Procesar respuestas
@@ -806,80 +806,80 @@ function calculateResults() {
         
         console.log(`Procesando respuesta ${index + 1}:`, answer);
         
-        // Convertir respuesta a valor numérico normalizado (0-5)
-        const value = parseFloat(answer.answer) || 0;
-        
-        // Asignar a inteligencia
+        // Asignar a inteligencia (preguntas de escala 1-5)
         if (answer.intelligence && intelligenceScores[answer.intelligence]) {
+            const value = parseFloat(answer.answer) || 0;
             intelligenceScores[answer.intelligence].total += value;
             intelligenceScores[answer.intelligence].count++;
+            intelligenceScores[answer.intelligence].maxPossible += 5; // Máximo posible por pregunta
         }
         
-        // Asignar a estilo de aprendizaje
+        // Asignar a estilo de aprendizaje (preguntas sí/no)
         if (answer.learning && learningScores[answer.learning]) {
+            // Para preguntas sí/no, contamos las respuestas "sí" (1)
+            const value = answer.answer === 1 || answer.answer === true ? 1 : 0;
             learningScores[answer.learning].total += value;
             learningScores[answer.learning].count++;
         }
     });
     
-    // Calcular promedios y porcentajes
-    let maxIntelligence = 0;
-    let maxLearning = 0;
-    
+    // Calcular porcentajes REALES para inteligencias (basado en puntuación máxima posible)
     for (let key in intelligenceScores) {
         const intel = intelligenceScores[key];
         if (intel.count > 0) {
             intel.average = intel.total / intel.count;
-            if (intel.average > maxIntelligence) maxIntelligence = intel.average;
+            // Porcentaje real: (puntuación obtenida / puntuación máxima) * 100
+            intel.percentage = (intel.total / intel.maxPossible) * 100;
         } else {
             intel.average = 0;
+            intel.percentage = 0;
         }
+    }
+    
+    // Calcular porcentajes REALES para estilos de aprendizaje
+    // Porcentaje = (respuestas "sí" / total preguntas del estilo) * 100
+    let totalLearningResponses = 0;
+    for (let key in learningScores) {
+        totalLearningResponses += learningScores[key].count;
     }
     
     for (let key in learningScores) {
         const style = learningScores[key];
         if (style.count > 0) {
-            style.average = style.total / style.count;
-            if (style.average > maxLearning) maxLearning = style.average;
+            // Porcentaje de respuestas "sí" para este estilo
+            style.percentage = (style.total / style.count) * 100;
+            style.average = style.percentage / 100 * 5; // Normalizar a escala 0-5 para consistencia
         } else {
+            style.percentage = 0;
             style.average = 0;
         }
     }
     
-    // Calcular porcentajes relativos
-    for (let key in intelligenceScores) {
-        if (maxIntelligence > 0) {
-            intelligenceScores[key].percentage = (intelligenceScores[key].average / maxIntelligence) * 100;
-        }
-    }
-    
-    for (let key in learningScores) {
-        if (maxLearning > 0) {
-            learningScores[key].percentage = (learningScores[key].average / maxLearning) * 100;
-        }
-    }
-    
-    // Determinar inteligencia dominante
+    // Ordenar inteligencias por porcentaje real
     const sortedIntelligences = Object.entries(intelligenceScores)
         .map(([key, data]) => ({ key, ...data }))
-        .sort((a, b) => b.average - a.average);
+        .filter(intel => intel.count > 0) // Solo incluir las que tienen respuestas
+        .sort((a, b) => b.percentage - a.percentage);
     
-    // Determinar estilo de aprendizaje dominante
+    // Ordenar estilos de aprendizaje por porcentaje
     const sortedLearning = Object.entries(learningScores)
         .map(([key, data]) => ({ key, ...data }))
-        .sort((a, b) => b.average - a.average);
+        .filter(style => style.count > 0) // Solo incluir las que tienen respuestas
+        .sort((a, b) => b.percentage - a.percentage);
     
     appState.results = {
         intelligences: intelligenceScores,
         learning: learningScores,
         dominant: {
-            intelligence: sortedIntelligences[0],
-            learning: sortedLearning[0]
+            intelligence: sortedIntelligences[0] || { key: 'unknown', percentage: 0 },
+            learning: sortedLearning[0] || { key: 'unknown', percentage: 0 }
         },
         top3: {
             intelligences: sortedIntelligences.slice(0, 3),
-            learning: sortedLearning.slice(0, 2)
+            learning: sortedLearning.slice(0, 4) // Mostrar los 4 estilos
         },
+        allIntelligences: sortedIntelligences,
+        allLearning: sortedLearning,
         timestamp: new Date().toISOString(),
         duration: Math.round((Date.now() - appState.startTime) / 1000),
         totalAnswers: appState.answers.filter(a => a).length
@@ -894,23 +894,43 @@ function showResults() {
     
     const results = appState.results;
     
-    // Definir nombres y descripciones en español
+    // Definir nombres y descripciones en español para INTELIGENCIAS
     const intelligenceNames = {
-        linguistic: { name: 'Lingüística-Verbal', icon: '📝', description: 'Habilidad para usar palabras de manera efectiva' },
-        logical: { name: 'Lógico-Matemática', icon: '🔢', description: 'Capacidad para el razonamiento lógico y matemático' },
-        spatial: { name: 'Espacial-Visual', icon: '🎨', description: 'Habilidad para percibir el mundo visual con precisión' },
-        bodily: { name: 'Corporal-Cinestésica', icon: '🤸', description: 'Capacidad para usar el cuerpo para expresar ideas' },
-        musical: { name: 'Musical-Rítmica', icon: '🎵', description: 'Habilidad para percibir y crear música' },
-        interpersonal: { name: 'Interpersonal-Social', icon: '👥', description: 'Capacidad para entender y relacionarse con otros' },
-        intrapersonal: { name: 'Intrapersonal-Reflexiva', icon: '🧘', description: 'Habilidad para comprenderse a uno mismo' },
-        naturalist: { name: 'Naturalista-Ecológica', icon: '🌿', description: 'Sensibilidad hacia el mundo natural' }
+        linguistic: { name: 'Lingüística-Verbal', icon: '📝', description: 'Habilidad para usar palabras de manera efectiva, tanto oral como escrita.' },
+        logical: { name: 'Lógico-Matemática', icon: '🔢', description: 'Capacidad para el razonamiento lógico, la resolución de problemas y el pensamiento matemático.' },
+        spatial: { name: 'Espacial-Visual', icon: '🎨', description: 'Habilidad para percibir el mundo visual con precisión y recrear experiencias visuales.' },
+        bodily: { name: 'Corporal-Cinestésica', icon: '🤸', description: 'Capacidad para usar el cuerpo para expresar ideas y sentimientos.' },
+        musical: { name: 'Musical-Rítmica', icon: '🎵', description: 'Habilidad para percibir, discriminar, transformar y expresar formas musicales.' },
+        interpersonal: { name: 'Interpersonal-Social', icon: '👥', description: 'Capacidad para entender y relacionarse efectivamente con otras personas.' },
+        intrapersonal: { name: 'Intrapersonal-Reflexiva', icon: '🧘', description: 'Habilidad para comprenderse a uno mismo y actuar en consecuencia.' }
     };
     
+    // ESTILOS DE APRENDIZAJE CORRECTOS según el test (Honey-Alonso)
     const learningNames = {
-        visual: { name: 'Visual', icon: '👁️', description: 'Aprende mejor viendo imágenes y gráficos' },
-        auditory: { name: 'Auditivo', icon: '👂', description: 'Aprende mejor escuchando explicaciones' },
-        kinesthetic: { name: 'Kinestésico', icon: '✋', description: 'Aprende mejor haciendo y experimentando' },
-        readwrite: { name: 'Lectura-Escritura', icon: '📖', description: 'Aprende mejor leyendo y escribiendo' }
+        active: { 
+            name: 'Activo', 
+            icon: '🚀', 
+            description: 'Te involucras plenamente en nuevas experiencias. Eres entusiasta, espontáneo y te gusta actuar primero y pensar después.',
+            tips: ['Participa en debates y discusiones', 'Busca retos y experiencias nuevas', 'Lidera proyectos en equipo']
+        },
+        reflective: { 
+            name: 'Reflexivo', 
+            icon: '🤔', 
+            description: 'Observas y analizas las experiencias desde diferentes perspectivas. Recoges datos y los analizas antes de llegar a conclusiones.',
+            tips: ['Toma notas y reflexiona sobre lo aprendido', 'Observa antes de actuar', 'Analiza diferentes puntos de vista']
+        },
+        theoretic: { 
+            name: 'Teórico', 
+            icon: '📚', 
+            description: 'Adaptas e integras observaciones dentro de teorías lógicas y complejas. Buscas la racionalidad y la objetividad.',
+            tips: ['Busca fundamentos teóricos', 'Crea modelos y sistemas', 'Analiza y sintetiza información']
+        },
+        pragmatic: { 
+            name: 'Pragmático', 
+            icon: '🎯', 
+            description: 'Buscas la aplicación práctica de las ideas. Te gusta probar nuevas teorías, técnicas e ideas y ver si funcionan.',
+            tips: ['Aplica lo aprendido inmediatamente', 'Busca soluciones prácticas', 'Experimenta con nuevas técnicas']
+        }
     };
     
     // Renderizar inteligencias múltiples
@@ -937,56 +957,70 @@ function showResults() {
         `;
     }).join('');
     
-    // Renderizar estilos de aprendizaje
+    // Renderizar TODOS los estilos de aprendizaje con información real
     const learningHTML = results.top3.learning.map((style, index) => {
-        const info = learningNames[style.key] || { name: style.key, icon: '🎯', description: '' };
+        const info = learningNames[style.key] || { name: style.key, icon: '🎯', description: '', tips: [] };
         const percentage = style.percentage.toFixed(1);
-        const position = index === 0 ? '🥇' : '🥈';
+        const position = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '4️⃣';
+        const isDominant = index === 0;
         
         return `
-            <div class="learning-card ${index === 0 ? 'dominant' : ''}">
+            <div class="learning-card ${isDominant ? 'dominant' : ''}">
                 <div class="learning-position">${position}</div>
                 <div class="learning-icon">${info.icon}</div>
-                <h3>${info.name}</h3>
+                <h3>Estilo ${info.name}</h3>
                 <div class="learning-percentage">${percentage}%</div>
                 <div class="learning-bar-container">
                     <div class="learning-bar-fill" style="width: ${percentage}%; background: ${getColorForIndex(index + 3)}"></div>
                 </div>
                 <p class="learning-description">${info.description}</p>
                 <div class="learning-stats">
-                    <span>Promedio: ${style.average.toFixed(2)}/5</span>
-                    <span>${style.count} preguntas</span>
+                    <span>${style.total} de ${style.count} respuestas afirmativas</span>
                 </div>
+                ${isDominant && info.tips ? `
+                    <div class="learning-tips">
+                        <strong>💡 Consejos para ti:</strong>
+                        <ul>
+                            ${info.tips.map(tip => `<li>${tip}</li>`).join('')}
+                        </ul>
+                    </div>
+                ` : ''}
             </div>
         `;
     }).join('');
     
-    // Generar recomendaciones personalizadas
+    // Generar recomendaciones personalizadas MEJORADAS
     const recommendations = generateIntelligentRecommendations(results);
     
-    // Actualizar el DOM
+    // Actualizar el DOM con botones FUNCIONALES
     const resultsContainer = document.getElementById('resultsSection');
     if (resultsContainer) {
         resultsContainer.innerHTML = `
             <div class="results-container">
                 <div class="results-header">
+                    <div class="results-logo">
+                        <img src="logo-english-myway.png" alt="English My Way" class="results-logo-img">
+                    </div>
                     <h1>✨ Tus Resultados Personalizados</h1>
-                    <p>Hola ${appState.userInfo.name}, aquí están tus inteligencias dominantes:</p>
+                    <p>Hola <strong>${appState.userInfo.name}</strong>, aquí está tu análisis completo:</p>
                     <div class="test-info">
                         <span>⏱️ Tiempo: ${Math.floor(results.duration / 60)}m ${results.duration % 60}s</span>
                         <span>✅ ${results.totalAnswers} respuestas</span>
+                        <span>📅 ${new Date().toLocaleDateString('es-ES')}</span>
                     </div>
                 </div>
                 
                 <div class="section">
-                    <h2>🧠 Tus 3 Inteligencias Múltiples Más Desarrolladas</h2>
+                    <h2>🧠 Tus Inteligencias Múltiples Más Desarrolladas</h2>
+                    <p class="section-subtitle">Según la teoría de Howard Gardner, todos poseemos múltiples inteligencias en diferentes grados.</p>
                     <div class="results-grid">
                         ${intelligencesHTML}
                     </div>
                 </div>
                 
                 <div class="section">
-                    <h2>📚 Tus Estilos de Aprendizaje Preferidos</h2>
+                    <h2>📚 Tus Estilos de Aprendizaje (Honey-Alonso)</h2>
+                    <p class="section-subtitle">Conocer tu estilo de aprendizaje te ayudará a estudiar de manera más efectiva.</p>
                     <div class="learning-grid">
                         ${learningHTML}
                     </div>
@@ -998,12 +1032,40 @@ function showResults() {
                 </div>
                 
                 <div class="actions">
-                    <button onclick="downloadResults()" class="btn-primary">📥 Descargar PDF</button>
-                    <button onclick="shareResults()" class="btn-secondary">🔗 Compartir</button>
-                    <button onclick="restartTest()" class="btn-outline">🔄 Hacer de nuevo</button>
+                    <button id="downloadResultsBtnFinal" class="btn-primary">📥 Descargar Resultados</button>
+                    <button id="shareResultsBtnFinal" class="btn-secondary">🔗 Compartir</button>
+                    <button id="retakeTestBtnFinal" class="btn-outline">🔄 Hacer de nuevo</button>
+                </div>
+                
+                <div class="email-notice">
+                    <i class="fas fa-envelope"></i>
+                    <p>Se ha enviado una copia de tus resultados a <strong>${appState.userInfo.email}</strong></p>
                 </div>
             </div>
         `;
+        
+        // Agregar event listeners a los botones DESPUÉS de crear el HTML
+        setTimeout(() => {
+            const downloadBtn = document.getElementById('downloadResultsBtnFinal');
+            const shareBtn = document.getElementById('shareResultsBtnFinal');
+            const retakeBtn = document.getElementById('retakeTestBtnFinal');
+            
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', downloadResults);
+                console.log('✅ Event listener agregado: downloadResultsBtnFinal');
+            }
+            if (shareBtn) {
+                shareBtn.addEventListener('click', shareResults);
+                console.log('✅ Event listener agregado: shareResultsBtnFinal');
+            }
+            if (retakeBtn) {
+                retakeBtn.addEventListener('click', restartTest);
+                console.log('✅ Event listener agregado: retakeTestBtnFinal');
+            }
+            
+            // Enviar correo automáticamente al mostrar resultados
+            sendResultsEmail();
+        }, 100);
     }
     
     console.log('✅ Resultados mostrados correctamente');
@@ -1074,90 +1136,125 @@ function generateIntelligentRecommendations(results) {
             'Establece metas y revísalas mensualmente',
             'Practica mindfulness y autoconocimiento',
             'Estudia psicología y desarrollo personal'
-        ],
-        naturalist: [
-            'Cultiva un huerto o jardín',
-            'Observa y cataloga especies naturales',
-            'Haz senderismo y camping',
-            'Estudia ecología y conservación',
-            'Participa en proyectos ambientales'
         ]
     };
     
+    // RECOMENDACIONES CORREGIDAS para estilos de aprendizaje reales
     const learningRecommendations = {
-        visual: [
-            'Usa mapas mentales y diagramas',
-            'Estudia con videos y gráficos',
-            'Colorea y destaca información importante',
-            'Usa infografías para resumir conceptos',
-            'Crea tableros visuales (mood boards)'
+        active: [
+            'Busca actividades donde puedas participar activamente',
+            'Trabaja en equipo y discute ideas con otros',
+            'Busca retos nuevos y experiencias desafiantes',
+            'Evita las sesiones de estudio muy largas y pasivas',
+            'Aprende haciendo, no solo leyendo'
         ],
-        auditory: [
-            'Graba tus notas y escúchalas',
-            'Estudia con podcasts y audiolibros',
-            'Discute temas en voz alta',
-            'Usa música de fondo apropiada',
-            'Participa en seminarios y conferencias'
+        reflective: [
+            'Tómate tiempo para pensar antes de actuar',
+            'Haz resúmenes y análisis de lo que aprendes',
+            'Observa a otros antes de intentar algo nuevo',
+            'Revisa lo aprendido desde diferentes ángulos',
+            'Lleva un diario de aprendizaje'
         ],
-        kinesthetic: [
-            'Haz pausas activas cada 30 minutos',
-            'Usa manipulativos y objetos físicos',
-            'Estudia caminando o moviéndote',
-            'Practica con simulaciones y experimentos',
-            'Toma notas a mano, no digital'
+        theoretic: [
+            'Busca el marco teórico detrás de cada tema',
+            'Crea modelos y sistemas para organizar información',
+            'Lee fuentes primarias y artículos académicos',
+            'Analiza y sintetiza información compleja',
+            'Relaciona nuevos conceptos con teorías existentes'
         ],
-        readwrite: [
-            'Reescribe notas con tus propias palabras',
-            'Lee libros de texto y artículos',
-            'Crea resúmenes y fichas de estudio',
-            'Escribe ensayos y reportes',
-            'Usa listas y bullet points'
+        pragmatic: [
+            'Busca la aplicación práctica de lo que aprendes',
+            'Experimenta con técnicas y métodos nuevos',
+            'Busca ejemplos concretos y casos de estudio',
+            'Prueba inmediatamente lo que aprendes',
+            'Enfócate en soluciones que funcionen'
         ]
     };
     
-    const intelRecs = intelligenceRecommendations[dominantIntel.key] || [];
-    const learnRecs = learningRecommendations[dominantLearning.key] || [];
+    const intelRecs = intelligenceRecommendations[dominantIntel?.key] || [];
+    const learnRecs = learningRecommendations[dominantLearning?.key] || [];
+    
+    // Nombres para mostrar
+    const intelligenceDisplayNames = {
+        linguistic: 'Lingüística',
+        logical: 'Lógico-Matemática',
+        spatial: 'Espacial',
+        bodily: 'Corporal-Cinestésica',
+        musical: 'Musical',
+        interpersonal: 'Interpersonal',
+        intrapersonal: 'Intrapersonal'
+    };
+    
+    const learningDisplayNames = {
+        active: 'Activo',
+        reflective: 'Reflexivo',
+        theoretic: 'Teórico',
+        pragmatic: 'Pragmático'
+    };
+    
+    const intelName = intelligenceDisplayNames[dominantIntel?.key] || dominantIntel?.key || 'desconocida';
+    const learnName = learningDisplayNames[dominantLearning?.key] || dominantLearning?.key || 'desconocido';
     
     return `
         <div class="recommendations-grid">
             <div class="rec-column">
-                <h3>🎯 Para tu inteligencia ${dominantIntel.key}:</h3>
+                <h3>🎯 Para potenciar tu inteligencia ${intelName}:</h3>
                 <ul>
-                    ${intelRecs.slice(0, 3).map(rec => `<li>${rec}</li>`).join('')}
+                    ${intelRecs.slice(0, 4).map(rec => `<li>${rec}</li>`).join('')}
                 </ul>
             </div>
             <div class="rec-column">
-                <h3>📖 Para tu estilo ${dominantLearning.key}:</h3>
+                <h3>📖 Según tu estilo ${learnName}:</h3>
                 <ul>
-                    ${learnRecs.slice(0, 3).map(rec => `<li>${rec}</li>`).join('')}
+                    ${learnRecs.slice(0, 4).map(rec => `<li>${rec}</li>`).join('')}
                 </ul>
             </div>
         </div>
         <div class="insight-box">
             <h4>💫 Tu perfil de aprendizaje único:</h4>
             <p>
-                Eres una persona con un perfil de <strong>${results.dominant.intelligence.key}</strong> 
-                que aprende mejor de forma <strong>${results.dominant.learning.key}</strong>. 
-                Esto significa que tu cerebro está especialmente desarrollado para 
-                ${getDominantDescription(results.dominant.intelligence.key, results.dominant.learning.key)}.
+                Eres una persona con una inteligencia <strong>${intelName}</strong> destacada, 
+                que aprende mejor de forma <strong>${learnName}</strong>. 
+                ${getPersonalizedInsight(dominantIntel?.key, dominantLearning?.key)}
             </p>
         </div>
     `;
 }
 
-function getDominantDescription(intelligence, learning) {
-    const descriptions = {
-        linguistic_visual: 'procesar información escrita y visual, perfecto para lectura rápida y análisis de textos con gráficos',
-        linguistic_auditory: 'comunicarte verbalmente y escuchar con atención, ideal para debates y podcasts',
-        logical_kinesthetic: 'resolver problemas prácticos mediante experimentación, excelente para ingeniería y ciencias aplicadas',
-        spatial_visual: 'visualizar conceptos espaciales complejos, perfecto para diseño, arquitectura y artes visuales',
-        musical_auditory: 'percibir y crear patrones sonoros, ideal para música, idiomas y fonética',
-        interpersonal_kinesthetic: 'trabajar en equipo y aprender haciendo con otros, excelente para deportes y proyectos colaborativos',
-        intrapersonal_readwrite: 'reflexionar profundamente mediante la escritura, perfecto para filosofía, literatura y coaching'
+function getPersonalizedInsight(intelligence, learning) {
+    const insights = {
+        linguistic_active: 'Esto significa que aprendes mejor participando en debates, discusiones y actividades que involucren comunicación verbal activa.',
+        linguistic_reflective: 'Tu combinación te hace excelente para analizar textos, escribir ensayos reflexivos y procesar información escrita profundamente.',
+        linguistic_theoretic: 'Destacas en comprender estructuras gramaticales, analizar literatura y crear marcos teóricos para el lenguaje.',
+        linguistic_pragmatic: 'Eres muy bueno aplicando habilidades lingüísticas de forma práctica: presentaciones, negociaciones y comunicación efectiva.',
+        logical_active: 'Te va bien resolviendo problemas en equipo, participando en competencias matemáticas y aplicando lógica de forma dinámica.',
+        logical_reflective: 'Destacas analizando problemas desde múltiples ángulos y tomando tiempo para encontrar soluciones óptimas.',
+        logical_theoretic: 'Tu perfil es ideal para matemáticas puras, filosofía lógica y desarrollo de teorías y modelos.',
+        logical_pragmatic: 'Eres excelente aplicando lógica a problemas reales: ingeniería, programación y optimización de procesos.',
+        spatial_active: 'Aprendes mejor creando arte, diseñando prototipos y participando en actividades visuales interactivas.',
+        spatial_reflective: 'Destacas observando detalles visuales, analizando arte y reflexionando sobre espacios y diseños.',
+        spatial_theoretic: 'Tu perfil es ideal para arquitectura, diseño teórico y comprensión de geometría avanzada.',
+        spatial_pragmatic: 'Eres muy bueno aplicando habilidades visuales: diseño gráfico, fotografía y soluciones visuales prácticas.',
+        bodily_active: 'Tu perfil es perfecto para deportes de equipo, danza, teatro y actividades físicas grupales.',
+        bodily_reflective: 'Destacas en técnicas que requieren precisión y reflexión: artes marciales, yoga y movimientos conscientes.',
+        bodily_theoretic: 'Comprendes bien la biomecánica, la teoría del movimiento y la fisiología del ejercicio.',
+        bodily_pragmatic: 'Eres excelente en aplicar habilidades físicas de forma práctica: construcción, reparación y trabajo manual.',
+        musical_active: 'Tu perfil es ideal para tocar en bandas, improvisar y participar en actividades musicales grupales.',
+        musical_reflective: 'Destacas analizando música, apreciando matices y reflexionando sobre composiciones.',
+        musical_theoretic: 'Comprendes muy bien la teoría musical, la armonía y la estructura de las composiciones.',
+        musical_pragmatic: 'Eres muy bueno aplicando música: producción, ingeniería de sonido y uso práctico de la música.',
+        interpersonal_active: 'Tu perfil es perfecto para liderazgo, trabajo en equipo y roles que requieran interacción constante.',
+        interpersonal_reflective: 'Destacas comprendiendo a las personas, mediando conflictos y reflexionando sobre relaciones.',
+        interpersonal_theoretic: 'Comprendes bien las teorías sociales, la psicología de grupos y los sistemas humanos.',
+        interpersonal_pragmatic: 'Eres excelente en aplicar habilidades sociales: ventas, negociación y gestión de equipos.',
+        intrapersonal_active: 'Tu perfil combina autoconocimiento con acción: estableces metas y las persigues activamente.',
+        intrapersonal_reflective: 'Destacas en la introspección profunda, el autoconocimiento y la reflexión personal.',
+        intrapersonal_theoretic: 'Comprendes bien las teorías de la personalidad, la psicología y el desarrollo humano.',
+        intrapersonal_pragmatic: 'Eres muy bueno aplicando el autoconocimiento: desarrollo personal, coaching y mejora continua.'
     };
     
     const key = `${intelligence}_${learning}`;
-    return descriptions[key] || 'procesar información de manera única y efectiva';
+    return insights[key] || 'Tu combinación única te permite procesar información de manera efectiva según tu propio estilo.';
 }
 
 function createRadarChart() {
@@ -1296,6 +1393,76 @@ function sendEmail() {
     })
     .catch(error => {
         console.error('Error al enviar correo:', error);
+    });
+}
+
+// Nueva función para enviar resultados por correo automáticamente
+function sendResultsEmail() {
+    console.log('📧 Enviando resultados por correo...');
+    
+    const results = appState.results;
+    const userInfo = appState.userInfo;
+    
+    // Preparar datos de inteligencias
+    const intelligencesData = {};
+    if (results.allIntelligences) {
+        results.allIntelligences.forEach(intel => {
+            intelligencesData[intel.key] = {
+                total: intel.total,
+                count: intel.count,
+                percentage: intel.percentage.toFixed(1),
+                average: intel.average.toFixed(2)
+            };
+        });
+    }
+    
+    // Preparar datos de estilos de aprendizaje
+    const learningData = {};
+    if (results.allLearning) {
+        results.allLearning.forEach(style => {
+            learningData[style.key] = {
+                total: style.total,
+                count: style.count,
+                percentage: style.percentage.toFixed(1)
+            };
+        });
+    }
+    
+    const emailData = {
+        nombre: userInfo.name,
+        email: userInfo.email,
+        edad: userInfo.age || 'No especificada',
+        profesion: userInfo.profession || 'No especificada',
+        fecha: new Date().toLocaleString('es-ES'),
+        resultados: JSON.stringify({
+            intelligences: intelligencesData,
+            learningStyles: learningData,
+            dominant: {
+                intelligence: results.dominant.intelligence?.key || 'unknown',
+                learning: results.dominant.learning?.key || 'unknown'
+            },
+            duration: results.duration,
+            totalAnswers: results.totalAnswers
+        })
+    };
+    
+    fetch(CONFIG.emailEndpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(emailData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('✅ Correo enviado correctamente:', data);
+        } else {
+            console.error('❌ Error al enviar correo:', data.message);
+        }
+    })
+    .catch(error => {
+        console.error('❌ Error de red al enviar correo:', error);
     });
 }
 
