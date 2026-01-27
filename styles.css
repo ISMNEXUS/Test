@@ -1958,19 +1958,22 @@ section {
 
 .learning-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
+    max-width: 100%;
 }
 
 .learning-card {
     background: white;
     border-radius: 16px;
-    padding: 1.5rem;
+    padding: 1.25rem;
     box-shadow: var(--shadow-md);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
     border: 2px solid transparent;
+    max-width: 100%;
+    min-height: auto;
 }
 
 .learning-card:hover {
@@ -2050,9 +2053,15 @@ section {
 
 .learning-description {
     color: var(--gray-600);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     line-height: 1.4;
-    margin: 0.75rem 0;
+    margin: 0.5rem 0;
+    max-height: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 .learning-stats {
@@ -2066,7 +2075,7 @@ section {
 }
 
 .recommendations {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
     color: white;
     padding: 2.5rem;
     border-radius: 20px;
@@ -2227,17 +2236,46 @@ section {
 }
 
 /* Tarjetas de estilos de aprendizaje mejoradas */
+.learning-activities {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--gray-200);
+    text-align: left;
+}
+
+.learning-activities strong {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--gray-700);
+}
+
+.activities-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.activity-badge {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.7rem;
+    white-space: nowrap;
+}
+
 .learning-tips {
-    margin-top: 1rem;
-    padding-top: 1rem;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
     border-top: 1px solid var(--gray-200);
     text-align: left;
 }
 
 .learning-tips strong {
     display: block;
-    margin-bottom: 0.5rem;
-    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
+    font-size: 0.8rem;
     color: var(--gray-700);
 }
 
@@ -2245,14 +2283,17 @@ section {
     list-style: none;
     padding: 0;
     margin: 0;
+    max-height: 80px;
+    overflow: hidden;
 }
 
 .learning-tips li {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: var(--gray-600);
-    padding: 0.35rem 0;
-    padding-left: 1.25rem;
+    padding: 0.25rem 0;
+    padding-left: 1rem;
     position: relative;
+    line-height: 1.3;
 }
 
 .learning-tips li::before {

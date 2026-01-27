@@ -1380,22 +1380,120 @@ function generateRecommendations() {
 }
 
 function downloadResults() {
-    const results = {
-        userInfo: appState.userInfo,
-        results: appState.results,
-        answers: appState.answers
+    const userName = appState.userInfo.name || 'Usuario';
+    const userEmail = appState.userInfo.email || '';
+    const results = appState.results;
+    const date = new Date().toLocaleDateString('es-ES');
+    
+    // Generar contenido HTML para el PDF
+    let intelligencesHTML = '';
+    if (results.top3 && results.top3.intelligences) {
+        results.top3.intelligences.forEach((intel, index) => {
+            const position = index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉';
+            intelligencesHTML += `
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${position} ${intel.name}</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: center;">${intel.percentage.toFixed(0)}%</td>
+                </tr>
+            `;
+        });
+    }
+    
+    let learningHTML = '';
+    if (results.allLearning) {
+        results.allLearning.forEach((style, index) => {
+            const position = index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉';
+            const info = learningNames[style.key] || { name: style.key };
+            learningHTML += `
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${position} Aprendizaje ${info.name}</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: center;">${style.percentage ? style.percentage.toFixed(0) : 0}%</td>
+                </tr>
+            `;
+        });
+    }
+    
+    const htmlContent = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Resultados Test - ${userName}</title>
+        <style>
+            body { font-family: 'Segoe UI', Arial, sans-serif; padding: 40px; color: #333; max-width: 800px; margin: 0 auto; }
+            .header { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 3px solid #2563eb; }
+            .header h1 { color: #2563eb; margin-bottom: 10px; }
+            .header p { color: #666; }
+            .section { margin: 25px 0; padding: 20px; background: #f8fafc; border-radius: 12px; border-left: 4px solid #2563eb; }
+            .section h2 { color: #2563eb; margin-bottom: 15px; font-size: 1.3em; }
+            table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+            th { background: #2563eb; color: white; padding: 12px; text-align: left; }
+            .footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #e5e7eb; color: #666; font-size: 0.9em; }
+            .logo { font-size: 1.5em; font-weight: bold; color: #2563eb; }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <div class="logo">🎓 English My Way</div>
+            <h1>Resultados del Test de Inteligencias Múltiples</h1>
+            <p>Fecha: ${date}</p>
+        </div>
+        
+        <div class="section">
+            <h2>👤 Información del Usuario</h2>
+            <p><strong>Nombre:</strong> ${userName}</p>
+            <p><strong>Email:</strong> ${userEmail}</p>
+            <p><strong>Respuestas completadas:</strong> ${results.totalAnswers || 80}</p>
+        </div>
+        
+        <div class="section">
+            <h2>🧠 Tus Inteligencias Múltiples</h2>
+            <table>
+                <thead>
+                    <tr><th>Inteligencia</th><th style="text-align: center;">Puntuación</th></tr>
+                </thead>
+                <tbody>
+                    ${intelligencesHTML}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>📚 Tus Estilos de Aprendizaje</h2>
+            <table>
+                <thead>
+                    <tr><th>Estilo</th><th style="text-align: center;">Porcentaje</th></tr>
+                </thead>
+                <tbody>
+                    ${learningHTML}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="footer">
+            <p>Generado por <strong>English My Way</strong> - Test de Inteligencias Múltiples</p>
+            <p>© ${new Date().getFullYear()} Todos los derechos reservados</p>
+        </div>
+    </body>
+    </html>
+    `;
+    
+    // Crear ventana de impresión para guardar como PDF
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+    
+    // Esperar a que cargue y abrir diálogo de impresión
+    printWindow.onload = function() {
+        printWindow.print();
     };
     
-    const dataStr = JSON.stringify(results, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(dataBlob);
-    
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `resultados-${appState.userInfo.name}-${Date.now()}.json`;
-    link.click();
-    
-    URL.revokeObjectURL(url);
+    // Fallback si onload no funciona
+    setTimeout(() => {
+        if (printWindow && !printWindow.closed) {
+            printWindow.print();
+        }
+    }, 500);
 }
 
 function retakeTest() {
