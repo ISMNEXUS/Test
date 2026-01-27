@@ -314,77 +314,85 @@ const QUESTIONS = [
         scale: [1, 2, 3, 4, 5],
         intelligence: 'intrapersonal'
     },
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'TENGO FAMA DE DECIR LO QUE PIENSO CLARAMENTE Y SIN RODEOS', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ESTOY SEGURO/A DE LO QUE ES BUENO Y LO QUE ES MALO, LO QUE ESTÁ BIEN Y LO QUE ESTÁ MAL', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'MUCHAS VECES ACTÚO SIN MIRAR LAS CONSECUENCIAS', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'NORMALMENTE TRATO DE RESOLVER LOS PROBLEMAS METÓDICAMENTE Y PASO A PASO', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CREO QUE LOS FORMALISMOS COARTAN Y LIMITAN LA ACTUACIÓN LIBRE DE LAS PERSONAS', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME INTERESA SABER CUÁLES SON LOS SISTEMAS DE VALORES DE LOS DEMÁS Y CON QUÉ CRITERIOS', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PIENSO QUE EL ACTUAR INTUITIVAMENTE PUEDE SER SIEMPRE TAN VÁLIDO COMO ACTUAR REFLEXIVAMENTE', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CREO QUE LO MÁS IMPORTANTE ES QUE LAS COSAS FUNCIONEN', learning: 'pragmatic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PROCURO ESTAR AL TANTO DE LO QUE OCURRE AQUÍ Y AHORA', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO CUANDO TENGO TIEMPO PARA PREPARAR MI TRABAJO Y REALIZARLO A CONCIENCIA', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ESTOY A GUSTO SIGUIENDO UN ORDEN, EN LAS COMIDAS, EN EL ESTUDIO, HACIENDO EJERCICIO REGULARMENTE', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CUANDO ESCUCHO UNA NUEVA IDEA ENSEGUIDA COMIENZO A PENSAR CÓMO PONERLA EN PRÁCTICA', learning: 'pragmatic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LAS IDEAS ORIGINALES Y NOVEDOSAS AUNQUE NO SEAN PRÁCTICAS', learning: 'theoretic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ADMITO Y ME AJUSTO A LAS NORMAS SOLO SI ME SIRVEN PARA LOGRAR MIS OBJETIVOS', learning: 'pragmatic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'NORMALMENTE ENCAJO BIEN CON PERSONAS REFLEXIVAS, Y ME CUESTAN SINCRONIZAR CON PERSONAS DEMASIADO ESPONTÁNEAS E IMPREVISIBLES', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ESCUCHO CON MÁS FRECUENCIA QUE HABLO', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LAS COSAS ESTRUCTURADAS A LAS DESORDENADAS', learning: 'theoretic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CUANDO POSEO CUALQUIER INFORMACIÓN, TRATO DE INTERPRETARLA BIEN ANTES DE MANIFESTAR ALGUNA CONCLUSIÓN', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ANTES DE HACER ALGO ESTUDIO CON CUIDADO SUS VENTAJAS E INCONVENIENTES', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME CREZCO CON EL RETO DE HACER ALGO NUEVO Y DIFERENTE', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CASI SIEMPRE PROCURO SER COHERENTE CON MIS CRITERIOS Y SISTEMAS DE VALORES. TENGO PRINCIPIOS Y LOS SIGO', learning: 'theoretic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CUANDO HAY UNA DISCUSIÓN NO ME GUSTA IR CON RODEOS', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME DISGUSTA IMPLICARME AFECTIVAMENTE EN MI AMBIENTE DE TRABAJO. PREFIERO MANTENER RELACIONES DISTANTES', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTAN MÁS LAS PERSONAS REALISTAS Y CONCRETAS QUE LAS TEÓRICAS', learning: 'pragmatic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA SER CREATIVO/A, ROMPER ESTRUCTURAS', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME SIENTO A GUSTO CON LAS PERSONAS DIVERTIDAS Y ESPONTÁNEAS', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'LA MAYORÍA DE LAS VECES EXPRESO ABIERTAMENTE CÓMO ME SIENTO', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA ANALIZAR Y DAR VUELTAS A LAS COSAS', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME MOLESTA QUE LA GENTE NO SE TOME EN SERIO LAS COSAS', learning: 'theoretic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME ATRAE EXPERIMENTAR Y PRACTICAR LAS ÚLTIMAS TÉCNICAS Y NOVEDADES', learning: 'pragmatic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'SOY CAUTELOSO/A A LA HORA DE SACAR CONCLUSIONES', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO CONTAR CON EL MAYOR NÚMERO DE FUENTES DE INFORMACIÓN. CUANTOS MÁS DATOS REÚNA PARA REFLEXIONAR, MEJOR', learning: 'theoretic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'TIENDO A SER PERFECCIONISTA', learning: 'theoretic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO OÍR LAS OPINIONES DE LOS DEMÁS ANTES DE EXPONER LA MÍA', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA AFRONTAR LA VIDA ESPONTÁNEAMENTE Y NO TENER QUE PLANIFICAR TODO PREVIAMENTE', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'EN LAS DISCUSIONES ME GUSTA OBSERVAR CÓMO ACTÚAN LOS DEMÁS PARTICIPANTES', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME SIENTO INCÓMODO/A CON LAS PERSONAS CALLADAS Y DEMASIADO ANALÍTICAS', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'JUZGO CON FRECUENCIA LAS IDEAS DE LOS DEMÁS POR SU VALOR PRÁCTICO', learning: 'pragmatic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME AGOBIO SI ME OBLIGAN A ACELERAR MUCHO EL TRABAJO PARA CUMPLIR UN PLAZO', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'EN LAS REUNIONES APOYO LAS IDEAS PRÁCTICAS Y REALISTAS', learning: 'pragmatic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ES MEJOR GOZAR DEL MOMENTO PRESENTE QUE DELEITARSE PENSANDO EN EL PASADO O EN EL FUTURO', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME MOLESTAN LAS PERSONAS QUE SIEMPRE DESEAN APRESURAR LAS COSAS', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APORTO IDEAS NUEVAS Y ESPONTÁNEAS EN LOS GRUPOS DE DISCUSIÓN', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PIENSO QUE SON MÁS CONSISTENTES LAS DECISIONES FUNDAMENTADAS EN UN MINUCIOSO ANÁLISIS QUE LAS BASADAS EN LA INTUICIÓN', learning: 'theoretic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DETECTO FRECUENTEMENTE LA INCONSISTENCIA Y PUNTOS DÉBILES EN LA ARGUMENTACIÓN DE LOS DEMÁS', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CREO QUE ES PRECISO SALTARSE LAS NORMAS MUCHAS VECES QUE CUMPLIRLAS', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'A MENUDO CAIGO EN LA CUENTA DE OTRAS FORMAS MEJORES Y MÁS PRÁCTICAS DE HACER LAS COSAS', learning: 'pragmatic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'EN CONJUNTO HABLO MÁS DE LO QUE ESCUCHO', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO DISTANCIARME DE LOS HECHOS Y OBSERVARLOS DESDE OTRAS PERSPECTIVAS', learning: 'theoretic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ESTOY CONVENCIDO/A QUE DEBE IMPONERSE LA LÓGICA Y EL RAZONAMIENTO', learning: 'theoretic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA BUSCAR NUEVAS EXPERIENCIAS', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA EXPERIMENTAR Y APLICAR LAS COSAS', learning: 'pragmatic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PIENSO QUE DEBEMOS LLEGAR PRONTO AL GRANO, AL MEOLLO DE LOS TEMAS', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'SIEMPRE TRATO DE CONSEGUIR CONCLUSIONES E IDEAS CLARAS', learning: 'pragmatic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO DISCUTIR CUESTIONES CONCRETAS Y NO PERDER EL TIEMPO CON CHARLAS VACÍAS', learning: 'pragmatic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME IMPACIENTO CUANDO ME DAN EXPLICACIONES IRRELEVANTES E INCOHERENTES', learning: 'pragmatic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'COMPRUEBO ANTES SI LAS COSAS FUNCIONAN REALMENTE', learning: 'pragmatic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'HAGO VARIOS BORRADORES ANTES DE LA REDACCIÓN DEFINITIVA DE UN TRABAJO', learning: 'theoretic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'SOY CONSCIENTE DE QUE EN LAS DISCUSIONES AYUDO A MANTENER A LOS DEMÁS CENTRADOS EN EL TEMA, EVITANDO DIVAGACIONES', learning: 'pragmatic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'OBSERVO QUE CON FRECUENCIA, SOY UNO/A DE LOS/AS MÁS OBJETIVOS/AS Y DESAPASIONADOS/AS EN LAS DISCUSIONES', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CUANDO ALGO VA MAL, LE QUITO IMPORTANCIA Y TRATO DE HACERLO MEJOR', learning: 'pragmatic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECHAZO IDEAS ORIGINALES Y ESPONTÁNEAS SI NO LAS VEO PRÁCTICAS', learning: 'pragmatic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA SOPESAR DIVERSAS ALTERNATIVAS ANTES DE TOMAR UNA DECISIÓN', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CON FRECUENCIA MIRO HACIA DELANTE PARA PREVER EL FUTURO', learning: 'theoretic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'EN LOS DEBATES Y DISCUSIONES PREFIERO DESEMPEÑAR UN PAPEL SECUNDARIO ANTES QUE SER EL/LA LÍDER O EL/LA QUE MÁS PARTICIPA', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME MOLESTAN LAS PERSONAS QUE NO ACTÚAN CON LÓGICA', learning: 'theoretic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA INCÓMODO TENER QUE PLANIFICAR Y PREVER LAS COSAS', learning: 'active'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CREO QUE EL FIN JUSTIFICA LOS MEDIOS EN MUCHOS CASOS', learning: 'pragmatic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'SELO REFLEXIONAR SOBRE LOS ASUNTOS Y PROBLEMAS', learning: 'reflective'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'EL TRABAJO A CONCIENCIA ME LLENA DE SATISFACCIÓN Y ORGULLO', learning: 'theoretic'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ANTE LOS ACONTECIMIENTOS TRATO DE DESCUBRIR LOS PRINCIPIOS Y TEORÍAS EN QUE SE BASAN', learning: 'theoretic'}
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'TENGO FAMA DE DECIR LO QUE PIENSO CLARAMENTE Y SIN RODEOS', learning: 'wordmadness'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ESTOY SEGURO/A DE LO QUE ES BUENO Y LO QUE ES MALO, LO QUE ESTÁ BIEN Y LO QUE ESTÁ MAL', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'MUCHAS VECES ACTÚO SIN MIRAR LAS CONSECUENCIAS', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'NORMALMENTE TRATO DE RESOLVER LOS PROBLEMAS METÓDICAMENTE Y PASO A PASO', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CREO QUE LOS FORMALISMOS COARTAN Y LIMITAN LA ACTUACIÓN LIBRE DE LAS PERSONAS', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME INTERESA SABER CUÁLES SON LOS SISTEMAS DE VALORES DE LOS DEMÁS Y CON QUÉ CRITERIOS', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PIENSO QUE EL ACTUAR INTUITIVAMENTE PUEDE SER SIEMPRE TAN VÁLIDO COMO ACTUAR REFLEXIVAMENTE', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CREO QUE LO MÁS IMPORTANTE ES QUE LAS COSAS FUNCIONEN', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PROCURO ESTAR AL TANTO DE LO QUE OCURRE AQUÍ Y AHORA', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO CUANDO TENGO TIEMPO PARA PREPARAR MI TRABAJO Y REALIZARLO A CONCIENCIA', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ESTOY A GUSTO SIGUIENDO UN ORDEN, EN LAS COMIDAS, EN EL ESTUDIO, HACIENDO EJERCICIO REGULARMENTE', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CUANDO ESCUCHO UNA NUEVA IDEA ENSEGUIDA COMIENZO A PENSAR CÓMO PONERLA EN PRÁCTICA', learning: 'jukebox'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LAS IDEAS ORIGINALES Y NOVEDOSAS AUNQUE NO SEAN PRÁCTICAS', learning: 'wordmadness'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ADMITO Y ME AJUSTO A LAS NORMAS SOLO SI ME SIRVEN PARA LOGRAR MIS OBJETIVOS', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'NORMALMENTE ENCAJO BIEN CON PERSONAS REFLEXIVAS, Y ME CUESTAN SINCRONIZAR CON PERSONAS DEMASIADO ESPONTÁNEAS E IMPREVISIBLES', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ESCUCHO CON MÁS FRECUENCIA QUE HABLO', learning: 'jukebox'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LAS COSAS ESTRUCTURADAS A LAS DESORDENADAS', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CUANDO POSEO CUALQUIER INFORMACIÓN, TRATO DE INTERPRETARLA BIEN ANTES DE MANIFESTAR ALGUNA CONCLUSIÓN', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ANTES DE HACER ALGO ESTUDIO CON CUIDADO SUS VENTAJAS E INCONVENIENTES', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME CREZCO CON EL RETO DE HACER ALGO NUEVO Y DIFERENTE', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CASI SIEMPRE PROCURO SER COHERENTE CON MIS CRITERIOS Y SISTEMAS DE VALORES. TENGO PRINCIPIOS Y LOS SIGO', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CUANDO HAY UNA DISCUSIÓN NO ME GUSTA IR CON RODEOS', learning: 'wordmadness'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME DISGUSTA IMPLICARME AFECTIVAMENTE EN MI AMBIENTE DE TRABAJO. PREFIERO MANTENER RELACIONES DISTANTES', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTAN MÁS LAS PERSONAS REALISTAS Y CONCRETAS QUE LAS TEÓRICAS', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA SER CREATIVO/A, ROMPER ESTRUCTURAS', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME SIENTO A GUSTO CON LAS PERSONAS DIVERTIDAS Y ESPONTÁNEAS', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'LA MAYORÍA DE LAS VECES EXPRESO ABIERTAMENTE CÓMO ME SIENTO', learning: 'wordmadness'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA ANALIZAR Y DAR VUELTAS A LAS COSAS', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME MOLESTA QUE LA GENTE NO SE TOME EN SERIO LAS COSAS', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME ATRAE EXPERIMENTAR Y PRACTICAR LAS ÚLTIMAS TÉCNICAS Y NOVEDADES', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'SOY CAUTELOSO/A A LA HORA DE SACAR CONCLUSIONES', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO CONTAR CON EL MAYOR NÚMERO DE FUENTES DE INFORMACIÓN. CUANTOS MÁS DATOS REÚNA PARA REFLEXIONAR, MEJOR', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'TIENDO A SER PERFECCIONISTA', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO OÍR LAS OPINIONES DE LOS DEMÁS ANTES DE EXPONER LA MÍA', learning: 'jukebox'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA AFRONTAR LA VIDA ESPONTÁNEAMENTE Y NO TENER QUE PLANIFICAR TODO PREVIAMENTE', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'EN LAS DISCUSIONES ME GUSTA OBSERVAR CÓMO ACTÚAN LOS DEMÁS PARTICIPANTES', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME SIENTO INCÓMODO/A CON LAS PERSONAS CALLADAS Y DEMASIADO ANALÍTICAS', learning: 'wordmadness'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'JUZGO CON FRECUENCIA LAS IDEAS DE LOS DEMÁS POR SU VALOR PRÁCTICO', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME AGOBIO SI ME OBLIGAN A ACELERAR MUCHO EL TRABAJO PARA CUMPLIR UN PLAZO', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'EN LAS REUNIONES APOYO LAS IDEAS PRÁCTICAS Y REALISTAS', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ES MEJOR GOZAR DEL MOMENTO PRESENTE QUE DELEITARSE PENSANDO EN EL PASADO O EN EL FUTURO', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME MOLESTAN LAS PERSONAS QUE SIEMPRE DESEAN APRESURAR LAS COSAS', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APORTO IDEAS NUEVAS Y ESPONTÁNEAS EN LOS GRUPOS DE DISCUSIÓN', learning: 'wordmadness'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PIENSO QUE SON MÁS CONSISTENTES LAS DECISIONES FUNDAMENTADAS EN UN MINUCIOSO ANÁLISIS QUE LAS BASADAS EN LA INTUICIÓN', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DETECTO FRECUENTEMENTE LA INCONSISTENCIA Y PUNTOS DÉBILES EN LA ARGUMENTACIÓN DE LOS DEMÁS', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CREO QUE ES PRECISO SALTARSE LAS NORMAS MUCHAS VECES QUE CUMPLIRLAS', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'A MENUDO CAIGO EN LA CUENTA DE OTRAS FORMAS MEJORES Y MÁS PRÁCTICAS DE HACER LAS COSAS', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'EN CONJUNTO HABLO MÁS DE LO QUE ESCUCHO', learning: 'wordmadness'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO DISTANCIARME DE LOS HECHOS Y OBSERVARLOS DESDE OTRAS PERSPECTIVAS', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ESTOY CONVENCIDO/A QUE DEBE IMPONERSE LA LÓGICA Y EL RAZONAMIENTO', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA BUSCAR NUEVAS EXPERIENCIAS', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA EXPERIMENTAR Y APLICAR LAS COSAS', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PIENSO QUE DEBEMOS LLEGAR PRONTO AL GRANO, AL MEOLLO DE LOS TEMAS', learning: 'wordmadness'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'SIEMPRE TRATO DE CONSEGUIR CONCLUSIONES E IDEAS CLARAS', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO DISCUTIR CUESTIONES CONCRETAS Y NO PERDER EL TIEMPO CON CHARLAS VACÍAS', learning: 'wordmadness'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME IMPACIENTO CUANDO ME DAN EXPLICACIONES IRRELEVANTES E INCOHERENTES', learning: 'jukebox'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'COMPRUEBO ANTES SI LAS COSAS FUNCIONAN REALMENTE', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'HAGO VARIOS BORRADORES ANTES DE LA REDACCIÓN DEFINITIVA DE UN TRABAJO', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'SOY CONSCIENTE DE QUE EN LAS DISCUSIONES AYUDO A MANTENER A LOS DEMÁS CENTRADOS EN EL TEMA, EVITANDO DIVAGACIONES', learning: 'wordmadness'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'OBSERVO QUE CON FRECUENCIA, SOY UNO/A DE LOS/AS MÁS OBJETIVOS/AS Y DESAPASIONADOS/AS EN LAS DISCUSIONES', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CUANDO ALGO VA MAL, LE QUITO IMPORTANCIA Y TRATO DE HACERLO MEJOR', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECHAZO IDEAS ORIGINALES Y ESPONTÁNEAS SI NO LAS VEO PRÁCTICAS', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA SOPESAR DIVERSAS ALTERNATIVAS ANTES DE TOMAR UNA DECISIÓN', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CON FRECUENCIA MIRO HACIA DELANTE PARA PREVER EL FUTURO', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'EN LOS DEBATES Y DISCUSIONES PREFIERO DESEMPEÑAR UN PAPEL SECUNDARIO ANTES QUE SER EL/LA LÍDER O EL/LA QUE MÁS PARTICIPA', learning: 'jukebox'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME MOLESTAN LAS PERSONAS QUE NO ACTÚAN CON LÓGICA', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA INCÓMODO TENER QUE PLANIFICAR Y PREVER LAS COSAS', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CREO QUE EL FIN JUSTIFICA LOS MEDIOS EN MUCHOS CASOS', learning: 'showtime'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'SUELO REFLEXIONAR SOBRE LOS ASUNTOS Y PROBLEMAS', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'EL TRABAJO A CONCIENCIA ME LLENA DE SATISFACCIÓN Y ORGULLO', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ANTE LOS ACONTECIMIENTOS TRATO DE DESCUBRIR LOS PRINCIPIOS Y TEORÍAS EN QUE SE BASAN', learning: 'readwrite'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR CUANDO PUEDO ESCUCHAR EXPLICACIONES O GRABACIONES', learning: 'jukebox'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECUERDO MEJOR LA INFORMACIÓN CUANDO LA ESCUCHO EN VOZ ALTA', learning: 'jukebox'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA ESTUDIAR CON MÚSICA DE FONDO', learning: 'jukebox'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LAS EXPLICACIONES VERBALES A LOS TEXTOS ESCRITOS', learning: 'jukebox'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PARTICIPO ACTIVAMENTE EN CONVERSACIONES Y DEBATES', learning: 'wordmadness'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA EXPRESAR MIS IDEAS HABLANDO CON OTROS', learning: 'wordmadness'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO CONTANDO HISTORIAS Y ANÉCDOTAS', learning: 'wordmadness'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA FÁCIL APRENDER NUEVAS PALABRAS Y VOCABULARIO', learning: 'wordmadness'}
 ];
 
 function loadUserData() {
@@ -792,12 +800,12 @@ function calculateResults() {
         intrapersonal: { total: 0, count: 0, percentage: 0, maxPossible: 0 }
     };
     
-    // Estilos de aprendizaje REALES según las preguntas del test
+    // Estilos de aprendizaje de English My Way
     const learningScores = {
-        active: { total: 0, count: 0, percentage: 0, description: 'Activo' },
-        reflective: { total: 0, count: 0, percentage: 0, description: 'Reflexivo' },
-        theoretic: { total: 0, count: 0, percentage: 0, description: 'Teórico' },
-        pragmatic: { total: 0, count: 0, percentage: 0, description: 'Pragmático' }
+        readwrite: { total: 0, count: 0, percentage: 0, description: 'Read and Write' },
+        showtime: { total: 0, count: 0, percentage: 0, description: 'Showtime' },
+        wordmadness: { total: 0, count: 0, percentage: 0, description: 'Wordmadness' },
+        jukebox: { total: 0, count: 0, percentage: 0, description: 'Jukebox' }
     };
     
     // Procesar respuestas
@@ -918,31 +926,31 @@ function showResults() {
         intrapersonal: { name: 'Intrapersonal-Reflexiva', icon: '🧘', description: 'Habilidad para comprenderse a uno mismo y actuar en consecuencia.' }
     };
     
-    // ESTILOS DE APRENDIZAJE CORRECTOS según el test (Honey-Alonso)
+    // ESTILOS DE APRENDIZAJE English My Way
     const learningNames = {
-        active: { 
-            name: 'Activo', 
-            icon: '🚀', 
-            description: 'Te involucras plenamente en nuevas experiencias. Eres entusiasta, espontáneo y te gusta actuar primero y pensar después.',
-            tips: ['Participa en debates y discusiones', 'Busca retos y experiencias nuevas', 'Lidera proyectos en equipo']
+        readwrite: { 
+            name: 'Read and Write', 
+            icon: '📖', 
+            description: 'Aprendes mejor leyendo y escribiendo. Prefieres información presentada como texto, disfrutas tomando notas y te expresas mejor por escrito.',
+            tips: ['Lee artículos y libros en inglés', 'Escribe un diario en inglés', 'Haz resúmenes de lo que aprendes', 'Usa tarjetas de vocabulario escritas']
         },
-        reflective: { 
-            name: 'Reflexivo', 
-            icon: '🤔', 
-            description: 'Observas y analizas las experiencias desde diferentes perspectivas. Recoges datos y los analizas antes de llegar a conclusiones.',
-            tips: ['Toma notas y reflexiona sobre lo aprendido', 'Observa antes de actuar', 'Analiza diferentes puntos de vista']
+        showtime: { 
+            name: 'Showtime', 
+            icon: '🎬', 
+            description: 'Aprendes mejor a través de la experiencia visual y la acción. Te gustan los videos, demostraciones prácticas y aprender haciendo.',
+            tips: ['Ve películas y series en inglés', 'Usa aplicaciones visuales interactivas', 'Practica con role-plays y dramatizaciones', 'Aprende con videos y tutoriales']
         },
-        theoretic: { 
-            name: 'Teórico', 
-            icon: '📚', 
-            description: 'Adaptas e integras observaciones dentro de teorías lógicas y complejas. Buscas la racionalidad y la objetividad.',
-            tips: ['Busca fundamentos teóricos', 'Crea modelos y sistemas', 'Analiza y sintetiza información']
+        wordmadness: { 
+            name: 'Wordmadness', 
+            icon: '💬', 
+            description: 'Aprendes mejor comunicándote verbalmente. Te encanta hablar, discutir ideas y aprendes mejor en conversaciones y debates.',
+            tips: ['Participa en conversaciones en inglés', 'Practica con un compañero de idiomas', 'Únete a clubs de conversación', 'Graba y escucha tu propia voz']
         },
-        pragmatic: { 
-            name: 'Pragmático', 
-            icon: '🎯', 
-            description: 'Buscas la aplicación práctica de las ideas. Te gusta probar nuevas teorías, técnicas e ideas y ver si funcionan.',
-            tips: ['Aplica lo aprendido inmediatamente', 'Busca soluciones prácticas', 'Experimenta con nuevas técnicas']
+        jukebox: { 
+            name: 'Jukebox', 
+            icon: '🎧', 
+            description: 'Aprendes mejor escuchando. La música, podcasts y contenido auditivo son tus mejores herramientas de aprendizaje.',
+            tips: ['Escucha podcasts en inglés', 'Aprende canciones en inglés', 'Usa audiolibros', 'Repite en voz alta lo que escuchas']
         }
     };
     
@@ -1160,35 +1168,35 @@ function generateIntelligentRecommendations(results) {
         ]
     };
     
-    // RECOMENDACIONES CORREGIDAS para estilos de aprendizaje reales
+    // RECOMENDACIONES para estilos de aprendizaje English My Way
     const learningRecommendations = {
-        active: [
-            'Busca actividades donde puedas participar activamente',
-            'Trabaja en equipo y discute ideas con otros',
-            'Busca retos nuevos y experiencias desafiantes',
-            'Evita las sesiones de estudio muy largas y pasivas',
-            'Aprende haciendo, no solo leyendo'
+        readwrite: [
+            'Lee libros, artículos y blogs en inglés todos los días',
+            'Escribe un diario personal en inglés',
+            'Toma notas detalladas durante tus clases',
+            'Haz resúmenes escritos de lo que aprendes',
+            'Usa tarjetas de vocabulario escritas a mano'
         ],
-        reflective: [
-            'Tómate tiempo para pensar antes de actuar',
-            'Haz resúmenes y análisis de lo que aprendes',
-            'Observa a otros antes de intentar algo nuevo',
-            'Revisa lo aprendido desde diferentes ángulos',
-            'Lleva un diario de aprendizaje'
+        showtime: [
+            'Ve películas y series en inglés con subtítulos',
+            'Aprende con videos tutoriales interactivos',
+            'Practica con role-plays y dramatizaciones',
+            'Usa mapas mentales y diagramas visuales',
+            'Participa en actividades prácticas y dinámicas'
         ],
-        theoretic: [
-            'Busca el marco teórico detrás de cada tema',
-            'Crea modelos y sistemas para organizar información',
-            'Lee fuentes primarias y artículos académicos',
-            'Analiza y sintetiza información compleja',
-            'Relaciona nuevos conceptos con teorías existentes'
+        wordmadness: [
+            'Practica conversaciones en inglés regularmente',
+            'Únete a clubs de conversación y debate',
+            'Graba tu voz y escúchate para mejorar',
+            'Explica lo que aprendes a otras personas',
+            'Participa activamente en discusiones grupales'
         ],
-        pragmatic: [
-            'Busca la aplicación práctica de lo que aprendes',
-            'Experimenta con técnicas y métodos nuevos',
-            'Busca ejemplos concretos y casos de estudio',
-            'Prueba inmediatamente lo que aprendes',
-            'Enfócate en soluciones que funcionen'
+        jukebox: [
+            'Escucha podcasts en inglés diariamente',
+            'Aprende canciones en inglés y canta',
+            'Usa audiolibros para reforzar tu aprendizaje',
+            'Repite en voz alta lo que escuchas',
+            'Estudia con música de fondo cuando sea apropiado'
         ]
     };
     
@@ -1207,10 +1215,10 @@ function generateIntelligentRecommendations(results) {
     };
     
     const learningDisplayNames = {
-        active: 'Activo',
-        reflective: 'Reflexivo',
-        theoretic: 'Teórico',
-        pragmatic: 'Pragmático'
+        readwrite: 'Read and Write',
+        showtime: 'Showtime',
+        wordmadness: 'Wordmadness',
+        jukebox: 'Jukebox'
     };
     
     const intelName = intelligenceDisplayNames[dominantIntel?.key] || dominantIntel?.key || 'desconocida';
@@ -1244,38 +1252,45 @@ function generateIntelligentRecommendations(results) {
 
 function getPersonalizedInsight(intelligence, learning) {
     const insights = {
-        linguistic_active: 'Esto significa que aprendes mejor participando en debates, discusiones y actividades que involucren comunicación verbal activa.',
-        linguistic_reflective: 'Tu combinación te hace excelente para analizar textos, escribir ensayos reflexivos y procesar información escrita profundamente.',
-        linguistic_theoretic: 'Destacas en comprender estructuras gramaticales, analizar literatura y crear marcos teóricos para el lenguaje.',
-        linguistic_pragmatic: 'Eres muy bueno aplicando habilidades lingüísticas de forma práctica: presentaciones, negociaciones y comunicación efectiva.',
-        logical_active: 'Te va bien resolviendo problemas en equipo, participando en competencias matemáticas y aplicando lógica de forma dinámica.',
-        logical_reflective: 'Destacas analizando problemas desde múltiples ángulos y tomando tiempo para encontrar soluciones óptimas.',
-        logical_theoretic: 'Tu perfil es ideal para matemáticas puras, filosofía lógica y desarrollo de teorías y modelos.',
-        logical_pragmatic: 'Eres excelente aplicando lógica a problemas reales: ingeniería, programación y optimización de procesos.',
-        spatial_active: 'Aprendes mejor creando arte, diseñando prototipos y participando en actividades visuales interactivas.',
-        spatial_reflective: 'Destacas observando detalles visuales, analizando arte y reflexionando sobre espacios y diseños.',
-        spatial_theoretic: 'Tu perfil es ideal para arquitectura, diseño teórico y comprensión de geometría avanzada.',
-        spatial_pragmatic: 'Eres muy bueno aplicando habilidades visuales: diseño gráfico, fotografía y soluciones visuales prácticas.',
-        bodily_active: 'Tu perfil es perfecto para deportes de equipo, danza, teatro y actividades físicas grupales.',
-        bodily_reflective: 'Destacas en técnicas que requieren precisión y reflexión: artes marciales, yoga y movimientos conscientes.',
-        bodily_theoretic: 'Comprendes bien la biomecánica, la teoría del movimiento y la fisiología del ejercicio.',
-        bodily_pragmatic: 'Eres excelente en aplicar habilidades físicas de forma práctica: construcción, reparación y trabajo manual.',
-        musical_active: 'Tu perfil es ideal para tocar en bandas, improvisar y participar en actividades musicales grupales.',
-        musical_reflective: 'Destacas analizando música, apreciando matices y reflexionando sobre composiciones.',
-        musical_theoretic: 'Comprendes muy bien la teoría musical, la armonía y la estructura de las composiciones.',
-        musical_pragmatic: 'Eres muy bueno aplicando música: producción, ingeniería de sonido y uso práctico de la música.',
-        interpersonal_active: 'Tu perfil es perfecto para liderazgo, trabajo en equipo y roles que requieran interacción constante.',
-        interpersonal_reflective: 'Destacas comprendiendo a las personas, mediando conflictos y reflexionando sobre relaciones.',
-        interpersonal_theoretic: 'Comprendes bien las teorías sociales, la psicología de grupos y los sistemas humanos.',
-        interpersonal_pragmatic: 'Eres excelente en aplicar habilidades sociales: ventas, negociación y gestión de equipos.',
-        intrapersonal_active: 'Tu perfil combina autoconocimiento con acción: estableces metas y las persigues activamente.',
-        intrapersonal_reflective: 'Destacas en la introspección profunda, el autoconocimiento y la reflexión personal.',
-        intrapersonal_theoretic: 'Comprendes bien las teorías de la personalidad, la psicología y el desarrollo humano.',
-        intrapersonal_pragmatic: 'Eres muy bueno aplicando el autoconocimiento: desarrollo personal, coaching y mejora continua.'
+        // Combinaciones con Read and Write
+        linguistic_readwrite: 'Esta combinación es perfecta para ti. Aprendes inglés de forma natural leyendo, escribiendo y analizando textos.',
+        logical_readwrite: 'Tu mente analítica combinada con el aprendizaje por lectura te hace excelente para estudiar gramática y estructuras del idioma.',
+        spatial_readwrite: 'Combina tu capacidad visual con listas y textos organizados visualmente para maximizar tu aprendizaje.',
+        bodily_readwrite: 'Escribe mientras caminas o practica la escritura de forma activa tomando notas en movimiento.',
+        musical_readwrite: 'Lee las letras de canciones en inglés mientras las escuchas para potenciar tu aprendizaje.',
+        interpersonal_readwrite: 'Intercambia textos y cartas en inglés con compañeros para practicar tu escritura.',
+        intrapersonal_readwrite: 'Llevar un diario personal en inglés será tu mejor herramienta de aprendizaje.',
+        
+        // Combinaciones con Showtime
+        linguistic_showtime: 'Ve documentales y películas con subtítulos para combinar tu amor por las palabras con el aprendizaje visual.',
+        logical_showtime: 'Los tutoriales paso a paso y videos explicativos serán perfectos para tu estilo de aprendizaje.',
+        spatial_showtime: 'Tu perfil es ideal para aprender con videos, películas y contenido visual interactivo.',
+        bodily_showtime: 'Role-plays, dramatizaciones y actividades físicas son tu mejor forma de aprender inglés.',
+        musical_showtime: 'Aprende inglés viendo musicales, videos musicales y contenido audiovisual dinámico.',
+        interpersonal_showtime: 'Participa en obras de teatro, presentaciones y actividades grupales visuales.',
+        intrapersonal_showtime: 'Crea tus propios videos o diarios visuales para reflexionar sobre tu aprendizaje.',
+        
+        // Combinaciones con Wordmadness
+        linguistic_wordmadness: 'Esta combinación te hace un comunicador natural. Las conversaciones fluidas son tu fuerte.',
+        logical_wordmadness: 'Participar en debates estructurados y discusiones lógicas potenciará tu aprendizaje del inglés.',
+        spatial_wordmadness: 'Describe imágenes y escenas en inglés para combinar tu capacidad visual con la comunicación verbal.',
+        bodily_wordmadness: 'Aprende inglés mientras haces actividades físicas, narrarando lo que haces.',
+        musical_wordmadness: 'Canta canciones en inglés y participa en karaoke para maximizar tu aprendizaje.',
+        interpersonal_wordmadness: 'Tu perfil es perfecto para clubs de conversación, debates y trabajo en equipo.',
+        intrapersonal_wordmadness: 'Habla contigo mismo en inglés, grábate y analiza tu progreso.',
+        
+        // Combinaciones con Jukebox
+        linguistic_jukebox: 'Audiolibros y podcasts serán tus mejores aliados para aprender vocabulario y expresiones.',
+        logical_jukebox: 'Escucha podcasts educativos y explicaciones paso a paso para entender estructuras del inglés.',
+        spatial_jukebox: 'Combina sonidos con imágenes mentales para recordar vocabulario y conceptos.',
+        bodily_jukebox: 'Escucha música o podcasts mientras haces ejercicio para aprender de forma natural.',
+        musical_jukebox: 'Tu perfil es ideal: aprende inglés con canciones, música y contenido auditivo.',
+        interpersonal_jukebox: 'Escucha conversaciones, entrevistas y podcasts grupales para mejorar tu inglés.',
+        intrapersonal_jukebox: 'Reflexiona mientras escuchas podcasts de desarrollo personal en inglés.'
     };
     
     const key = `${intelligence}_${learning}`;
-    return insights[key] || 'Tu combinación única te permite procesar información de manera efectiva según tu propio estilo.';
+    return insights[key] || 'Tu combinación única te permite procesar información de manera efectiva según tu propio estilo de English My Way.';
 }
 
 function createRadarChart() {

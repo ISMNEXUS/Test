@@ -153,13 +153,13 @@ function prepareEmailContent($nombre, $edad, $profesion, $resultados, $fecha) {
         }
     }
     
-    // ESTILOS DE APRENDIZAJE CORREGIDOS (Honey-Alonso)
+    // ESTILOS DE APRENDIZAJE English My Way
     $learningHtml = '';
     $learningNames = [
-        'active' => ['name' => 'Estilo Activo', 'icon' => '🚀', 'desc' => 'Aprende mejor participando activamente y con experiencias nuevas'],
-        'reflective' => ['name' => 'Estilo Reflexivo', 'icon' => '🤔', 'desc' => 'Aprende mejor observando y analizando antes de actuar'],
-        'theoretic' => ['name' => 'Estilo Teórico', 'icon' => '📚', 'desc' => 'Aprende mejor cuando puede integrar observaciones en teorías'],
-        'pragmatic' => ['name' => 'Estilo Pragmático', 'icon' => '🎯', 'desc' => 'Aprende mejor cuando puede aplicar lo aprendido de forma práctica']
+        'readwrite' => ['name' => 'Read and Write', 'icon' => '📖', 'desc' => 'Aprende mejor leyendo y escribiendo, tomando notas y analizando textos'],
+        'showtime' => ['name' => 'Showtime', 'icon' => '🎬', 'desc' => 'Aprende mejor con videos, demostraciones visuales y actividades prácticas'],
+        'wordmadness' => ['name' => 'Wordmadness', 'icon' => '💬', 'desc' => 'Aprende mejor conversando, debatiendo y expresándose verbalmente'],
+        'jukebox' => ['name' => 'Jukebox', 'icon' => '🎧', 'desc' => 'Aprende mejor escuchando podcasts, música y contenido auditivo']
     ];
     
     // Ordenar estilos por porcentaje
@@ -310,7 +310,7 @@ function prepareEmailContent($nombre, $edad, $profesion, $resultados, $fecha) {
                 </div>
                 
                 <div class='section'>
-                    <h2>🎓 Estilos de Aprendizaje (Honey-Alonso)</h2>
+                    <h2>🎓 Estilos de Aprendizaje (English My Way)</h2>
                     <table>
                         <tr>
                             <th>Estilo</th>
@@ -366,10 +366,10 @@ function prepareAdminEmail($nombre, $email, $edad, $profesion, $resultados, $fec
     ];
     
     $learningNames = [
-        'active' => 'Activo',
-        'reflective' => 'Reflexivo',
-        'theoretic' => 'Teórico',
-        'pragmatic' => 'Pragmático'
+        'readwrite' => 'Read and Write',
+        'showtime' => 'Showtime',
+        'wordmadness' => 'Wordmadness',
+        'jukebox' => 'Jukebox'
     ];
     
     $dominantIntel = $dominant['intelligence'] ?? 'No determinado';
