@@ -153,13 +153,27 @@ function prepareEmailContent($nombre, $edad, $profesion, $resultados, $fecha) {
         }
     }
     
-    // ESTILOS DE APRENDIZAJE English My Way
+    // ESTILOS DE APRENDIZAJE VAK (Visual-Auditivo-Kinestésico)
     $learningHtml = '';
     $learningNames = [
-        'readwrite' => ['name' => 'Read and Write', 'icon' => '📖', 'desc' => 'Aprende mejor leyendo y escribiendo, tomando notas y analizando textos'],
-        'showtime' => ['name' => 'Showtime', 'icon' => '🎬', 'desc' => 'Aprende mejor con videos, demostraciones visuales y actividades prácticas'],
-        'wordmadness' => ['name' => 'Wordmadness', 'icon' => '💬', 'desc' => 'Aprende mejor conversando, debatiendo y expresándose verbalmente'],
-        'jukebox' => ['name' => 'Jukebox', 'icon' => '🎧', 'desc' => 'Aprende mejor escuchando podcasts, música y contenido auditivo']
+        'visual' => [
+            'name' => 'Aprendizaje Visual', 
+            'icon' => '👁️', 
+            'desc' => 'Aprende mejor con imágenes, videos, diagramas y contenido visual',
+            'activities' => '📖 Read and Write, 🎬 Showtime'
+        ],
+        'auditivo' => [
+            'name' => 'Aprendizaje Auditivo', 
+            'icon' => '👂', 
+            'desc' => 'Aprende mejor escuchando, con podcasts, música y conversaciones',
+            'activities' => '🎧 Jukebox, 💬 Wordmadness'
+        ],
+        'kinestesico' => [
+            'name' => 'Aprendizaje Kinestésico', 
+            'icon' => '🤲', 
+            'desc' => 'Aprende mejor haciendo, con práctica activa y movimiento',
+            'activities' => '🎬 Showtime, 💬 Wordmadness'
+        ]
     ];
     
     // Ordenar estilos por porcentaje
@@ -169,18 +183,22 @@ function prepareEmailContent($nombre, $edad, $profesion, $resultados, $fecha) {
     
     $learningPosition = 1;
     foreach ($learningStyles as $style => $data) {
-        $info = $learningNames[$style] ?? ['name' => $style, 'icon' => '📊', 'desc' => ''];
+        $info = $learningNames[$style] ?? ['name' => $style, 'icon' => '📊', 'desc' => '', 'activities' => ''];
         $percentage = $data['percentage'] ?? 0;
         $total = $data['total'] ?? 0;
         $count = $data['count'] ?? 0;
         
         if ($count > 0) {
-            $medal = $learningPosition <= 2 ? ['🥇', '🥈'][$learningPosition - 1] : '';
+            $medal = $learningPosition == 1 ? '🥇' : '';
+            $activitiesHtml = $learningPosition == 1 && !empty($info['activities']) 
+                ? "<br><span style='background: #10b981; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px;'>Actividades recomendadas: {$info['activities']}</span>" 
+                : '';
             $learningHtml .= "
                 <tr>
                     <td style='padding: 12px; border-bottom: 1px solid #e5e7eb;'>
                         {$medal} {$info['icon']} <strong>{$info['name']}</strong>
                         <br><small style='color: #6b7280;'>{$info['desc']}</small>
+                        {$activitiesHtml}
                     </td>
                     <td style='padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: center;'>
                         {$total}/{$count} respuestas
@@ -365,17 +383,19 @@ function prepareAdminEmail($nombre, $email, $edad, $profesion, $resultados, $fec
         'intrapersonal' => 'Intrapersonal-Reflexiva'
     ];
     
+    // Estilos de aprendizaje VAK con actividades recomendadas
     $learningNames = [
-        'readwrite' => 'Read and Write',
-        'showtime' => 'Showtime',
-        'wordmadness' => 'Wordmadness',
-        'jukebox' => 'Jukebox'
+        'visual' => ['name' => 'Aprendizaje Visual', 'activities' => 'Read and Write, Showtime'],
+        'auditivo' => ['name' => 'Aprendizaje Auditivo', 'activities' => 'Jukebox, Wordmadness'],
+        'kinestesico' => ['name' => 'Aprendizaje Kinestésico', 'activities' => 'Showtime, Wordmadness']
     ];
     
     $dominantIntel = $dominant['intelligence'] ?? 'No determinado';
     $dominantLearn = $dominant['learning'] ?? 'No determinado';
     $dominantIntelName = $intelligenceNames[$dominantIntel] ?? $dominantIntel;
-    $dominantLearnName = $learningNames[$dominantLearn] ?? $dominantLearn;
+    $dominantLearnInfo = $learningNames[$dominantLearn] ?? ['name' => $dominantLearn, 'activities' => ''];
+    $dominantLearnName = $dominantLearnInfo['name'];
+    $recommendedActivities = $dominantLearnInfo['activities'];
     
     // Crear resumen de inteligencias
     $intelSummary = '';
@@ -387,10 +407,11 @@ function prepareAdminEmail($nombre, $email, $edad, $profesion, $resultados, $fec
         }
     }
     
-    // Crear resumen de estilos
+    // Crear resumen de estilos VAK
     $learnSummary = '';
     foreach ($learningStyles as $style => $data) {
-        $name = $learningNames[$style] ?? $style;
+        $info = $learningNames[$style] ?? ['name' => $style, 'activities' => ''];
+        $name = $info['name'];
         $percentage = $data['percentage'] ?? 0;
         if ($data['count'] ?? 0 > 0) {
             $learnSummary .= "<li>{$name}: " . round($percentage, 1) . "%</li>";
@@ -426,6 +447,7 @@ function prepareAdminEmail($nombre, $email, $edad, $profesion, $resultados, $fec
                 <h3 style='margin-top: 0; color: #0369a1;'>⭐ Perfil Dominante</h3>
                 <p><strong>Inteligencia:</strong> {$dominantIntelName}</p>
                 <p><strong>Estilo de Aprendizaje:</strong> {$dominantLearnName}</p>
+                <p style='background: #10b981; color: white; padding: 8px 12px; border-radius: 4px; display: inline-block;'><strong>🎯 Actividades Recomendadas:</strong> {$recommendedActivities}</p>
             </div>
             
             <div style='margin-bottom: 20px;'>

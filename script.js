@@ -314,93 +314,91 @@ const QUESTIONS = [
         scale: [1, 2, 3, 4, 5],
         intelligence: 'intrapersonal'
     },
-    // ===== READ AND WRITE (20 preguntas) - Aprendizaje por lectura y escritura =====
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO CUANDO TENGO TIEMPO PARA PREPARAR MI TRABAJO Y REALIZARLO A CONCIENCIA', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LAS COSAS ESTRUCTURADAS A LAS DESORDENADAS', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CUANDO POSEO CUALQUIER INFORMACIÓN, TRATO DE INTERPRETARLA BIEN ANTES DE MANIFESTAR ALGUNA CONCLUSIÓN', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ANTES DE HACER ALGO ESTUDIO CON CUIDADO SUS VENTAJAS E INCONVENIENTES', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA ANALIZAR Y DAR VUELTAS A LAS COSAS', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'SOY CAUTELOSO/A A LA HORA DE SACAR CONCLUSIONES', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO CONTAR CON EL MAYOR NÚMERO DE FUENTES DE INFORMACIÓN ESCRITAS', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'TIENDO A SER PERFECCIONISTA CON MIS ESCRITOS', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'HAGO VARIOS BORRADORES ANTES DE LA REDACCIÓN DEFINITIVA DE UN TRABAJO', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA SOPESAR DIVERSAS ALTERNATIVAS ANTES DE TOMAR UNA DECISIÓN', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR TOMANDO NOTAS DETALLADAS DURANTE LAS CLASES', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LEER INSTRUCCIONES ANTES DE INTENTAR ALGO NUEVO', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA HACER LISTAS Y ORGANIZAR INFORMACIÓN POR ESCRITO', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECUERDO MEJOR LO QUE LEO QUE LO QUE ESCUCHO', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO ESCRIBIENDO ENSAYOS, ARTÍCULOS O HISTORIAS', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'SUELO SUBRAYAR O RESALTAR INFORMACIÓN IMPORTANTE EN LOS TEXTOS', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA ÚTIL ESCRIBIR RESÚMENES DE LO QUE ESTUDIO', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LOS EXÁMENES ESCRITOS A LOS ORALES', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA LLEVAR UN DIARIO O AGENDA DONDE ANOTO MIS PENSAMIENTOS', learning: 'readwrite'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'COMPRENDO MEJOR LOS CONCEPTOS CUANDO LOS VEO ESCRITOS', learning: 'readwrite'},
+    // ===== VISUAL (27 preguntas) - Aprendizaje visual =====
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO VER IMÁGENES, DIAGRAMAS O GRÁFICOS PARA ENTENDER UN TEMA', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECUERDO MEJOR LO QUE VEO QUE LO QUE ESCUCHO', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA USAR MAPAS MENTALES Y ESQUEMAS PARA ORGANIZAR IDEAS', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR VIENDO VIDEOS Y TUTORIALES', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LEER INSTRUCCIONES ANTES DE INTENTAR ALGO NUEVO', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA FÁCIL RECORDAR ROSTROS Y LUGARES', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO VER PELÍCULAS, SERIES Y DOCUMENTALES PARA APRENDER', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA SUBRAYAR Y RESALTAR TEXTOS CON COLORES', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'COMPRENDO MEJOR LOS CONCEPTOS CUANDO LOS VEO ESCRITOS', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LAS PRESENTACIONES CON IMÁGENES A LAS QUE SOLO TIENEN TEXTO', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA TOMAR NOTAS Y HACER DIBUJOS MIENTRAS ESTUDIO', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECUERDO MEJOR LA INFORMACIÓN CUANDO LA VEO EN UN LIBRO O PANTALLA', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA VISUALIZAR LOS CONCEPTOS EN MI MENTE', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LAS INSTRUCCIONES ESCRITAS A LAS VERBALES', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME AYUDA VER EJEMPLOS ANTES DE HACER ALGO', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA ÚTIL HACER TARJETAS DE VOCABULARIO CON IMÁGENES', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO LEYENDO LIBROS Y ARTÍCULOS', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA ORGANIZAR MI ESPACIO DE ESTUDIO DE FORMA ORDENADA', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR CON PRESENTACIONES VISUALES COLORIDAS', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA ESCRIBIR RESÚMENES DE LO QUE ESTUDIO', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LOS EXÁMENES ESCRITOS A LOS ORALES', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA FÁCIL SEGUIR INSTRUCCIONES ESCRITAS', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA LLEVAR UN DIARIO O AGENDA', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PUEDO CREAR IMÁGENES MENTALES DE LO QUE LEO', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME ATRAEN LOS LIBROS CON ILUSTRACIONES', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA VER DEMOSTRACIONES ANTES DE PRACTICAR', learning: 'visual'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECUERDO MEJOR LAS COSAS CUANDO LAS ESCRIBO', learning: 'visual'},
     
-    // ===== SHOWTIME (20 preguntas) - Aprendizaje visual y práctico =====
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME CREZCO CON EL RETO DE HACER ALGO NUEVO Y DIFERENTE', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA SER CREATIVO/A Y ROMPER ESTRUCTURAS', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME ATRAE EXPERIMENTAR Y PRACTICAR LAS ÚLTIMAS TÉCNICAS Y NOVEDADES', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA AFRONTAR LA VIDA ESPONTÁNEAMENTE SIN PLANIFICAR TODO', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA BUSCAR NUEVAS EXPERIENCIAS Y AVENTURAS', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA EXPERIMENTAR Y APLICAR LAS COSAS EN LA PRÁCTICA', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'COMPRUEBO ANTES SI LAS COSAS FUNCIONAN REALMENTE', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CUANDO ALGO VA MAL, LE QUITO IMPORTANCIA Y TRATO DE HACERLO MEJOR', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR VIENDO VIDEOS Y DEMOSTRACIONES VISUALES', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA USAR DIAGRAMAS, MAPAS MENTALES Y GRÁFICOS', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO VER CÓMO SE HACE ALGO ANTES DE INTENTARLO', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA FÁCIL RECORDAR IMÁGENES Y ESCENAS', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO VER PELÍCULAS Y DOCUMENTALES EDUCATIVOS', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR CUANDO PUEDO HACER LAS COSAS CON MIS PROPIAS MANOS', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA PARTICIPAR EN ACTIVIDADES PRÁCTICAS Y DINÁMICAS', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO APRENDER HACIENDO EN LUGAR DE SOLO LEYENDO', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTAN LOS JUEGOS DE ROL Y LAS DRAMATIZACIONES', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR CON PRESENTACIONES VISUALES COLORIDAS', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA ÚTIL VER TUTORIALES EN VIDEO', learning: 'showtime'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LAS CLASES INTERACTIVAS CON ACTIVIDADES VISUALES', learning: 'showtime'},
+    // ===== AUDITIVO (27 preguntas) - Aprendizaje auditivo =====
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR ESCUCHANDO EXPLICACIONES QUE LEYENDO', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECUERDO MEJOR LO QUE ESCUCHO QUE LO QUE VEO', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA ESTUDIAR CON MÚSICA DE FONDO', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LAS EXPLICACIONES VERBALES A LOS TEXTOS ESCRITOS', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA FÁCIL RECORDAR MELODÍAS Y CANCIONES', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO BIEN ESCUCHANDO PODCASTS Y AUDIOLIBROS', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA REPETIR EN VOZ ALTA LO QUE QUIERO MEMORIZAR', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PUEDO RECONOCER FÁCILMENTE DIFERENTES TONOS Y RITMOS', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA ESCUCHAR MÚSICA MIENTRAS TRABAJO O ESTUDIO', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO CANCIONES EN OTROS IDIOMAS CON FACILIDAD', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO ESCUCHAR UNA CONFERENCIA QUE LEER UN DOCUMENTO', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA ÚTIL GRABARME Y ESCUCHARME DESPUÉS', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA APRENDER A TRAVÉS DE RIMAS Y RITMOS', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PUEDO RECORDAR CONVERSACIONES CON GRAN DETALLE', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME CONCENTRO MEJOR EN AMBIENTES SILENCIOSOS O CON MÚSICA SUAVE', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA USAR APLICACIONES DE AUDIO PARA APRENDER IDIOMAS', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECUERDO MEJOR LAS INSTRUCCIONES CUANDO ME LAS DICEN VERBALMENTE', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ESCUCHO CON MÁS FRECUENCIA QUE HABLO', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO OÍR LAS OPINIONES DE LOS DEMÁS ANTES DE EXPONER LA MÍA', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME DISTRAIGO FÁCILMENTE CON RUIDOS INESPERADOS', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA HABLAR CONMIGO MISMO CUANDO PIENSO', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO DE LA MÚSICA Y LOS SONIDOS DE LA NATURALEZA', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA PARTICIPAR EN CONVERSACIONES PARA APRENDER', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO QUE ME EXPLIQUEN LAS COSAS EN VEZ DE LEERLAS', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA FÁCIL IMITAR ACENTOS Y PRONUNCIACIONES', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR CUANDO ALGUIEN ME EXPLICA PASO A PASO', learning: 'auditivo'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA ESCUCHAR HISTORIAS Y NARRACIONES', learning: 'auditivo'},
     
-    // ===== WORDMADNESS (20 preguntas) - Aprendizaje verbal y comunicativo =====
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'TENGO FAMA DE DECIR LO QUE PIENSO CLARAMENTE Y SIN RODEOS', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'CUANDO HAY UNA DISCUSIÓN NO ME GUSTA IR CON RODEOS', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'LA MAYORÍA DE LAS VECES EXPRESO ABIERTAMENTE CÓMO ME SIENTO', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APORTO IDEAS NUEVAS Y ESPONTÁNEAS EN LOS GRUPOS DE DISCUSIÓN', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'EN CONJUNTO HABLO MÁS DE LO QUE ESCUCHO', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PIENSO QUE DEBEMOS LLEGAR PRONTO AL GRANO DE LOS TEMAS', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO DISCUTIR CUESTIONES CONCRETAS EN CONVERSACIONES', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PARTICIPO ACTIVAMENTE EN CONVERSACIONES Y DEBATES', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA EXPRESAR MIS IDEAS HABLANDO CON OTROS', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO CONTANDO HISTORIAS Y ANÉCDOTAS', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA FÁCIL APRENDER NUEVAS PALABRAS Y VOCABULARIO', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA EXPLICAR CONCEPTOS A OTRAS PERSONAS', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR CUANDO PUEDO HABLAR SOBRE LO QUE ESTUDIO', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO DE LOS DEBATES Y DISCUSIONES GRUPALES', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA HACER PREGUNTAS EN CLASE O EN REUNIONES', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECUERDO MEJOR LAS COSAS CUANDO LAS DISCUTO CON ALGUIEN', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA NATURAL COMUNICARME Y RELACIONARME CON OTROS', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO TRABAJAR EN EQUIPO QUE SOLO/A', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA COMPARTIR MIS CONOCIMIENTOS CON LOS DEMÁS', learning: 'wordmadness'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR EN CLASES DONDE HAY MUCHA INTERACCIÓN VERBAL', learning: 'wordmadness'},
-    
-    // ===== JUKEBOX (20 preguntas) - Aprendizaje auditivo y musical =====
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ESCUCHO CON MÁS FRECUENCIA QUE HABLO', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO OÍR LAS OPINIONES DE LOS DEMÁS ANTES DE EXPONER LA MÍA', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR CUANDO PUEDO ESCUCHAR EXPLICACIONES O GRABACIONES', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECUERDO MEJOR LA INFORMACIÓN CUANDO LA ESCUCHO EN VOZ ALTA', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA ESTUDIAR CON MÚSICA DE FONDO', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LAS EXPLICACIONES VERBALES A LOS TEXTOS ESCRITOS', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA FÁCIL RECORDAR MELODÍAS Y CANCIONES', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO BIEN ESCUCHANDO PODCASTS Y AUDIOLIBROS', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA REPETIR EN VOZ ALTA LO QUE QUIERO MEMORIZAR', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PUEDO RECONOCER FÁCILMENTE DIFERENTES TONOS Y RITMOS', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME DISTRAIGO FÁCILMENTE CON RUIDOS Y SONIDOS', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA ESCUCHAR MÚSICA MIENTRAS TRABAJO O ESTUDIO', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO CANCIONES EN OTROS IDIOMAS CON FACILIDAD', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO ESCUCHAR UNA CONFERENCIA QUE LEER UN DOCUMENTO', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA ÚTIL GRABARME Y ESCUCHARME DESPUÉS', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA APRENDER A TRAVÉS DE RIMAS Y RITMOS', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PUEDO RECORDAR CONVERSACIONES CON GRAN DETALLE', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME CONCENTRO MEJOR EN AMBIENTES SILENCIOSOS O CON MÚSICA SUAVE', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA USAR APLICACIONES DE AUDIO PARA APRENDER IDIOMAS', learning: 'jukebox'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECUERDO MEJOR LAS INSTRUCCIONES CUANDO ME LAS DICEN VERBALMENTE', learning: 'jukebox'}
+    // ===== KINESTÉSICO (26 preguntas) - Aprendizaje kinestésico =====
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR HACIENDO LAS COSAS CON MIS PROPIAS MANOS', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME CUESTA ESTAR SENTADO POR MUCHO TIEMPO', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA MOVERME MIENTRAS ESTUDIO O PIENSO', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO APRENDER HACIENDO EN LUGAR DE SOLO LEYENDO O ESCUCHANDO', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA PARTICIPAR EN ACTIVIDADES PRÁCTICAS Y DINÁMICAS', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO LOS JUEGOS DE ROL Y LAS DRAMATIZACIONES', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME CREZCO CON EL RETO DE HACER ALGO NUEVO Y DIFERENTE', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA EXPERIMENTAR Y APLICAR LAS COSAS EN LA PRÁCTICA', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'NECESITO TOCAR Y MANIPULAR OBJETOS PARA ENTENDERLOS', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA GESTICUAR CUANDO HABLO', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR CON ACTIVIDADES QUE INVOLUCRAN MOVIMIENTO', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA TRABAJAR CON LAS MANOS Y CONSTRUIR COSAS', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LAS CLASES INTERACTIVAS CON ACTIVIDADES PRÁCTICAS', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA DIFÍCIL CONCENTRARME SI NO ESTOY EN MOVIMIENTO', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA CAMINAR MIENTRAS PIENSO O MEMORIZO', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO LOS DEPORTES Y LAS ACTIVIDADES FÍSICAS', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR CUANDO PUEDO PRACTICAR INMEDIATAMENTE', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA EXPLORAR Y DESCUBRIR LAS COSAS POR MÍ MISMO', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PARTICIPO ACTIVAMENTE EN CONVERSACIONES Y DEBATES', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA EXPRESAR MIS IDEAS HABLANDO CON OTROS', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LA ACCIÓN A LA TEORÍA', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME ABURRO CON LAS CLASES SOLO DE LECTURA', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA PROBAR COSAS NUEVAS SIN MUCHA PLANIFICACIÓN', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECUERDO MEJOR LO QUE HICE QUE LO QUE VI O ESCUCHÉ', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA TRABAJAR EN EQUIPO EN PROYECTOS PRÁCTICOS', learning: 'kinestesico'},
+    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR CON SIMULACIONES Y EXPERIENCIAS REALES', learning: 'kinestesico'}
 ];
 
 function loadUserData() {
@@ -808,12 +806,11 @@ function calculateResults() {
         intrapersonal: { total: 0, count: 0, percentage: 0, maxPossible: 0 }
     };
     
-    // Estilos de aprendizaje de English My Way
+    // Estilos de aprendizaje VAK (Visual, Auditivo, Kinestésico)
     const learningScores = {
-        readwrite: { total: 0, count: 0, percentage: 0, description: 'Read and Write' },
-        showtime: { total: 0, count: 0, percentage: 0, description: 'Showtime' },
-        wordmadness: { total: 0, count: 0, percentage: 0, description: 'Wordmadness' },
-        jukebox: { total: 0, count: 0, percentage: 0, description: 'Jukebox' }
+        visual: { total: 0, count: 0, percentage: 0, description: 'Visual' },
+        auditivo: { total: 0, count: 0, percentage: 0, description: 'Auditivo' },
+        kinestesico: { total: 0, count: 0, percentage: 0, description: 'Kinestésico' }
     };
     
     // Procesar respuestas
@@ -934,31 +931,37 @@ function showResults() {
         intrapersonal: { name: 'Intrapersonal-Reflexiva', icon: '🧘', description: 'Habilidad para comprenderse a uno mismo y actuar en consecuencia.' }
     };
     
-    // ESTILOS DE APRENDIZAJE English My Way
+    // ESTILOS DE APRENDIZAJE VAK (Visual, Auditivo, Kinestésico)
     const learningNames = {
-        readwrite: { 
-            name: 'Read and Write', 
-            icon: '📖', 
-            description: 'Aprendes mejor leyendo y escribiendo. Prefieres información presentada como texto, disfrutas tomando notas y te expresas mejor por escrito.',
-            tips: ['Lee artículos y libros en inglés', 'Escribe un diario en inglés', 'Haz resúmenes de lo que aprendes', 'Usa tarjetas de vocabulario escritas']
+        visual: { 
+            name: 'Visual', 
+            icon: '👁️', 
+            description: 'Aprendes mejor viendo imágenes, videos, gráficos y texto escrito. Tu mente procesa mejor la información cuando la puedes visualizar.',
+            activities: ['📖 Read and Write', '🎬 Showtime'],
+            tips: [
+                '📖 READ AND WRITE: Lee libros, artículos y usa tarjetas de vocabulario',
+                '🎬 SHOWTIME: Ve películas, series y tutoriales en inglés con subtítulos'
+            ]
         },
-        showtime: { 
-            name: 'Showtime', 
-            icon: '🎬', 
-            description: 'Aprendes mejor a través de la experiencia visual y la acción. Te gustan los videos, demostraciones prácticas y aprender haciendo.',
-            tips: ['Ve películas y series en inglés', 'Usa aplicaciones visuales interactivas', 'Practica con role-plays y dramatizaciones', 'Aprende con videos y tutoriales']
+        auditivo: { 
+            name: 'Auditivo', 
+            icon: '👂', 
+            description: 'Aprendes mejor escuchando explicaciones, música, podcasts y conversaciones. Tu oído es tu mejor herramienta de aprendizaje.',
+            activities: ['🎧 Jukebox', '💬 Wordmadness'],
+            tips: [
+                '🎧 JUKEBOX: Escucha podcasts, canciones y audiolibros en inglés',
+                '💬 WORDMADNESS: Participa en conversaciones y practica la pronunciación'
+            ]
         },
-        wordmadness: { 
-            name: 'Wordmadness', 
-            icon: '💬', 
-            description: 'Aprendes mejor comunicándote verbalmente. Te encanta hablar, discutir ideas y aprendes mejor en conversaciones y debates.',
-            tips: ['Participa en conversaciones en inglés', 'Practica con un compañero de idiomas', 'Únete a clubs de conversación', 'Graba y escucha tu propia voz']
-        },
-        jukebox: { 
-            name: 'Jukebox', 
-            icon: '🎧', 
-            description: 'Aprendes mejor escuchando. La música, podcasts y contenido auditivo son tus mejores herramientas de aprendizaje.',
-            tips: ['Escucha podcasts en inglés', 'Aprende canciones en inglés', 'Usa audiolibros', 'Repite en voz alta lo que escuchas']
+        kinestesico: { 
+            name: 'Kinestésico', 
+            icon: '🤸', 
+            description: 'Aprendes mejor haciendo, practicando y experimentando. Necesitas movimiento y actividad física para procesar información.',
+            activities: ['🎬 Showtime', '💬 Wordmadness'],
+            tips: [
+                '🎬 SHOWTIME: Participa en role-plays, dramatizaciones y actividades interactivas',
+                '💬 WORDMADNESS: Practica conversaciones reales y juegos de vocabulario activos'
+            ]
         }
     };
     
@@ -986,17 +989,16 @@ function showResults() {
         `;
     }).join('');
     
-    // Renderizar TODOS los estilos de aprendizaje ordenados por relevancia
-    // Usamos allLearning que está ordenado correctamente
+    // Renderizar los 3 estilos de aprendizaje VAK ordenados por relevancia
     const learningData = results.allLearning || results.top3.learning || [];
     
     console.log('📊 Datos de aprendizaje para mostrar:', learningData);
     
-    const learningHTML = learningData.map((style, index) => {
-        const info = learningNames[style.key] || { name: style.key, icon: '🎯', description: '', tips: [] };
+    const learningHTML = learningData.slice(0, 3).map((style, index) => {
+        const info = learningNames[style.key] || { name: style.key, icon: '🎯', description: '', tips: [], activities: [] };
         // Mostrar el porcentaje de respuestas afirmativas
         const percentage = style.percentage ? style.percentage.toFixed(0) : 0;
-        const position = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '4️⃣';
+        const position = index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉';
         const isDominant = index === 0;
         const totalResponses = style.total || 0;
         const totalQuestions = style.count || 0;
@@ -1005,7 +1007,7 @@ function showResults() {
             <div class="learning-card ${isDominant ? 'dominant' : ''} learning-rank-${index + 1}">
                 <div class="learning-position">${position}</div>
                 <div class="learning-icon">${info.icon}</div>
-                <h3>Estilo ${info.name}</h3>
+                <h3>Aprendizaje ${info.name}</h3>
                 <div class="learning-percentage">${percentage}%</div>
                 <div class="learning-bar-container">
                     <div class="learning-bar-fill" style="width: ${percentage}%; background: ${getColorForIndex(index + 3)}"></div>
@@ -1014,9 +1016,17 @@ function showResults() {
                 <div class="learning-stats">
                     <span>✓ ${totalResponses} afirmativas de ${totalQuestions} preguntas</span>
                 </div>
+                ${isDominant && info.activities ? `
+                    <div class="learning-activities">
+                        <strong>🎯 Actividades recomendadas para ti:</strong>
+                        <div class="activities-badges">
+                            ${info.activities.map(act => `<span class="activity-badge">${act}</span>`).join('')}
+                        </div>
+                    </div>
+                ` : ''}
                 ${isDominant && info.tips ? `
                     <div class="learning-tips">
-                        <strong>💡 Consejos para tu estilo dominante:</strong>
+                        <strong>💡 Consejos de English My Way:</strong>
                         <ul>
                             ${info.tips.map(tip => `<li>${tip}</li>`).join('')}
                         </ul>
@@ -1176,35 +1186,28 @@ function generateIntelligentRecommendations(results) {
         ]
     };
     
-    // RECOMENDACIONES para estilos de aprendizaje English My Way
+    // RECOMENDACIONES para estilos de aprendizaje VAK con actividades English My Way
     const learningRecommendations = {
-        readwrite: [
-            'Lee libros, artículos y blogs en inglés todos los días',
-            'Escribe un diario personal en inglés',
-            'Toma notas detalladas durante tus clases',
-            'Haz resúmenes escritos de lo que aprendes',
-            'Usa tarjetas de vocabulario escritas a mano'
+        visual: [
+            '📖 READ AND WRITE: Lee libros y artículos en inglés diariamente',
+            '📖 READ AND WRITE: Usa tarjetas de vocabulario con imágenes',
+            '🎬 SHOWTIME: Ve películas y series en inglés con subtítulos',
+            '🎬 SHOWTIME: Aprende con videos tutoriales y demostraciones',
+            'Usa mapas mentales y diagramas para organizar vocabulario'
         ],
-        showtime: [
-            'Ve películas y series en inglés con subtítulos',
-            'Aprende con videos tutoriales interactivos',
-            'Practica con role-plays y dramatizaciones',
-            'Usa mapas mentales y diagramas visuales',
-            'Participa en actividades prácticas y dinámicas'
+        auditivo: [
+            '🎧 JUKEBOX: Escucha podcasts en inglés diariamente',
+            '🎧 JUKEBOX: Aprende canciones en inglés y canta',
+            '🎧 JUKEBOX: Usa audiolibros para reforzar tu aprendizaje',
+            '💬 WORDMADNESS: Practica conversaciones en inglés regularmente',
+            '💬 WORDMADNESS: Participa en clubs de conversación'
         ],
-        wordmadness: [
-            'Practica conversaciones en inglés regularmente',
-            'Únete a clubs de conversación y debate',
-            'Graba tu voz y escúchate para mejorar',
-            'Explica lo que aprendes a otras personas',
-            'Participa activamente en discusiones grupales'
-        ],
-        jukebox: [
-            'Escucha podcasts en inglés diariamente',
-            'Aprende canciones en inglés y canta',
-            'Usa audiolibros para reforzar tu aprendizaje',
-            'Repite en voz alta lo que escuchas',
-            'Estudia con música de fondo cuando sea apropiado'
+        kinestesico: [
+            '🎬 SHOWTIME: Participa en role-plays y dramatizaciones',
+            '🎬 SHOWTIME: Aprende con actividades prácticas e interactivas',
+            '💬 WORDMADNESS: Practica el inglés en situaciones reales',
+            '💬 WORDMADNESS: Haz juegos de vocabulario activos',
+            'Aprende inglés mientras haces ejercicio o caminas'
         ]
     };
     
@@ -1223,11 +1226,19 @@ function generateIntelligentRecommendations(results) {
     };
     
     const learningDisplayNames = {
-        readwrite: 'Read and Write',
-        showtime: 'Showtime',
-        wordmadness: 'Wordmadness',
-        jukebox: 'Jukebox'
+        visual: 'Visual',
+        auditivo: 'Auditivo',
+        kinestesico: 'Kinestésico'
     };
+    
+    // Actividades recomendadas por estilo
+    const activityRecommendations = {
+        visual: ['📖 Read and Write', '🎬 Showtime'],
+        auditivo: ['🎧 Jukebox', '💬 Wordmadness'],
+        kinestesico: ['🎬 Showtime', '💬 Wordmadness']
+    };
+    
+    const activities = activityRecommendations[dominantLearning?.key] || [];
     
     const intelName = intelligenceDisplayNames[dominantIntel?.key] || dominantIntel?.key || 'desconocida';
     const learnName = learningDisplayNames[dominantLearning?.key] || dominantLearning?.key || 'desconocido';
@@ -1251,50 +1262,47 @@ function generateIntelligentRecommendations(results) {
             <h4>💫 Tu perfil de aprendizaje único:</h4>
             <p>
                 Eres una persona con una inteligencia <strong>${intelName}</strong> destacada, 
-                que aprende mejor de forma <strong>${learnName}</strong>. 
+                con un estilo de aprendizaje <strong>${learnName}</strong>. 
                 ${getPersonalizedInsight(dominantIntel?.key, dominantLearning?.key)}
             </p>
+            <div class="activities-recommendation">
+                <h4>🎯 Actividades English My Way recomendadas para ti:</h4>
+                <div class="activities-badges-large">
+                    ${activities.map(act => `<span class="activity-badge-large">${act}</span>`).join('')}
+                </div>
+            </div>
         </div>
     `;
 }
 
 function getPersonalizedInsight(intelligence, learning) {
     const insights = {
-        // Combinaciones con Read and Write
-        linguistic_readwrite: 'Esta combinación es perfecta para ti. Aprendes inglés de forma natural leyendo, escribiendo y analizando textos.',
-        logical_readwrite: 'Tu mente analítica combinada con el aprendizaje por lectura te hace excelente para estudiar gramática y estructuras del idioma.',
-        spatial_readwrite: 'Combina tu capacidad visual con listas y textos organizados visualmente para maximizar tu aprendizaje.',
-        bodily_readwrite: 'Escribe mientras caminas o practica la escritura de forma activa tomando notas en movimiento.',
-        musical_readwrite: 'Lee las letras de canciones en inglés mientras las escuchas para potenciar tu aprendizaje.',
-        interpersonal_readwrite: 'Intercambia textos y cartas en inglés con compañeros para practicar tu escritura.',
-        intrapersonal_readwrite: 'Llevar un diario personal en inglés será tu mejor herramienta de aprendizaje.',
+        // Combinaciones con Visual
+        linguistic_visual: 'Lee libros, artículos y usa tarjetas de vocabulario con imágenes. Ve películas con subtítulos en inglés.',
+        logical_visual: 'Usa diagramas y mapas mentales para organizar reglas gramaticales. Los tutoriales en video son perfectos para ti.',
+        spatial_visual: 'Tu perfil es ideal: aprende con videos, imágenes, infografías y contenido visual rico.',
+        bodily_visual: 'Ve demostraciones en video y luego practica. Combina lo visual con la acción.',
+        musical_visual: 'Ve videos musicales con letras en pantalla. Los musicales son perfectos para ti.',
+        interpersonal_visual: 'Aprende viendo presentaciones grupales y videos de conversaciones reales.',
+        intrapersonal_visual: 'Crea mapas mentales personales y ve videos a tu propio ritmo.',
         
-        // Combinaciones con Showtime
-        linguistic_showtime: 'Ve documentales y películas con subtítulos para combinar tu amor por las palabras con el aprendizaje visual.',
-        logical_showtime: 'Los tutoriales paso a paso y videos explicativos serán perfectos para tu estilo de aprendizaje.',
-        spatial_showtime: 'Tu perfil es ideal para aprender con videos, películas y contenido visual interactivo.',
-        bodily_showtime: 'Role-plays, dramatizaciones y actividades físicas son tu mejor forma de aprender inglés.',
-        musical_showtime: 'Aprende inglés viendo musicales, videos musicales y contenido audiovisual dinámico.',
-        interpersonal_showtime: 'Participa en obras de teatro, presentaciones y actividades grupales visuales.',
-        intrapersonal_showtime: 'Crea tus propios videos o diarios visuales para reflexionar sobre tu aprendizaje.',
+        // Combinaciones con Auditivo
+        linguistic_auditivo: 'Escucha podcasts, audiolibros y canciones. Repite en voz alta lo que aprendes.',
+        logical_auditivo: 'Escucha explicaciones paso a paso y podcasts educativos sobre gramática.',
+        spatial_auditivo: 'Escucha descripciones detalladas mientras visualizas mentalmente las escenas.',
+        bodily_auditivo: 'Escucha música o podcasts mientras caminas o haces ejercicio.',
+        musical_auditivo: 'Tu perfil es ideal: aprende con canciones, podcasts musicales y contenido auditivo.',
+        interpersonal_auditivo: 'Participa en conversaciones, escucha entrevistas y podcasts de debates.',
+        intrapersonal_auditivo: 'Escucha podcasts de reflexión y desarrollo personal en inglés.',
         
-        // Combinaciones con Wordmadness
-        linguistic_wordmadness: 'Esta combinación te hace un comunicador natural. Las conversaciones fluidas son tu fuerte.',
-        logical_wordmadness: 'Participar en debates estructurados y discusiones lógicas potenciará tu aprendizaje del inglés.',
-        spatial_wordmadness: 'Describe imágenes y escenas en inglés para combinar tu capacidad visual con la comunicación verbal.',
-        bodily_wordmadness: 'Aprende inglés mientras haces actividades físicas, narrarando lo que haces.',
-        musical_wordmadness: 'Canta canciones en inglés y participa en karaoke para maximizar tu aprendizaje.',
-        interpersonal_wordmadness: 'Tu perfil es perfecto para clubs de conversación, debates y trabajo en equipo.',
-        intrapersonal_wordmadness: 'Habla contigo mismo en inglés, grábate y analiza tu progreso.',
-        
-        // Combinaciones con Jukebox
-        linguistic_jukebox: 'Audiolibros y podcasts serán tus mejores aliados para aprender vocabulario y expresiones.',
-        logical_jukebox: 'Escucha podcasts educativos y explicaciones paso a paso para entender estructuras del inglés.',
-        spatial_jukebox: 'Combina sonidos con imágenes mentales para recordar vocabulario y conceptos.',
-        bodily_jukebox: 'Escucha música o podcasts mientras haces ejercicio para aprender de forma natural.',
-        musical_jukebox: 'Tu perfil es ideal: aprende inglés con canciones, música y contenido auditivo.',
-        interpersonal_jukebox: 'Escucha conversaciones, entrevistas y podcasts grupales para mejorar tu inglés.',
-        intrapersonal_jukebox: 'Reflexiona mientras escuchas podcasts de desarrollo personal en inglés.'
+        // Combinaciones con Kinestésico
+        linguistic_kinestesico: 'Practica escribiendo mientras te mueves. Haz role-plays de conversaciones.',
+        logical_kinestesico: 'Aprende gramática con juegos interactivos y actividades prácticas.',
+        spatial_kinestesico: 'Construye modelos, usa gestos y movimientos para recordar vocabulario.',
+        bodily_kinestesico: 'Tu perfil es ideal: aprende haciendo, con dramatizaciones y actividades físicas.',
+        musical_kinestesico: 'Baila mientras escuchas música en inglés. Canta y muévete con las canciones.',
+        interpersonal_kinestesico: 'Aprende en grupo con juegos, competencias y actividades colaborativas.',
+        intrapersonal_kinestesico: 'Practica solo con actividades interactivas y apps de aprendizaje activo.'
     };
     
     const key = `${intelligence}_${learning}`;

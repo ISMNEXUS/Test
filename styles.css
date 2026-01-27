@@ -2397,3 +2397,103 @@ section {
         width: 100%;
     }
 }
+
+/* ============================================
+   ESTILOS PARA ACTIVIDADES RECOMENDADAS
+   ============================================ */
+
+/* Badges de actividades en tarjetas */
+.activities-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--gray-200);
+}
+
+.activity-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.35rem 0.75rem;
+    background: linear-gradient(135deg, var(--secondary-color), #059669);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 20px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.activity-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Sección de recomendación de actividades grande */
+.activities-recommendation {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    border-radius: 12px;
+    border: 1px solid #a7f3d0;
+}
+
+.activities-recommendation h4 {
+    color: #065f46;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.activities-badges-large {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+.activity-badge-large {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 25px;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.activity-badge-large:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Etiquetas de estilo de aprendizaje */
+.learning-style-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+}
+
+/* Responsive para actividades */
+@media (max-width: 480px) {
+    .activities-badges-large {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .activity-badge-large {
+        justify-content: center;
+    }
+}
