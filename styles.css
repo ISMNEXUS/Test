@@ -326,6 +326,24 @@ section {
     margin-bottom: 3rem;
 }
 
+/* Logo en el formulario */
+.form-logo {
+    margin: 0 auto 1.5rem;
+    text-align: center;
+    animation: bounceIn 0.8s ease;
+}
+
+.form-logo-img {
+    max-width: 220px;
+    height: auto;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+    transition: transform 0.3s ease;
+}
+
+.form-logo-img:hover {
+    transform: scale(1.05);
+}
+
 .form-icon {
     width: 80px;
     height: 80px;
@@ -1963,6 +1981,30 @@ section {
 .learning-card.dominant {
     border-color: #10b981;
     background: linear-gradient(to bottom, rgba(16, 185, 129, 0.05), white);
+}
+
+/* Estilos por ranking para mostrar orden visual */
+.learning-card.learning-rank-1 {
+    border-color: #fbbf24;
+    background: linear-gradient(to bottom, rgba(251, 191, 36, 0.08), white);
+    order: 1;
+}
+
+.learning-card.learning-rank-2 {
+    border-color: #9ca3af;
+    background: linear-gradient(to bottom, rgba(156, 163, 175, 0.05), white);
+    order: 2;
+}
+
+.learning-card.learning-rank-3 {
+    border-color: #cd7f32;
+    background: linear-gradient(to bottom, rgba(205, 127, 50, 0.05), white);
+    order: 3;
+}
+
+.learning-card.learning-rank-4 {
+    border-color: var(--gray-300);
+    order: 4;
 }
 
 .learning-position {

@@ -839,21 +839,28 @@ function calculateResults() {
     // Calcular porcentajes REALES para estilos de aprendizaje
     // Porcentaje = (respuestas "sí" / total preguntas del estilo) * 100
     let totalLearningResponses = 0;
+    let totalYesResponses = 0;
     for (let key in learningScores) {
         totalLearningResponses += learningScores[key].count;
+        totalYesResponses += learningScores[key].total;
     }
     
     for (let key in learningScores) {
         const style = learningScores[key];
         if (style.count > 0) {
-            // Porcentaje de respuestas "sí" para este estilo
+            // Porcentaje de respuestas "sí" para este estilo sobre el total de preguntas de ese estilo
             style.percentage = (style.total / style.count) * 100;
+            // También calcular el peso relativo respecto al total de respuestas "sí"
+            style.relativeWeight = totalYesResponses > 0 ? (style.total / totalYesResponses) * 100 : 0;
             style.average = style.percentage / 100 * 5; // Normalizar a escala 0-5 para consistencia
         } else {
             style.percentage = 0;
+            style.relativeWeight = 0;
             style.average = 0;
         }
     }
+    
+    console.log('📊 Estilos de aprendizaje calculados:', learningScores);
     
     // Ordenar inteligencias por porcentaje real
     const sortedIntelligences = Object.entries(intelligenceScores)
@@ -861,11 +868,17 @@ function calculateResults() {
         .filter(intel => intel.count > 0) // Solo incluir las que tienen respuestas
         .sort((a, b) => b.percentage - a.percentage);
     
-    // Ordenar estilos de aprendizaje por porcentaje
+    // Ordenar estilos de aprendizaje por número de respuestas "sí" (total) y luego por porcentaje
     const sortedLearning = Object.entries(learningScores)
         .map(([key, data]) => ({ key, ...data }))
-        .filter(style => style.count > 0) // Solo incluir las que tienen respuestas
-        .sort((a, b) => b.percentage - a.percentage);
+        .sort((a, b) => {
+            // Primero ordenar por total de respuestas "sí" (descendente)
+            if (b.total !== a.total) return b.total - a.total;
+            // Si empatan, ordenar por porcentaje
+            return b.percentage - a.percentage;
+        });
+    
+    console.log('📊 Estilos ordenados:', sortedLearning);
     
     appState.results = {
         intelligences: intelligenceScores,
@@ -957,15 +970,23 @@ function showResults() {
         `;
     }).join('');
     
-    // Renderizar TODOS los estilos de aprendizaje con información real
-    const learningHTML = results.top3.learning.map((style, index) => {
+    // Renderizar TODOS los estilos de aprendizaje ordenados por relevancia
+    // Usamos allLearning que está ordenado correctamente
+    const learningData = results.allLearning || results.top3.learning || [];
+    
+    console.log('📊 Datos de aprendizaje para mostrar:', learningData);
+    
+    const learningHTML = learningData.map((style, index) => {
         const info = learningNames[style.key] || { name: style.key, icon: '🎯', description: '', tips: [] };
-        const percentage = style.percentage.toFixed(1);
+        // Mostrar el porcentaje de respuestas afirmativas
+        const percentage = style.percentage ? style.percentage.toFixed(0) : 0;
         const position = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '4️⃣';
         const isDominant = index === 0;
+        const totalResponses = style.total || 0;
+        const totalQuestions = style.count || 0;
         
         return `
-            <div class="learning-card ${isDominant ? 'dominant' : ''}">
+            <div class="learning-card ${isDominant ? 'dominant' : ''} learning-rank-${index + 1}">
                 <div class="learning-position">${position}</div>
                 <div class="learning-icon">${info.icon}</div>
                 <h3>Estilo ${info.name}</h3>
@@ -975,11 +996,11 @@ function showResults() {
                 </div>
                 <p class="learning-description">${info.description}</p>
                 <div class="learning-stats">
-                    <span>${style.total} de ${style.count} respuestas afirmativas</span>
+                    <span>✓ ${totalResponses} afirmativas de ${totalQuestions} preguntas</span>
                 </div>
                 ${isDominant && info.tips ? `
                     <div class="learning-tips">
-                        <strong>💡 Consejos para ti:</strong>
+                        <strong>💡 Consejos para tu estilo dominante:</strong>
                         <ul>
                             ${info.tips.map(tip => `<li>${tip}</li>`).join('')}
                         </ul>
