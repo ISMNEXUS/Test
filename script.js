@@ -1519,115 +1519,197 @@ function exitTest() {
 function downloadResults() {
     console.log('📥 Generando PDF de resultados...');
     
-    const userName = appState.userInfo.name || 'Usuario';
-    const userEmail = appState.userInfo.email || '';
-    const results = appState.results;
-    const date = new Date().toLocaleDateString('es-ES');
-    
-    // Generar contenido HTML para el PDF
-    let intelligencesHTML = '';
-    if (results.top3 && results.top3.intelligences) {
-        results.top3.intelligences.forEach((intel, index) => {
-            const position = index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉';
-            intelligencesHTML += `
-                <tr>
-                    <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${position} ${intel.name}</td>
-                    <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: center;">${intel.percentage.toFixed(0)}%</td>
-                </tr>
-            `;
-        });
+    try {
+        // Verificar que jsPDF esté disponible
+        if (typeof window.jspdf === 'undefined') {
+            console.error('❌ jsPDF no está cargado');
+            alert('Error: No se pudo cargar la librería de PDF. Por favor, recarga la página e intenta de nuevo.');
+            return;
+        }
+        
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        const userName = appState.userInfo.name || 'Usuario';
+        const userEmail = appState.userInfo.email || '';
+        const results = appState.results;
+        const date = new Date().toLocaleDateString('es-ES');
+        
+        // Colores
+        const primaryColor = [37, 99, 235]; // #2563eb
+        const textColor = [51, 51, 51];
+        const grayColor = [100, 100, 100];
+        
+        let yPos = 20;
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const margin = 20;
+        const contentWidth = pageWidth - (margin * 2);
+        
+        // === ENCABEZADO ===
+        doc.setFillColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+        doc.rect(0, 0, pageWidth, 45, 'F');
+        
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(22);
+        doc.setFont('helvetica', 'bold');
+        doc.text('English My Way', pageWidth / 2, 18, { align: 'center' });
+        
+        doc.setFontSize(14);
+        doc.setFont('helvetica', 'normal');
+        doc.text('Test de Inteligencias Multiples', pageWidth / 2, 28, { align: 'center' });
+        
+        doc.setFontSize(10);
+        doc.text('Fecha: ' + date, pageWidth / 2, 38, { align: 'center' });
+        
+        yPos = 60;
+        
+        // === INFORMACIÓN DEL USUARIO ===
+        doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+        doc.setFontSize(14);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Informacion del Usuario', margin, yPos);
+        
+        yPos += 10;
+        doc.setTextColor(textColor[0], textColor[1], textColor[2]);
+        doc.setFontSize(11);
+        doc.setFont('helvetica', 'normal');
+        doc.text('Nombre: ' + userName, margin, yPos);
+        yPos += 7;
+        doc.text('Email: ' + userEmail, margin, yPos);
+        yPos += 7;
+        doc.text('Respuestas completadas: ' + (results.totalAnswers || 40), margin, yPos);
+        
+        yPos += 15;
+        
+        // === INTELIGENCIAS MÚLTIPLES ===
+        doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+        doc.setFontSize(14);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Tus Inteligencias Multiples', margin, yPos);
+        
+        yPos += 10;
+        
+        if (results.top3 && results.top3.intelligences) {
+            results.top3.intelligences.forEach((intel, index) => {
+                const medal = index === 0 ? '1ro' : index === 1 ? '2do' : '3ro';
+                const barWidth = (intel.percentage / 100) * (contentWidth - 60);
+                
+                // Fondo de la barra
+                doc.setFillColor(230, 230, 230);
+                doc.roundedRect(margin, yPos, contentWidth - 40, 10, 2, 2, 'F');
+                
+                // Barra de progreso
+                doc.setFillColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+                doc.roundedRect(margin, yPos, barWidth, 10, 2, 2, 'F');
+                
+                // Texto
+                doc.setTextColor(textColor[0], textColor[1], textColor[2]);
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'bold');
+                doc.text(medal + ' - ' + intel.name, margin + 3, yPos + 7);
+                
+                // Porcentaje
+                doc.setFont('helvetica', 'normal');
+                doc.text(intel.percentage.toFixed(0) + '%', contentWidth, yPos + 7);
+                
+                yPos += 15;
+            });
+        }
+        
+        yPos += 10;
+        
+        // === ESTILOS DE APRENDIZAJE ===
+        doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+        doc.setFontSize(14);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Tus Estilos de Aprendizaje', margin, yPos);
+        
+        yPos += 10;
+        
+        if (results.allLearning) {
+            results.allLearning.forEach((style, index) => {
+                const medal = index === 0 ? '1ro' : index === 1 ? '2do' : '3ro';
+                const info = learningNames[style.key] || { name: style.key };
+                const percentage = style.percentage || 0;
+                const barWidth = (percentage / 100) * (contentWidth - 60);
+                
+                // Fondo de la barra
+                doc.setFillColor(230, 230, 230);
+                doc.roundedRect(margin, yPos, contentWidth - 40, 10, 2, 2, 'F');
+                
+                // Barra de progreso
+                doc.setFillColor(76, 175, 80); // Verde para estilos de aprendizaje
+                doc.roundedRect(margin, yPos, barWidth, 10, 2, 2, 'F');
+                
+                // Texto
+                doc.setTextColor(textColor[0], textColor[1], textColor[2]);
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'bold');
+                doc.text(medal + ' - Aprendizaje ' + info.name, margin + 3, yPos + 7);
+                
+                // Porcentaje
+                doc.setFont('helvetica', 'normal');
+                doc.text(percentage.toFixed(0) + '%', contentWidth, yPos + 7);
+                
+                yPos += 15;
+            });
+        }
+        
+        // Verificar si necesitamos nueva página
+        if (yPos > 250) {
+            doc.addPage();
+            yPos = 20;
+        }
+        
+        yPos += 15;
+        
+        // === RECOMENDACIONES ===
+        doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+        doc.setFontSize(14);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Recomendaciones', margin, yPos);
+        
+        yPos += 10;
+        doc.setTextColor(textColor[0], textColor[1], textColor[2]);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        
+        // Recomendación basada en inteligencia dominante
+        if (results.top3 && results.top3.intelligences && results.top3.intelligences[0]) {
+            const dominant = results.top3.intelligences[0];
+            const recommendations = [
+                'Aprovecha tu inteligencia ' + dominant.name.toLowerCase() + ' para aprender ingles.',
+                'Busca actividades que combinen tus fortalezas con el aprendizaje del idioma.',
+                'En English My Way tenemos metodos adaptados a tu estilo de aprendizaje.'
+            ];
+            
+            recommendations.forEach(rec => {
+                const lines = doc.splitTextToSize('- ' + rec, contentWidth);
+                doc.text(lines, margin, yPos);
+                yPos += lines.length * 6;
+            });
+        }
+        
+        // === PIE DE PÁGINA ===
+        const footerY = doc.internal.pageSize.getHeight() - 20;
+        doc.setDrawColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+        doc.line(margin, footerY - 5, pageWidth - margin, footerY - 5);
+        
+        doc.setTextColor(grayColor[0], grayColor[1], grayColor[2]);
+        doc.setFontSize(9);
+        doc.text('Generado por English My Way - Test de Inteligencias Multiples', pageWidth / 2, footerY, { align: 'center' });
+        doc.text('(c) ' + new Date().getFullYear() + ' Todos los derechos reservados', pageWidth / 2, footerY + 5, { align: 'center' });
+        
+        // Descargar el PDF
+        const fileName = 'Resultados-Test-' + userName.replace(/\s+/g, '-') + '.pdf';
+        doc.save(fileName);
+        
+        console.log('✅ PDF generado y descargado: ' + fileName);
+        
+    } catch (error) {
+        console.error('❌ Error al generar PDF:', error);
+        alert('Hubo un error al generar el PDF. Por favor, intenta de nuevo.');
     }
-    
-    let learningHTML = '';
-    if (results.allLearning) {
-        results.allLearning.forEach((style, index) => {
-            const position = index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉';
-            const info = learningNames[style.key] || { name: style.key };
-            learningHTML += `
-                <tr>
-                    <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${position} Aprendizaje ${info.name}</td>
-                    <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: center;">${style.percentage ? style.percentage.toFixed(0) : 0}%</td>
-                </tr>
-            `;
-        });
-    }
-    
-    const htmlContent = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Resultados Test - ${userName}</title>
-        <style>
-            body { font-family: 'Segoe UI', Arial, sans-serif; padding: 40px; color: #333; max-width: 800px; margin: 0 auto; }
-            .header { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 3px solid #2563eb; }
-            .header h1 { color: #2563eb; margin-bottom: 10px; }
-            .header p { color: #666; }
-            .section { margin: 25px 0; padding: 20px; background: #f8fafc; border-radius: 12px; border-left: 4px solid #2563eb; }
-            .section h2 { color: #2563eb; margin-bottom: 15px; font-size: 1.3em; }
-            table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-            th { background: #2563eb; color: white; padding: 12px; text-align: left; }
-            .footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #e5e7eb; color: #666; font-size: 0.9em; }
-            .logo { font-size: 1.5em; font-weight: bold; color: #2563eb; }
-        </style>
-    </head>
-    <body>
-        <div class="header">
-            <div class="logo">🎓 English My Way</div>
-            <h1>Resultados del Test de Inteligencias Múltiples</h1>
-            <p>Fecha: ${date}</p>
-        </div>
-        
-        <div class="section">
-            <h2>👤 Información del Usuario</h2>
-            <p><strong>Nombre:</strong> ${userName}</p>
-            <p><strong>Email:</strong> ${userEmail}</p>
-            <p><strong>Respuestas completadas:</strong> ${results.totalAnswers || 80}</p>
-        </div>
-        
-        <div class="section">
-            <h2>🧠 Tus Inteligencias Múltiples</h2>
-            <table>
-                <thead>
-                    <tr><th>Inteligencia</th><th style="text-align: center;">Puntuación</th></tr>
-                </thead>
-                <tbody>
-                    ${intelligencesHTML}
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="section">
-            <h2>📚 Tus Estilos de Aprendizaje</h2>
-            <table>
-                <thead>
-                    <tr><th>Estilo</th><th style="text-align: center;">Porcentaje</th></tr>
-                </thead>
-                <tbody>
-                    ${learningHTML}
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="footer">
-            <p>Generado por <strong>English My Way</strong> - Test de Inteligencias Múltiples</p>
-            <p>© ${new Date().getFullYear()} Todos los derechos reservados</p>
-        </div>
-    </body>
-    </html>
-    `;
-    
-    // Crear ventana de impresión para guardar como PDF
-    const printWindow = window.open('', '_blank');
-    printWindow.document.write(htmlContent);
-    printWindow.document.close();
-    
-    // Esperar a que cargue y abrir diálogo de impresión
-    setTimeout(() => {
-        printWindow.print();
-    }, 300);
-    
-    console.log('✅ Ventana de impresión abierta - Guarda como PDF');
 }
 
 function shareResults() {
