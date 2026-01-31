@@ -37,6 +37,7 @@ $nombre = sanitize($data['nombre']);
 $email = sanitize($data['email']);
 $edad = sanitize($data['edad'] ?? 'No especificada');
 $profesion = sanitize($data['profesion'] ?? 'No especificada');
+$ciudad = sanitize($data['ciudad'] ?? 'No especificada');
 $resultados = json_decode($data['resultados'], true);
 $fecha = $data['fecha'] ?? date('d/m/Y H:i:s');
 
@@ -50,7 +51,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 // Preparar contenido del correo
 $subject = "Resultados de tu Test de Inteligencias Múltiples - English My Way";
 
-$message = prepareEmailContent($nombre, $edad, $profesion, $resultados, $fecha);
+$message = prepareEmailContent($nombre, $edad, $profesion, $ciudad, $resultados, $fecha);
 
 // Headers del correo
 $headers = "MIME-Version: 1.0\r\n";
@@ -77,7 +78,7 @@ if ($emailSent) {
     ];
     
     $adminSubject = "📊 Nuevo Test Completado - " . $nombre;
-    $adminMessage = prepareAdminEmail($nombre, $email, $edad, $profesion, $resultados, $fecha);
+    $adminMessage = prepareAdminEmail($nombre, $email, $edad, $profesion, $ciudad, $resultados, $fecha);
     
     // Enviar a cada administrador
     foreach ($adminEmails as $adminEmail) {
@@ -106,7 +107,7 @@ function sanitize($string) {
     return htmlspecialchars(strip_tags(trim($string)), ENT_QUOTES, 'UTF-8');
 }
 
-function prepareEmailContent($nombre, $edad, $profesion, $resultados, $fecha) {
+function prepareEmailContent($nombre, $edad, $profesion, $ciudad, $resultados, $fecha) {
     $intelligences = $resultados['intelligences'] ?? [];
     $learningStyles = $resultados['learningStyles'] ?? [];
     $dominant = $resultados['dominant'] ?? [];
@@ -312,6 +313,7 @@ function prepareEmailContent($nombre, $edad, $profesion, $resultados, $fecha) {
                     <p><strong>Nombre:</strong> {$nombre}</p>
                     <p><strong>Edad:</strong> {$edad}</p>
                     <p><strong>Profesión:</strong> {$profesion}</p>
+                    <p><strong>Ciudad:</strong> {$ciudad}</p>
                     <p><strong>Fecha:</strong> {$fecha}</p>
                 </div>
                 
@@ -368,7 +370,7 @@ function prepareEmailContent($nombre, $edad, $profesion, $resultados, $fecha) {
     return $html;
 }
 
-function prepareAdminEmail($nombre, $email, $edad, $profesion, $resultados, $fecha) {
+function prepareAdminEmail($nombre, $email, $edad, $profesion, $ciudad, $resultados, $fecha) {
     $intelligences = $resultados['intelligences'] ?? [];
     $learningStyles = $resultados['learningStyles'] ?? [];
     $dominant = $resultados['dominant'] ?? [];
@@ -438,6 +440,7 @@ function prepareAdminEmail($nombre, $email, $edad, $profesion, $resultados, $fec
                 <p><strong>Email:</strong> <a href='mailto:{$email}'>{$email}</a></p>
                 <p><strong>Edad:</strong> {$edad}</p>
                 <p><strong>Profesión:</strong> {$profesion}</p>
+                <p><strong>Ciudad:</strong> {$ciudad}</p>
                 <p><strong>Fecha:</strong> {$fecha}</p>
                 <p><strong>Tiempo:</strong> " . floor($duration / 60) . "m " . ($duration % 60) . "s</p>
                 <p><strong>Respuestas:</strong> {$totalAnswers}</p>

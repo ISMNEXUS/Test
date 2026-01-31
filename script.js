@@ -542,6 +542,7 @@ function submitUserForm(e) {
     const email = document.getElementById('email').value.trim();
     const age = document.getElementById('edad').value.trim();
     const profession = document.getElementById('profesion').value.trim();
+    const city = document.getElementById('ciudad').value.trim();
     
     if (!name || !email) {
         alert('Por favor, completa al menos el nombre y email');
@@ -549,7 +550,7 @@ function submitUserForm(e) {
     }
     
     console.log('✅ Datos del formulario válidos');
-    appState.userInfo = { name, email, age, profession };
+    appState.userInfo = { name, email, age, profession, city };
     
     try {
         localStorage.setItem('testUserData', JSON.stringify(appState.userInfo));
@@ -1466,6 +1467,7 @@ function sendResultsEmail() {
         email: userInfo.email,
         edad: userInfo.age || 'No especificada',
         profesion: userInfo.profession || 'No especificada',
+        ciudad: userInfo.city || 'No especificada',
         fecha: new Date().toLocaleString('es-ES'),
         resultados: JSON.stringify({
             intelligences: intelligencesData,
