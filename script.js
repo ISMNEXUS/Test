@@ -550,7 +550,8 @@ function submitUserForm(e) {
     }
     
     console.log('✅ Datos del formulario válidos');
-    appState.userInfo = { name, email, age, profession, city };
+    const phone = document.getElementById('telefono')?.value?.trim() || '';
+    appState.userInfo = { name, email, age, profession, city, phone };
     
     try {
         localStorage.setItem('testUserData', JSON.stringify(appState.userInfo));
@@ -1386,8 +1387,18 @@ function retakeTest() {
 }
 
 function saveToDatabase() {
+    // Mapear los campos del userInfo al formato esperado por la API
+    const mappedUserInfo = {
+        nombre: appState.userInfo.name,
+        email: appState.userInfo.email,
+        edad: appState.userInfo.age,
+        profesion: appState.userInfo.profession,
+        ciudad: appState.userInfo.city,
+        celular: appState.userInfo.phone
+    };
+    
     const data = {
-        userInfo: appState.userInfo,
+        userInfo: mappedUserInfo,
         results: appState.results,
         answers: appState.answers
     };
@@ -1468,6 +1479,7 @@ function sendResultsEmail() {
         edad: userInfo.age || 'No especificada',
         profesion: userInfo.profession || 'No especificada',
         ciudad: userInfo.city || 'No especificada',
+        telefono: userInfo.phone || 'No especificado',
         fecha: new Date().toLocaleString('es-ES'),
         resultados: JSON.stringify({
             intelligences: intelligencesData,
@@ -1517,6 +1529,13 @@ function exitTest() {
         showSection('heroSection');
     }
 }
+
+// Nombres de estilos de aprendizaje para PDF
+const LEARNING_NAMES_PDF = {
+    visual: { name: 'Visual', icon: '👁️' },
+    auditivo: { name: 'Auditivo', icon: '👂' },
+    kinestesico: { name: 'Kinestésico', icon: '🤸' }
+};
 
 function downloadResults() {
     console.log('📥 Generando PDF de resultados...');
@@ -1579,6 +1598,12 @@ function downloadResults() {
         yPos += 7;
         doc.text('Email: ' + userEmail, margin, yPos);
         yPos += 7;
+        const userCity = appState.userInfo.city || 'No especificada';
+        doc.text('Ciudad: ' + userCity, margin, yPos);
+        yPos += 7;
+        const userPhone = appState.userInfo.phone || 'No especificado';
+        doc.text('Telefono: ' + userPhone, margin, yPos);
+        yPos += 7;
         doc.text('Respuestas completadas: ' + (results.totalAnswers || 40), margin, yPos);
         
         yPos += 15;
@@ -1631,7 +1656,7 @@ function downloadResults() {
         if (results.allLearning) {
             results.allLearning.forEach((style, index) => {
                 const medal = index === 0 ? '1ro' : index === 1 ? '2do' : '3ro';
-                const info = learningNames[style.key] || { name: style.key };
+                const info = LEARNING_NAMES_PDF[style.key] || { name: style.key };
                 const percentage = style.percentage || 0;
                 const barWidth = (percentage / 100) * (contentWidth - 60);
                 

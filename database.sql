@@ -19,6 +19,7 @@ CREATE TABLE cognitive_tests (
     email VARCHAR(150) NOT NULL,
     edad INT NULL,
     profesion VARCHAR(100) NULL,
+    ciudad VARCHAR(100) NULL,
     celular VARCHAR(20) NULL,
     overall_score DECIMAL(5,2) NOT NULL,
     dominant_intelligence VARCHAR(20) NOT NULL,

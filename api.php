@@ -260,6 +260,10 @@ class CognitiveTestAPI {
                 $data['userInfo']['profesion'] = $this->sanitizeString($data['userInfo']['profesion']);
             }
             
+            if (isset($data['userInfo']['ciudad'])) {
+                $data['userInfo']['ciudad'] = $this->sanitizeString($data['userInfo']['ciudad']);
+            }
+            
             if (isset($data['userInfo']['celular'])) {
                 $data['userInfo']['celular'] = preg_replace('/[^\d\s\+\-\(\)]/', '', $data['userInfo']['celular']);
             }
