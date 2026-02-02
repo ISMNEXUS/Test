@@ -1542,7 +1542,7 @@ function downloadResults() {
     
     try {
         // Verificar que jsPDF esté disponible
-        if (typeof window.jspdf === 'undefined') {
+        if (!window.jspdf || !window.jspdf.jsPDF) {
             console.error('❌ jsPDF no está cargado');
             alert('Error: No se pudo cargar la librería de PDF. Por favor, recarga la página e intenta de nuevo.');
             return;
@@ -1551,9 +1551,9 @@ function downloadResults() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         
-        const userName = appState.userInfo.name || 'Usuario';
-        const userEmail = appState.userInfo.email || '';
-        const results = appState.results;
+        const userName = appState.userInfo?.name || 'Usuario';
+        const userEmail = appState.userInfo?.email || '';
+        const results = appState.results || {};
         const date = new Date().toLocaleDateString('es-ES');
         
         // Colores
@@ -1616,10 +1616,13 @@ function downloadResults() {
         
         yPos += 10;
         
-        if (results.top3 && results.top3.intelligences) {
-            results.top3.intelligences.forEach((intel, index) => {
+        const topIntelligences = results.top3?.intelligences || [];
+        if (topIntelligences.length) {
+            topIntelligences.forEach((intel, index) => {
+                const intelName = intel?.name || 'Sin datos';
+                const intelPercentage = Number.isFinite(intel?.percentage) ? intel.percentage : 0;
                 const medal = index === 0 ? '1ro' : index === 1 ? '2do' : '3ro';
-                const barWidth = (intel.percentage / 100) * (contentWidth - 60);
+                const barWidth = (intelPercentage / 100) * (contentWidth - 60);
                 
                 // Fondo de la barra
                 doc.setFillColor(230, 230, 230);
@@ -1633,11 +1636,11 @@ function downloadResults() {
                 doc.setTextColor(textColor[0], textColor[1], textColor[2]);
                 doc.setFontSize(10);
                 doc.setFont('helvetica', 'bold');
-                doc.text(medal + ' - ' + intel.name, margin + 3, yPos + 7);
+                doc.text(medal + ' - ' + intelName, margin + 3, yPos + 7);
                 
                 // Porcentaje
                 doc.setFont('helvetica', 'normal');
-                doc.text(intel.percentage.toFixed(0) + '%', contentWidth, yPos + 7);
+                doc.text(Math.round(intelPercentage) + '%', contentWidth, yPos + 7);
                 
                 yPos += 15;
             });
@@ -1653,11 +1656,12 @@ function downloadResults() {
         
         yPos += 10;
         
-        if (results.allLearning) {
-            results.allLearning.forEach((style, index) => {
+        const learningStyles = results.allLearning || [];
+        if (learningStyles.length) {
+            learningStyles.forEach((style, index) => {
                 const medal = index === 0 ? '1ro' : index === 1 ? '2do' : '3ro';
                 const info = LEARNING_NAMES_PDF[style.key] || { name: style.key };
-                const percentage = style.percentage || 0;
+                const percentage = Number.isFinite(style?.percentage) ? style.percentage : 0;
                 const barWidth = (percentage / 100) * (contentWidth - 60);
                 
                 // Fondo de la barra
@@ -1702,10 +1706,10 @@ function downloadResults() {
         doc.setFont('helvetica', 'normal');
         
         // Recomendación basada en inteligencia dominante
-        if (results.top3 && results.top3.intelligences && results.top3.intelligences[0]) {
-            const dominant = results.top3.intelligences[0];
+        if (topIntelligences[0]) {
+            const dominant = topIntelligences[0];
             const recommendations = [
-                'Aprovecha tu inteligencia ' + dominant.name.toLowerCase() + ' para aprender ingles.',
+                'Aprovecha tu inteligencia ' + (dominant.name || 'principal').toLowerCase() + ' para aprender ingles.',
                 'Busca actividades que combinen tus fortalezas con el aprendizaje del idioma.',
                 'En English My Way tenemos metodos adaptados a tu estilo de aprendizaje.'
             ];
