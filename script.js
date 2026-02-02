@@ -4,242 +4,408 @@ const CONFIG = {
     totalQuestions: 40,
     originalQuestions: 80,
     apiEndpoint: 'api.php',
-    emailEndpoint: 'correo.php',
-    redirectUrl: 'https://www.tu-sitio.com'
-};
-
-class AppState {
-    constructor() {
-        this.currentStep = 'hero';
-        this.currentQuestion = 0;
-        this.answers = [];
-        this.userInfo = {};
-        this.startTime = null;
-        this.results = {};
-        this.selectedQuestions = [];
-    }
+    const QUESTIONS = [
+        // PARTE 1: INTELIGENCIAS MÚLTIPLES (35 preguntas - Escala 1-5)
+        // Inteligencia Lingüística (5 preguntas)
+        {
+            section: 1,
+            type: 'scale',
+            category: 'INTELIGENCIA LINGÜÍSTICA',
+            question: 'CUENTA BROMAS Y CHISTE O INVENTA CUENTOS INCREÍBLES',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'linguistic'
+        },
+        {
+            section: 1,
+            type: 'scale',
+            category: 'INTELIGENCIA LINGÜÍSTICA',
+            question: 'TIENE BUENA MEMORIA PARA LOS NOMBRES, LUGARES, FECHAS Y TRIVIALIDADES',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'linguistic'
+        },
+        {
+            section: 1,
+            type: 'scale',
+            category: 'INTELIGENCIA LINGÜÍSTICA',
+            question: 'DISFRUTA LOS JUEGOS DE PALABRAS',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'linguistic'
+        },
+        {
+            section: 1,
+            type: 'scale',
+            category: 'INTELIGENCIA LINGÜÍSTICA',
+            question: 'DISFRUTA LEER LIBROS',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'linguistic'
+        },
+        {
+            section: 1,
+            type: 'scale',
+            category: 'INTELIGENCIA LINGÜÍSTICA',
+            question: 'ESCRIBE LAS PALABRAS CORRECTAMENTE',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'linguistic'
+        },
     
-    reset() {
-        this.currentStep = 'hero';
-        this.currentQuestion = 0;
-        this.answers = [];
-        this.userInfo = {};
-        this.startTime = null;
-        this.results = {};
-        this.selectedQuestions = [];
+        // Inteligencia Lógica y Matemática (5 preguntas)
+        {
+            section: 2,
+            type: 'scale',
+            category: 'INTELIGENCIA LÓGICA Y MATEMÁTICA',
+            question: 'HACE MUCHAS PREGUNTAS ACERCA DEL FUNCIONAMIENTO DE LAS COSAS',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'logical'
+        },
+        {
+            section: 2,
+            type: 'scale',
+            category: 'INTELIGENCIA LÓGICA Y MATEMÁTICA',
+            question: 'HACE OPERACIONES ARITMÉTICAS MENTALMENTE CON MUCHA RAPIDEZ',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'logical'
+        },
+        {
+            section: 2,
+            type: 'scale',
+            category: 'INTELIGENCIA LÓGICA Y MATEMÁTICA',
+            question: 'DISFRUTA LAS CLASES DE MATEMÁTICAS',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'logical'
+        },
+        {
+            section: 2,
+            type: 'scale',
+            category: 'INTELIGENCIA LÓGICA Y MATEMÁTICA',
+            question: 'LE INTERESAN LOS JUEGOS DE MATEMÁTICAS EN COMPUTADORAS',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'logical'
+        },
+        {
+            section: 2,
+            type: 'scale',
+            category: 'INTELIGENCIA LÓGICA Y MATEMÁTICA',
+            question: 'LE GUSTAN LOS JUEGOS Y ROMPECABEZAS QUE REQUIEREN LÓGICA',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'logical'
+        },
+    
+        // Inteligencia Espacial (5 preguntas)
+        {
+            section: 3,
+            type: 'scale',
+            category: 'INTELIGENCIA ESPACIAL',
+            question: 'PRESENTA IMÁGENES VISUALES NÍTIDAS',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'spatial'
+        },
+        {
+            section: 3,
+            type: 'scale',
+            category: 'INTELIGENCIA ESPACIAL',
+            question: 'LEE MAPAS, GRÁFICOS Y DIAGRAMAS CON MÁS FACILIDAD QUE EL TEXTO',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'spatial'
+        },
+        {
+            section: 3,
+            type: 'scale',
+            category: 'INTELIGENCIA ESPACIAL',
+            question: 'FANTASEA MÁS QUE SUS COMPAÑEROS',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'spatial'
+        },
+        {
+            section: 3,
+            type: 'scale',
+            category: 'INTELIGENCIA ESPACIAL',
+            question: 'DIBUJA FIGURAS AVANZADAS PARA SU EDAD',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'spatial'
+        },
+        {
+            section: 3,
+            type: 'scale',
+            category: 'INTELIGENCIA ESPACIAL',
+            question: 'LE GUSTA VER PELÍCULAS, DIAPOSITIVAS Y OTRAS PRESENTACIONES VISUALES',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'spatial'
+        },
+    
+        // Inteligencia Corporal-Cinestésica (5 preguntas)
+        {
+            section: 4,
+            type: 'scale',
+            category: 'INTELIGENCIA FÍSICA Y CINESTÉSICA',
+            question: 'SE DESTACA EN UNO O MÁS DEPORTES',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'bodily'
+        },
+        {
+            section: 4,
+            type: 'scale',
+            category: 'INTELIGENCIA FÍSICA Y CINESTÉSICA',
+            question: 'SE MUEVE O ESTÁ INQUIETO CUANDO ESTÁ SENTADO MUCHO TIEMPO',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'bodily'
+        },
+        {
+            section: 4,
+            type: 'scale',
+            category: 'INTELIGENCIA FÍSICA Y CINESTÉSICA',
+            question: 'IMITA MUY BIEN LOS GESTOS Y MOVIMIENTOS CARACTERÍSTICOS DE OTRAS PERSONAS',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'bodily'
+        },
+        {
+            section: 4,
+            type: 'scale',
+            category: 'INTELIGENCIA FÍSICA Y CINESTÉSICA',
+            question: 'LE ENCANTA DESARMAR COSAS Y VOLVERLAS A ARMAR',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'bodily'
+        },
+        {
+            section: 4,
+            type: 'scale',
+            category: 'INTELIGENCIA FÍSICA Y CINESTÉSICA',
+            question: 'APENAS VE ALGO, LO TOCA TODO CON LAS MANOS',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'bodily'
+        },
+    
+        // Inteligencia Musical (5 preguntas)
+        {
+            section: 5,
+            type: 'scale',
+            category: 'INTELIGENCIA MUSICAL',
+            question: 'SE DA CUENTA CUANDO LA MÚSICA ESTÁ DESTONADA O SUENA MAL',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'musical'
+        },
+        {
+            section: 5,
+            type: 'scale',
+            category: 'INTELIGENCIA MUSICAL',
+            question: 'RECUERDA LAS MELODÍAS DE LAS CANCIONES',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'musical'
+        },
+        {
+            section: 5,
+            type: 'scale',
+            category: 'INTELIGENCIA MUSICAL',
+            question: 'TIENE BUENA VOZ PARA CANTAR',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'musical'
+        },
+        {
+            section: 5,
+            type: 'scale',
+            category: 'INTELIGENCIA MUSICAL',
+            question: 'TOCA UN INSTRUMENTO MUSICAL O CANTA EN UN CORO O ALGÚN OTRO GRUPO',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'musical'
+        },
+        {
+            section: 5,
+            type: 'scale',
+            category: 'INTELIGENCIA MUSICAL',
+            question: 'CANTURREA SIN DARSE CUENTA',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'musical'
+        },
+    
+        // Inteligencia Interpersonal (5 preguntas)
+        {
+            section: 6,
+            type: 'scale',
+            category: 'INTELIGENCIA INTERPERSONAL',
+            question: 'DISFRUTA CONVERSAR CON SUS COMPAÑEROS',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'interpersonal'
+        },
+        {
+            section: 6,
+            type: 'scale',
+            category: 'INTELIGENCIA INTERPERSONAL',
+            question: 'TIENE CARACTERÍSTICAS DE LÍDER NATURAL',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'interpersonal'
+        },
+        {
+            section: 6,
+            type: 'scale',
+            category: 'INTELIGENCIA INTERPERSONAL',
+            question: 'ACONSEJA A LOS AMIGOS QUE TIENEN PROBLEMAS',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'interpersonal'
+        },
+        {
+            section: 6,
+            type: 'scale',
+            category: 'INTELIGENCIA INTERPERSONAL',
+            question: 'PARECE TENER BUEN SENTIDO COMÚN',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'interpersonal'
+        },
+        {
+            section: 6,
+            type: 'scale',
+            category: 'INTELIGENCIA INTERPERSONAL',
+            question: 'PERTENECE A CLUBES, COMITÉS Y OTRAS ORGANIZACIONES',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'interpersonal'
+        },
+    
+        // Inteligencia Intrapersonal (5 preguntas)
+        {
+            section: 7,
+            type: 'scale',
+            category: 'INTELIGENCIA INTRAPERSONAL',
+            question: 'DEMUESTRA SENTIDO DE INDEPENDENCIA O VOLUNTAD FUERTE',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'intrapersonal'
+        },
+        {
+            section: 7,
+            type: 'scale',
+            category: 'INTELIGENCIA INTRAPERSONAL',
+            question: 'TIENE UN CONCEPTO PRÁCTICO DE SUS HABILIDADES Y DEBILIDADES',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'intrapersonal'
+        },
+        {
+            section: 7,
+            type: 'scale',
+            category: 'INTELIGENCIA INTRAPERSONAL',
+            question: 'PRESENTA BUEN DESEMPEÑO CUANDO ESTÁ SOLO JUGANDO O ESTUDIANDO',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'intrapersonal'
+        },
+        {
+            section: 7,
+            type: 'scale',
+            category: 'INTELIGENCIA INTRAPERSONAL',
+            question: 'LLEVA UN BUEN ESTILO DE VIDA Y APRENDIZAJE',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'intrapersonal'
+        },
+        {
+            section: 7,
+            type: 'scale',
+            category: 'INTELIGENCIA INTRAPERSONAL',
+            question: 'TIENE UN INTERÉS O PASATIEMPO SOBRE EL QUE NO HABLA MUCHO CON LOS DEMÁS',
+            scale: [1, 2, 3, 4, 5],
+            intelligence: 'intrapersonal'
+        },
+    
+        // Estilos de Aprendizaje (Sí/No)
+        {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO APRENDER MEDIANTE LA PRÁCTICA Y LA EXPERIENCIA', learning: 'active'},
+        {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA REFLEXIONAR ANTES DE ACTUAR', learning: 'reflective'},
+        {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTAN LAS EXPLICACIONES TEÓRICAS', learning: 'theoretic'},
+        {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'BUSCO APLICAR LO QUE APRENDO A LA VIDA REAL', learning: 'pragmatic'},
+        {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA PARTICIPAR EN ACTIVIDADES NUEVAS', learning: 'active'},
+        {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'OBSERVAR Y ANALIZAR ME AYUDA A APRENDER', learning: 'reflective'},
+        {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME INTERESAN LOS MODELOS Y TEORÍAS', learning: 'theoretic'},
+        {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LOS EJEMPLOS PRÁCTICOS', learning: 'pragmatic'},
+        {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO LA ACCIÓN RÁPIDA', learning: 'active'},
+        {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PIENSO BIEN ANTES DE DECIDIR', learning: 'reflective'}
+    ];
+
+    function initializeApp() {
+        console.log('📦 Iniciando aplicación...');
+        loadUserData();
+    
+        window.startTest = startTest;
+        window.goBack = goBack;
+        window.exitTest = exitTest;
+        window.showSection = showSection;
+        window.submitUserForm = submitUserForm;
+        window.selectScaleAnswer = selectScaleAnswer;
+        window.selectYesNoAnswer = selectYesNoAnswer;
+        window.nextQuestion = nextQuestion;
+        window.previousQuestion = previousQuestion;
+        window.retakeTest = retakeTest;
+        window.downloadResults = downloadResults;
+    
+        setupEventListeners();
+        console.log('✅ Aplicación inicializada correctamente');
+        console.log('✅ Total de preguntas:', QUESTIONS.length);
     }
-}
 
-const appState = new AppState();
-window.appState = appState;
-
-const QUESTIONS = [
-    {
-        section: 1,
-        type: 'scale',
-        category: 'INTELIGENCIA LINGÜÍSTICA',
-        question: 'CUENTA BROMAS Y CHISTE O INVENTA CUENTOS INCREÍBLES',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'linguistic'
-    },
-    {
-        section: 1,
-        type: 'scale',
-        category: 'INTELIGENCIA LINGÜÍSTICA',
-        question: 'TIENE BUENA MEMORIA PARA LOS NOMBRES, LUGARES, FECHAS Y TRIVIALIDADES',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'linguistic'
-    },
-    {
-        section: 1,
-        type: 'scale',
-        category: 'INTELIGENCIA LINGÜÍSTICA',
-        // === RESULTADOS COMPLETOS (TEXTO DEL DOM) ===
-        const resultsSection = document.getElementById('resultsSection');
-        const resultsText = resultsSection ? resultsSection.innerText.replace(/\n{3,}/g, '\n\n') : '';
-        
-        if (resultsText) {
-            const addTextWithPagination = (text, startY) => {
-                const lines = doc.splitTextToSize(text, contentWidth);
-                const lineHeight = 6;
-                const pageHeight = doc.internal.pageSize.getHeight();
-                let y = startY;
-                
-                lines.forEach(line => {
-                    if (y + lineHeight > pageHeight - 25) {
-                        doc.addPage();
-                        y = 20;
-                    }
-                    doc.text(line, margin, y);
-                    y += lineHeight;
-                });
-                return y;
-            };
-            
-            doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-            doc.setFontSize(14);
-            doc.setFont('helvetica', 'bold');
-            doc.text('Resultados completos', margin, yPos);
-            
-            yPos += 10;
-            doc.setTextColor(textColor[0], textColor[1], textColor[2]);
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'normal');
-            yPos = addTextWithPagination(resultsText, yPos);
+    function setupEventListeners() {
+        console.log('🎯 Configurando event listeners...');
+    
+        const startBtn = document.getElementById('startTestBtn');
+        if (startBtn) {
+            startBtn.addEventListener('click', function() {
+                console.log('🖱️ Click en botón Comenzar Test');
+                startTest();
+            });
+            console.log('✅ Event listener agregado: startTestBtn');
+        } else {
+            console.error('❌ No se encontró el botón startTestBtn');
         }
-        question: 'SE MUEVE O ESTÁ INQUIETO CUANDO ESTÁ SENTADO MUCHO TIEMPO',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'bodily'
-    },
-    {
-        section: 4,
-        type: 'scale',
-        category: 'INTELIGENCIA FÍSICA Y CINESTÉSICA',
-        question: 'IMITA MUY BIEN LOS GESTOS Y MOVIMIENTOS CARACTERÍSTICOS DE OTRAS PERSONAS',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'bodily'
-    },
-    {
-        section: 4,
-        type: 'scale',
-        category: 'INTELIGENCIA FÍSICA Y CINESTÉSICA',
-        question: 'LE ENCANTA DESARMAR COSAS Y VOLVERLAS A ARMAR',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'bodily'
-    },
-    {
-        section: 4,
-        type: 'scale',
-        category: 'INTELIGENCIA FÍSICA Y CINESTÉSICA',
-        question: 'APENAS VE ALGO, LO TOCA TODO CON LAS MANOS',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'bodily'
-    },
-    {
-        section: 5,
-        type: 'scale',
-        category: 'INTELIGENCIA MUSICAL',
-        question: 'SE DA CUENTA CUANDO LA MÚSICA ESTÁ DESTONADA O SUENA MAL',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'musical'
-    },
-    {
-        section: 5,
-        type: 'scale',
-        category: 'INTELIGENCIA MUSICAL',
-        question: 'RECUERDA LAS MELODÍAS DE LAS CANCIONES',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'musical'
-    },
-    {
-        section: 5,
-        type: 'scale',
-        category: 'INTELIGENCIA MUSICAL',
-        question: 'TIENE BUENA VOZ PARA CANTAR',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'musical'
-    },
-    {
-        section: 5,
-        type: 'scale',
-        category: 'INTELIGENCIA MUSICAL',
-        question: 'TOCA UN INSTRUMENTO MUSICAL O CANTA EN UN CORO O ALGÚN OTRO GRUPO',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'musical'
-    },
-    {
-        section: 5,
-        type: 'scale',
-        category: 'INTELIGENCIA MUSICAL',
-        question: 'CANTURREA SIN DARSE CUENTA',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'musical'
-    },
-    {
-        section: 6,
-        type: 'scale',
-        category: 'INTELIGENCIA INTERPERSONAL',
-        question: 'DISFRUTA CONVERSAR CON SUS COMPAÑEROS',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'interpersonal'
-    },
-    {
-        section: 6,
-        type: 'scale',
-        category: 'INTELIGENCIA INTERPERSONAL',
-        question: 'TIENE CARACTERÍSTICAS DE LÍDER NATURAL',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'interpersonal'
-    },
-    {
-        section: 6,
-        type: 'scale',
-        category: 'INTELIGENCIA INTERPERSONAL',
-        question: 'ACONSEJA A LOS AMIGOS QUE TIENEN PROBLEMAS',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'interpersonal'
-    },
-    {
-        section: 6,
-        type: 'scale',
-        category: 'INTELIGENCIA INTERPERSONAL',
-        question: 'PARECE TENER BUEN SENTIDO COMÚN',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'interpersonal'
-    },
-    {
-        section: 6,
-        type: 'scale',
-        category: 'INTELIGENCIA INTERPERSONAL',
-        question: 'PERTENECE A CLUBES, COMITÉS Y OTRAS ORGANIZACIONES',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'interpersonal'
-    },
-    {
-        section: 7,
-        type: 'scale',
-        category: 'INTELIGENCIA INTRAPERSONAL',
-        question: 'DEMUESTRA SENTIDO DE INDEPENDENCIA O VOLUNTAD FUERTE',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'intrapersonal'
-    },
-    {
-        section: 7,
-        type: 'scale',
-        category: 'INTELIGENCIA INTRAPERSONAL',
-        question: 'TIENE UN CONCEPTO PRÁCTICO DE SUS HABILIDADES Y DEBILIDADES',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'intrapersonal'
-    },
-    {
-        section: 7,
-        type: 'scale',
-        category: 'INTELIGENCIA INTRAPERSONAL',
-        question: 'PRESENTA BUEN DESEMPEÑO CUANDO ESTÁ SOLO JUGANDO O ESTUDIANDO',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'intrapersonal'
-    },
-    {
-        section: 7,
-        type: 'scale',
-        category: 'INTELIGENCIA INTRAPERSONAL',
-        question: 'LLEVA UN BUEN ESTILO DE VIDA Y APRENDIZAJE',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'intrapersonal'
-    },
-    {
-        section: 7,
-        type: 'scale',
-        category: 'INTELIGENCIA INTRAPERSONAL',
-        question: 'TIENE UN INTERÉS O PASATIEMPO SOBRE EL QUE NO HABLA MUCHO CON LOS DEMÁS',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'intrapersonal'
-    },
+    
+        const userForm = document.getElementById('userForm');
+        if (userForm) {
+            userForm.addEventListener('submit', submitUserForm);
+            console.log('✅ Event listener agregado: userForm');
+        } else {
+            console.warn('⚠️ No se encontró userForm');
+        }
+    
+        const goBackBtn = document.getElementById('goBackBtn');
+        if (goBackBtn) {
+            goBackBtn.addEventListener('click', goBack);
+            console.log('✅ Event listener agregado: goBackBtn');
+        } else {
+            console.warn('⚠️ No se encontró goBackBtn');
+        }
+    
+        const exitTestBtn = document.getElementById('exitTestBtn');
+        if (exitTestBtn) {
+            exitTestBtn.addEventListener('click', exitTest);
+            console.log('✅ Event listener agregado: exitTestBtn');
+        } else {
+            console.warn('⚠️ No se encontró exitTestBtn');
+        }
+    
+        const retakeTestBtn = document.getElementById('retakeTestBtn');
+        if (retakeTestBtn) {
+            retakeTestBtn.addEventListener('click', retakeTest);
+            console.log('✅ Event listener agregado: retakeTestBtn');
+        } else {
+            console.warn('⚠️ No se encontró retakeTestBtn');
+        }
+    
+        const downloadResultsBtn = document.getElementById('downloadResultsBtn');
+        if (downloadResultsBtn) {
+            downloadResultsBtn.addEventListener('click', downloadResults);
+            console.log('✅ Event listener agregado: downloadResultsBtn');
+        } else {
+            console.warn('⚠️ No se encontró downloadResultsBtn');
+        }
+    
+        console.log('✅ Configuración de event listeners completada');
+    }
+
+    function loadUserData() {
+        const saved = localStorage.getItem('testUserData');
+        if (saved) {
+            try {
+                appState.userInfo = JSON.parse(saved);
+            } catch (error) {
+                console.error('Error al cargar datos guardados:', error);
+            }
+        }
+    }
+
     async function downloadResults() {
         console.log('📥 Generando PDF de resultados...');
     
         try {
-            // Verificar que jsPDF esté disponible
             if (!window.jspdf || !window.jspdf.jsPDF) {
                 console.error('❌ jsPDF no está cargado');
                 alert('Error: No se pudo cargar la librería de PDF. Por favor, recarga la página e intenta de nuevo.');
@@ -252,7 +418,6 @@ const QUESTIONS = [
                 return;
             }
         
-            // Clonar la sección para renderizarla en PDF sin afectar la UI
             const clone = resultsSection.cloneNode(true);
             clone.style.display = 'block';
             clone.style.position = 'fixed';
@@ -292,41 +457,34 @@ const QUESTIONS = [
             alert('Hubo un error al generar el PDF: ' + errorMessage + '. Por favor, intenta de nuevo.');
         }
     }
-    
-    const goBackBtn = document.getElementById('goBackBtn');
-    if (goBackBtn) {
-        goBackBtn.addEventListener('click', goBack);
-        console.log('   ✅ Event listener agregado: goBackBtn');
-    } else {
-        console.warn('   ⚠️ No se encontró: goBackBtn');
+            const fileName = 'Resultados-Test-' + (appState.userInfo?.name || 'Usuario').replace(/\s+/g, '-') + '.pdf';
+        
+            await doc.html(clone, {
+                x: 20,
+                y: 20,
+                width: 555,
+                windowWidth: 800,
+                autoPaging: 'text',
+                html2canvas: {
+                    scale: 0.75,
+                    useCORS: true
+                },
+                callback: (docInstance) => {
+                    docInstance.save(fileName);
+                }
+            });
+        
+            document.body.removeChild(clone);
+            console.log('✅ PDF generado y descargado: ' + fileName);
+        
+        } catch (error) {
+            console.error('❌ Error al generar PDF:', error);
+            const errorMessage = error && error.message ? error.message : 'Error desconocido';
+            alert('Hubo un error al generar el PDF: ' + errorMessage + '. Por favor, intenta de nuevo.');
+        }
     }
     
-    const exitTestBtn = document.getElementById('exitTestBtn');
-    if (exitTestBtn) {
-        exitTestBtn.addEventListener('click', exitTest);
-        console.log('   ✅ Event listener agregado: exitTestBtn');
-    } else {
-        console.warn('   ⚠️ No se encontró: exitTestBtn');
-    }
-    
-    const retakeTestBtn = document.getElementById('retakeTestBtn');
-    if (retakeTestBtn) {
-        retakeTestBtn.addEventListener('click', retakeTest);
-        console.log('   ✅ Event listener agregado: retakeTestBtn');
-    } else {
-        console.warn('   ⚠️ No se encontró: retakeTestBtn');
-    }
-    
-    const downloadResultsBtn = document.getElementById('downloadResultsBtn');
-    if (downloadResultsBtn) {
-        downloadResultsBtn.addEventListener('click', downloadResults);
-        console.log('   ✅ Event listener agregado: downloadResultsBtn');
-    } else {
-        console.warn('   ⚠️ No se encontró: downloadResultsBtn');
-    }
-    
-    console.log('✅ Configuración de event listeners completada');
-}
+
 
 function showSection(sectionId) {
     console.log('📍 showSection llamada con:', sectionId);
