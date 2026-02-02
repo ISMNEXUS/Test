@@ -1739,7 +1739,28 @@ function downloadResults() {
         
     } catch (error) {
         console.error('❌ Error al generar PDF:', error);
-        alert('Hubo un error al generar el PDF. Por favor, intenta de nuevo.');
+        
+        try {
+            if (window.jspdf && window.jspdf.jsPDF) {
+                const { jsPDF } = window.jspdf;
+                const fallbackDoc = new jsPDF();
+                fallbackDoc.setFont('helvetica', 'bold');
+                fallbackDoc.setFontSize(16);
+                fallbackDoc.text('Resultados del Test', 20, 20);
+                fallbackDoc.setFont('helvetica', 'normal');
+                fallbackDoc.setFontSize(11);
+                fallbackDoc.text('No se pudo generar el PDF completo.', 20, 35);
+                fallbackDoc.text('Intenta de nuevo o recarga la página.', 20, 45);
+                const fallbackName = 'Resultados-Test-' + (appState.userInfo?.name || 'Usuario').replace(/\s+/g, '-') + '.pdf';
+                fallbackDoc.save(fallbackName);
+                return;
+            }
+        } catch (fallbackError) {
+            console.error('❌ Error al generar PDF de respaldo:', fallbackError);
+        }
+        
+        const errorMessage = error && error.message ? error.message : 'Error desconocido';
+        alert('Hubo un error al generar el PDF: ' + errorMessage + '. Por favor, intenta de nuevo.');
     }
 }
 
