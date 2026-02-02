@@ -54,118 +54,39 @@ const QUESTIONS = [
         section: 1,
         type: 'scale',
         category: 'INTELIGENCIA LINGÜÍSTICA',
-        question: 'DISFRUTA LOS JUEGOS DE PALABRAS',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'linguistic'
-    },
-    {
-        section: 1,
-        type: 'scale',
-        category: 'INTELIGENCIA LINGÜÍSTICA',
-        question: 'DISFRUTA LEER LIBROS',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'linguistic'
-    },
-    {
-        section: 1,
-        type: 'scale',
-        category: 'INTELIGENCIA LINGÜÍSTICA',
-        question: 'ESCRIBE LAS PALABRAS CORRECTAMENTE',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'linguistic'
-    },
-    {
-        section: 2,
-        type: 'scale',
-        category: 'INTELIGENCIA LÓGICA Y MATEMÁTICA',
-        question: 'HACE MUCHAS PREGUNTAS ACERCA DEL FUNCIONAMIENTO DE LAS COSAS',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'logical'
-    },
-    {
-        section: 2,
-        type: 'scale',
-        category: 'INTELIGENCIA LÓGICA Y MATEMÁTICA',
-        question: 'HACE OPERACIONES ARITMÉTICAS MENTALMENTE CON MUCHA RAPIDEZ',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'logical'
-    },
-    {
-        section: 2,
-        type: 'scale',
-        category: 'INTELIGENCIA LÓGICA Y MATEMÁTICA',
-        question: 'DISFRUTA LAS CLASES DE MATEMÁTICAS',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'logical'
-    },
-    {
-        section: 2,
-        type: 'scale',
-        category: 'INTELIGENCIA LÓGICA Y MATEMÁTICA',
-        question: 'LE INTERESAN LOS JUEGOS DE MATEMÁTICAS EN COMPUTADORAS',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'logical'
-    },
-    {
-        section: 2,
-        type: 'scale',
-        category: 'INTELIGENCIA LÓGICA Y MATEMÁTICA',
-        question: 'LE GUSTAN LOS JUEGOS Y ROMPECABEZAS QUE REQUIEREN LÓGICA',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'logical'
-    },
-    {
-        section: 3,
-        type: 'scale',
-        category: 'INTELIGENCIA ESPACIAL',
-        question: 'PRESENTA IMÁGENES VISUALES NÍTIDAS',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'spatial'
-    },
-    {
-        section: 3,
-        type: 'scale',
-        category: 'INTELIGENCIA ESPACIAL',
-        question: 'LEE MAPAS, GRÁFICOS Y DIAGRAMAS CON MÁS FACILIDAD QUE EL TEXTO',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'spatial'
-    },
-    {
-        section: 3,
-        type: 'scale',
-        category: 'INTELIGENCIA ESPACIAL',
-        question: 'FANTASEA MÁS QUE SUS COMPAÑEROS',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'spatial'
-    },
-    {
-        section: 3,
-        type: 'scale',
-        category: 'INTELIGENCIA ESPACIAL',
-        question: 'DIBUJA FIGURAS AVANZADAS PARA SU EDAD',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'spatial'
-    },
-    {
-        section: 3,
-        type: 'scale',
-        category: 'INTELIGENCIA ESPACIAL',
-        question: 'LE GUSTA VER PELÍCULAS, DIAPOSITIVAS Y OTRAS PRESENTACIONES VISUALES',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'spatial'
-    },
-    {
-        section: 4,
-        type: 'scale',
-        category: 'INTELIGENCIA FÍSICA Y CINESTÉSICA',
-        question: 'SE DESTACA EN UNO O MÁS DEPORTES',
-        scale: [1, 2, 3, 4, 5],
-        intelligence: 'bodily'
-    },
-    {
-        section: 4,
-        type: 'scale',
-        category: 'INTELIGENCIA FÍSICA Y CINESTÉSICA',
+        // === RESULTADOS COMPLETOS (TEXTO DEL DOM) ===
+        const resultsSection = document.getElementById('resultsSection');
+        const resultsText = resultsSection ? resultsSection.innerText.replace(/\n{3,}/g, '\n\n') : '';
+        
+        if (resultsText) {
+            const addTextWithPagination = (text, startY) => {
+                const lines = doc.splitTextToSize(text, contentWidth);
+                const lineHeight = 6;
+                const pageHeight = doc.internal.pageSize.getHeight();
+                let y = startY;
+                
+                lines.forEach(line => {
+                    if (y + lineHeight > pageHeight - 25) {
+                        doc.addPage();
+                        y = 20;
+                    }
+                    doc.text(line, margin, y);
+                    y += lineHeight;
+                });
+                return y;
+            };
+            
+            doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Resultados completos', margin, yPos);
+            
+            yPos += 10;
+            doc.setTextColor(textColor[0], textColor[1], textColor[2]);
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            yPos = addTextWithPagination(resultsText, yPos);
+        }
         question: 'SE MUEVE O ESTÁ INQUIETO CUANDO ESTÁ SENTADO MUCHO TIEMPO',
         scale: [1, 2, 3, 4, 5],
         intelligence: 'bodily'
