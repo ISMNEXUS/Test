@@ -1514,12 +1514,12 @@ function sendResultsEmail() {
 }
 
 function goBack() {
-    if (appState.currentStep === 'test') {
+    if (appState.currentStep === 'testSection') {
         if (confirm('¿Estás seguro de que quieres volver? Perderás tu progreso.')) {
-            showSection('userInfo');
+            showSection('userFormSection');
         }
     } else {
-        showSection('hero');
+        showSection('heroSection');
     }
 }
 
@@ -1535,6 +1535,17 @@ const LEARNING_NAMES_PDF = {
     visual: { name: 'Visual', icon: '👁️' },
     auditivo: { name: 'Auditivo', icon: '👂' },
     kinestesico: { name: 'Kinestésico', icon: '🤸' }
+};
+
+// Nombres de inteligencias para PDF
+const INTELLIGENCE_NAMES_PDF = {
+    linguistic: 'Lingüística-Verbal',
+    logical: 'Lógico-Matemática',
+    spatial: 'Espacial-Visual',
+    bodily: 'Corporal-Cinestésica',
+    musical: 'Musical-Rítmica',
+    interpersonal: 'Interpersonal-Social',
+    intrapersonal: 'Intrapersonal-Reflexiva'
 };
 
 function downloadResults() {
@@ -1619,6 +1630,7 @@ function downloadResults() {
         if (results.top3 && results.top3.intelligences) {
             results.top3.intelligences.forEach((intel, index) => {
                 const medal = index === 0 ? '1ro' : index === 1 ? '2do' : '3ro';
+                const intelName = INTELLIGENCE_NAMES_PDF[intel.key] || intel.key;
                 const barWidth = (intel.percentage / 100) * (contentWidth - 60);
                 
                 // Fondo de la barra
@@ -1633,7 +1645,7 @@ function downloadResults() {
                 doc.setTextColor(textColor[0], textColor[1], textColor[2]);
                 doc.setFontSize(10);
                 doc.setFont('helvetica', 'bold');
-                doc.text(medal + ' - ' + intel.name, margin + 3, yPos + 7);
+                doc.text(medal + ' - ' + intelName, margin + 3, yPos + 7);
                 
                 // Porcentaje
                 doc.setFont('helvetica', 'normal');
@@ -1704,8 +1716,9 @@ function downloadResults() {
         // Recomendación basada en inteligencia dominante
         if (results.top3 && results.top3.intelligences && results.top3.intelligences[0]) {
             const dominant = results.top3.intelligences[0];
+            const dominantName = INTELLIGENCE_NAMES_PDF[dominant.key] || dominant.key;
             const recommendations = [
-                'Aprovecha tu inteligencia ' + dominant.name.toLowerCase() + ' para aprender ingles.',
+                'Aprovecha tu inteligencia ' + dominantName.toLowerCase() + ' para aprender ingles.',
                 'Busca actividades que combinen tus fortalezas con el aprendizaje del idioma.',
                 'En English My Way tenemos metodos adaptados a tu estilo de aprendizaje.'
             ];
