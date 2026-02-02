@@ -235,152 +235,62 @@ const QUESTIONS = [
         scale: [1, 2, 3, 4, 5],
         intelligence: 'intrapersonal'
     },
-    // ===== VISUAL (27 preguntas) - Aprendizaje visual =====
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO VER IMÁGENES, DIAGRAMAS O GRÁFICOS PARA ENTENDER UN TEMA', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECUERDO MEJOR LO QUE VEO QUE LO QUE ESCUCHO', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA USAR MAPAS MENTALES Y ESQUEMAS PARA ORGANIZAR IDEAS', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR VIENDO VIDEOS Y TUTORIALES', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LEER INSTRUCCIONES ANTES DE INTENTAR ALGO NUEVO', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA FÁCIL RECORDAR ROSTROS Y LUGARES', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO VER PELÍCULAS, SERIES Y DOCUMENTALES PARA APRENDER', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA SUBRAYAR Y RESALTAR TEXTOS CON COLORES', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'COMPRENDO MEJOR LOS CONCEPTOS CUANDO LOS VEO ESCRITOS', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LAS PRESENTACIONES CON IMÁGENES A LAS QUE SOLO TIENEN TEXTO', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA TOMAR NOTAS Y HACER DIBUJOS MIENTRAS ESTUDIO', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECUERDO MEJOR LA INFORMACIÓN CUANDO LA VEO EN UN LIBRO O PANTALLA', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA VISUALIZAR LOS CONCEPTOS EN MI MENTE', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LAS INSTRUCCIONES ESCRITAS A LAS VERBALES', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME AYUDA VER EJEMPLOS ANTES DE HACER ALGO', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA ÚTIL HACER TARJETAS DE VOCABULARIO CON IMÁGENES', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO LEYENDO LIBROS Y ARTÍCULOS', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA ORGANIZAR MI ESPACIO DE ESTUDIO DE FORMA ORDENADA', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR CON PRESENTACIONES VISUALES COLORIDAS', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA ESCRIBIR RESÚMENES DE LO QUE ESTUDIO', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LOS EXÁMENES ESCRITOS A LOS ORALES', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA FÁCIL SEGUIR INSTRUCCIONES ESCRITAS', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA LLEVAR UN DIARIO O AGENDA', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PUEDO CREAR IMÁGENES MENTALES DE LO QUE LEO', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME ATRAEN LOS LIBROS CON ILUSTRACIONES', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA VER DEMOSTRACIONES ANTES DE PRACTICAR', learning: 'visual'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECUERDO MEJOR LAS COSAS CUANDO LAS ESCRIBO', learning: 'visual'},
+    async function downloadResults() {
+        console.log('📥 Generando PDF de resultados...');
     
-    // ===== AUDITIVO (27 preguntas) - Aprendizaje auditivo =====
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR ESCUCHANDO EXPLICACIONES QUE LEYENDO', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECUERDO MEJOR LO QUE ESCUCHO QUE LO QUE VEO', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA ESTUDIAR CON MÚSICA DE FONDO', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LAS EXPLICACIONES VERBALES A LOS TEXTOS ESCRITOS', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA FÁCIL RECORDAR MELODÍAS Y CANCIONES', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO BIEN ESCUCHANDO PODCASTS Y AUDIOLIBROS', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA REPETIR EN VOZ ALTA LO QUE QUIERO MEMORIZAR', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PUEDO RECONOCER FÁCILMENTE DIFERENTES TONOS Y RITMOS', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA ESCUCHAR MÚSICA MIENTRAS TRABAJO O ESTUDIO', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO CANCIONES EN OTROS IDIOMAS CON FACILIDAD', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO ESCUCHAR UNA CONFERENCIA QUE LEER UN DOCUMENTO', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA ÚTIL GRABARME Y ESCUCHARME DESPUÉS', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA APRENDER A TRAVÉS DE RIMAS Y RITMOS', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PUEDO RECORDAR CONVERSACIONES CON GRAN DETALLE', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME CONCENTRO MEJOR EN AMBIENTES SILENCIOSOS O CON MÚSICA SUAVE', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA USAR APLICACIONES DE AUDIO PARA APRENDER IDIOMAS', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECUERDO MEJOR LAS INSTRUCCIONES CUANDO ME LAS DICEN VERBALMENTE', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ESCUCHO CON MÁS FRECUENCIA QUE HABLO', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO OÍR LAS OPINIONES DE LOS DEMÁS ANTES DE EXPONER LA MÍA', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME DISTRAIGO FÁCILMENTE CON RUIDOS INESPERADOS', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA HABLAR CONMIGO MISMO CUANDO PIENSO', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO DE LA MÚSICA Y LOS SONIDOS DE LA NATURALEZA', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA PARTICIPAR EN CONVERSACIONES PARA APRENDER', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO QUE ME EXPLIQUEN LAS COSAS EN VEZ DE LEERLAS', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA FÁCIL IMITAR ACENTOS Y PRONUNCIACIONES', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR CUANDO ALGUIEN ME EXPLICA PASO A PASO', learning: 'auditivo'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA ESCUCHAR HISTORIAS Y NARRACIONES', learning: 'auditivo'},
-    
-    // ===== KINESTÉSICO (26 preguntas) - Aprendizaje kinestésico =====
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR HACIENDO LAS COSAS CON MIS PROPIAS MANOS', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME CUESTA ESTAR SENTADO POR MUCHO TIEMPO', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA MOVERME MIENTRAS ESTUDIO O PIENSO', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO APRENDER HACIENDO EN LUGAR DE SOLO LEYENDO O ESCUCHANDO', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA PARTICIPAR EN ACTIVIDADES PRÁCTICAS Y DINÁMICAS', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO LOS JUEGOS DE ROL Y LAS DRAMATIZACIONES', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME CREZCO CON EL RETO DE HACER ALGO NUEVO Y DIFERENTE', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA EXPERIMENTAR Y APLICAR LAS COSAS EN LA PRÁCTICA', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'NECESITO TOCAR Y MANIPULAR OBJETOS PARA ENTENDERLOS', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA GESTICUAR CUANDO HABLO', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR CON ACTIVIDADES QUE INVOLUCRAN MOVIMIENTO', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA TRABAJAR CON LAS MANOS Y CONSTRUIR COSAS', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LAS CLASES INTERACTIVAS CON ACTIVIDADES PRÁCTICAS', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME RESULTA DIFÍCIL CONCENTRARME SI NO ESTOY EN MOVIMIENTO', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA CAMINAR MIENTRAS PIENSO O MEMORIZO', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO LOS DEPORTES Y LAS ACTIVIDADES FÍSICAS', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR CUANDO PUEDO PRACTICAR INMEDIATAMENTE', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA EXPLORAR Y DESCUBRIR LAS COSAS POR MÍ MISMO', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PARTICIPO ACTIVAMENTE EN CONVERSACIONES Y DEBATES', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA EXPRESAR MIS IDEAS HABLANDO CON OTROS', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LA ACCIÓN A LA TEORÍA', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME ABURRO CON LAS CLASES SOLO DE LECTURA', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA PROBAR COSAS NUEVAS SIN MUCHA PLANIFICACIÓN', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'RECUERDO MEJOR LO QUE HICE QUE LO QUE VI O ESCUCHÉ', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'ME GUSTA TRABAJAR EN EQUIPO EN PROYECTOS PRÁCTICOS', learning: 'kinestesico'},
-    {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'APRENDO MEJOR CON SIMULACIONES Y EXPERIENCIAS REALES', learning: 'kinestesico'}
-];
-
-function loadUserData() {
-    try {
-        const savedData = localStorage.getItem('testUserData');
-        if (savedData) {
-            const data = JSON.parse(savedData);
-            appState.userInfo = data;
-            console.log('Datos de usuario cargados desde localStorage');
+        try {
+            // Verificar que jsPDF esté disponible
+            if (!window.jspdf || !window.jspdf.jsPDF) {
+                console.error('❌ jsPDF no está cargado');
+                alert('Error: No se pudo cargar la librería de PDF. Por favor, recarga la página e intenta de nuevo.');
+                return;
+            }
+        
+            const resultsSection = document.getElementById('resultsSection');
+            if (!resultsSection) {
+                alert('No se encontró la sección de resultados.');
+                return;
+            }
+        
+            // Clonar la sección para renderizarla en PDF sin afectar la UI
+            const clone = resultsSection.cloneNode(true);
+            clone.style.display = 'block';
+            clone.style.position = 'fixed';
+            clone.style.left = '-10000px';
+            clone.style.top = '0';
+            clone.style.width = '800px';
+            clone.style.maxWidth = '800px';
+            clone.style.background = '#ffffff';
+            clone.style.padding = '20px';
+            document.body.appendChild(clone);
+        
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'pt', 'a4');
+            const fileName = 'Resultados-Test-' + (appState.userInfo?.name || 'Usuario').replace(/\s+/g, '-') + '.pdf';
+        
+            await doc.html(clone, {
+                x: 20,
+                y: 20,
+                width: 555,
+                windowWidth: 800,
+                autoPaging: 'text',
+                html2canvas: {
+                    scale: 0.75,
+                    useCORS: true
+                },
+                callback: (docInstance) => {
+                    docInstance.save(fileName);
+                }
+            });
+        
+            document.body.removeChild(clone);
+            console.log('✅ PDF generado y descargado: ' + fileName);
+        
+        } catch (error) {
+            console.error('❌ Error al generar PDF:', error);
+            const errorMessage = error && error.message ? error.message : 'Error desconocido';
+            alert('Hubo un error al generar el PDF: ' + errorMessage + '. Por favor, intenta de nuevo.');
         }
-    } catch (error) {
-        console.error('Error al cargar datos del usuario:', error);
-    }
-}
-
-function initializeApp() {
-    console.log('📦 Iniciando aplicación...');
-    
-    loadUserData();
-    
-    console.log('🎯 Registrando funciones en window...');
-    window.startTest = startTest;
-    window.goBack = goBack;
-    window.exitTest = exitTest;
-    window.showSection = showSection;
-    window.submitUserForm = submitUserForm;
-    window.selectScaleAnswer = selectScaleAnswer;
-    window.selectYesNoAnswer = selectYesNoAnswer;
-    window.nextQuestion = nextQuestion;
-    window.previousQuestion = previousQuestion;
-    window.retakeTest = retakeTest;
-    window.downloadResults = downloadResults;
-    console.log('✅ Funciones registradas en window');
-    
-    console.log('🎯 Configurando event listeners...');
-    setupEventListeners();
-    
-    console.log('✅ Aplicación inicializada correctamente');
-    console.log('✅ Total de preguntas:', QUESTIONS.length);
-}
-
-function setupEventListeners() {
-    console.log('   Buscando botones...');
-    
-    const startTestBtn = document.getElementById('startTestBtn');
-    if (startTestBtn) {
-        startTestBtn.addEventListener('click', () => {
-            console.log('🖱️ Click detectado en startTestBtn');
-            startTest();
-        });
-        console.log('   ✅ Event listener agregado: startTestBtn');
-    } else {
-        console.warn('   ⚠️ No se encontró: startTestBtn');
-    }
-    
-    const userForm = document.getElementById('userForm');
-    if (userForm) {
-        userForm.addEventListener('submit', submitUserForm);
-        console.log('   ✅ Event listener agregado: userForm');
-    } else {
-        console.warn('   ⚠️ No se encontró: userForm');
     }
     
     const goBackBtn = document.getElementById('goBackBtn');
