@@ -3,8 +3,10 @@ console.log('🚀 Script cargado');
 const CONFIG = {
     totalQuestions: 40,
     originalQuestions: 80,
-    apiEndpoint: 'api.php',
-    const QUESTIONS = [
+    apiEndpoint: 'api.php'
+};
+
+const QUESTIONS = [
         // PARTE 1: INTELIGENCIAS MÚLTIPLES (35 preguntas - Escala 1-5)
         // Inteligencia Lingüística (5 preguntas)
         {
@@ -311,180 +313,152 @@ const CONFIG = {
         {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PREFIERO LOS EJEMPLOS PRÁCTICOS', learning: 'pragmatic'},
         {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'DISFRUTO LA ACCIÓN RÁPIDA', learning: 'active'},
         {section: 8, type: 'yesno', category: 'Estilos de Aprendizaje', question: 'PIENSO BIEN ANTES DE DECIDIR', learning: 'reflective'}
-    ];
+];
 
-    function initializeApp() {
-        console.log('📦 Iniciando aplicación...');
-        loadUserData();
-    
-        window.startTest = startTest;
-        window.goBack = goBack;
-        window.exitTest = exitTest;
-        window.showSection = showSection;
-        window.submitUserForm = submitUserForm;
-        window.selectScaleAnswer = selectScaleAnswer;
-        window.selectYesNoAnswer = selectYesNoAnswer;
-        window.nextQuestion = nextQuestion;
-        window.previousQuestion = previousQuestion;
-        window.retakeTest = retakeTest;
-        window.downloadResults = downloadResults;
-    
-        setupEventListeners();
-        console.log('✅ Aplicación inicializada correctamente');
-        console.log('✅ Total de preguntas:', QUESTIONS.length);
+function initializeApp() {
+    console.log('📦 Iniciando aplicación...');
+    loadUserData();
+
+    window.startTest = startTest;
+    window.goBack = goBack;
+    window.exitTest = exitTest;
+    window.showSection = showSection;
+    window.submitUserForm = submitUserForm;
+    window.selectScaleAnswer = selectScaleAnswer;
+    window.selectYesNoAnswer = selectYesNoAnswer;
+    window.nextQuestion = nextQuestion;
+    window.previousQuestion = previousQuestion;
+    window.retakeTest = retakeTest;
+    window.downloadResults = downloadResults;
+
+    setupEventListeners();
+    console.log('✅ Aplicación inicializada correctamente');
+    console.log('✅ Total de preguntas:', QUESTIONS.length);
+}
+
+function setupEventListeners() {
+    console.log('🎯 Configurando event listeners...');
+
+    const startBtn = document.getElementById('startTestBtn');
+    if (startBtn) {
+        startBtn.addEventListener('click', function() {
+            console.log('🖱️ Click en botón Comenzar Test');
+            startTest();
+        });
+        console.log('✅ Event listener agregado: startTestBtn');
+    } else {
+        console.error('❌ No se encontró el botón startTestBtn');
     }
 
-    function setupEventListeners() {
-        console.log('🎯 Configurando event listeners...');
-    
-        const startBtn = document.getElementById('startTestBtn');
-        if (startBtn) {
-            startBtn.addEventListener('click', function() {
-                console.log('🖱️ Click en botón Comenzar Test');
-                startTest();
-            });
-            console.log('✅ Event listener agregado: startTestBtn');
-        } else {
-            console.error('❌ No se encontró el botón startTestBtn');
-        }
-    
-        const userForm = document.getElementById('userForm');
-        if (userForm) {
-            userForm.addEventListener('submit', submitUserForm);
-            console.log('✅ Event listener agregado: userForm');
-        } else {
-            console.warn('⚠️ No se encontró userForm');
-        }
-    
-        const goBackBtn = document.getElementById('goBackBtn');
-        if (goBackBtn) {
-            goBackBtn.addEventListener('click', goBack);
-            console.log('✅ Event listener agregado: goBackBtn');
-        } else {
-            console.warn('⚠️ No se encontró goBackBtn');
-        }
-    
-        const exitTestBtn = document.getElementById('exitTestBtn');
-        if (exitTestBtn) {
-            exitTestBtn.addEventListener('click', exitTest);
-            console.log('✅ Event listener agregado: exitTestBtn');
-        } else {
-            console.warn('⚠️ No se encontró exitTestBtn');
-        }
-    
-        const retakeTestBtn = document.getElementById('retakeTestBtn');
-        if (retakeTestBtn) {
-            retakeTestBtn.addEventListener('click', retakeTest);
-            console.log('✅ Event listener agregado: retakeTestBtn');
-        } else {
-            console.warn('⚠️ No se encontró retakeTestBtn');
-        }
-    
-        const downloadResultsBtn = document.getElementById('downloadResultsBtn');
-        if (downloadResultsBtn) {
-            downloadResultsBtn.addEventListener('click', downloadResults);
-            console.log('✅ Event listener agregado: downloadResultsBtn');
-        } else {
-            console.warn('⚠️ No se encontró downloadResultsBtn');
-        }
-    
-        console.log('✅ Configuración de event listeners completada');
+    const userForm = document.getElementById('userForm');
+    if (userForm) {
+        userForm.addEventListener('submit', submitUserForm);
+        console.log('✅ Event listener agregado: userForm');
+    } else {
+        console.warn('⚠️ No se encontró userForm');
     }
 
-    function loadUserData() {
-        const saved = localStorage.getItem('testUserData');
-        if (saved) {
-            try {
-                appState.userInfo = JSON.parse(saved);
-            } catch (error) {
-                console.error('Error al cargar datos guardados:', error);
-            }
-        }
+    const goBackBtn = document.getElementById('goBackBtn');
+    if (goBackBtn) {
+        goBackBtn.addEventListener('click', goBack);
+        console.log('✅ Event listener agregado: goBackBtn');
+    } else {
+        console.warn('⚠️ No se encontró goBackBtn');
     }
 
-    async function downloadResults() {
-        console.log('📥 Generando PDF de resultados...');
-    
+    const exitTestBtn = document.getElementById('exitTestBtn');
+    if (exitTestBtn) {
+        exitTestBtn.addEventListener('click', exitTest);
+        console.log('✅ Event listener agregado: exitTestBtn');
+    } else {
+        console.warn('⚠️ No se encontró exitTestBtn');
+    }
+
+    const retakeTestBtn = document.getElementById('retakeTestBtn');
+    if (retakeTestBtn) {
+        retakeTestBtn.addEventListener('click', retakeTest);
+        console.log('✅ Event listener agregado: retakeTestBtn');
+    } else {
+        console.warn('⚠️ No se encontró retakeTestBtn');
+    }
+
+    const downloadResultsBtn = document.getElementById('downloadResultsBtn');
+    if (downloadResultsBtn) {
+        downloadResultsBtn.addEventListener('click', downloadResults);
+        console.log('✅ Event listener agregado: downloadResultsBtn');
+    } else {
+        console.warn('⚠️ No se encontró downloadResultsBtn');
+    }
+
+    console.log('✅ Configuración de event listeners completada');
+}
+
+function loadUserData() {
+    const saved = localStorage.getItem('testUserData');
+    if (saved) {
         try {
-            if (!window.jspdf || !window.jspdf.jsPDF) {
-                console.error('❌ jsPDF no está cargado');
-                alert('Error: No se pudo cargar la librería de PDF. Por favor, recarga la página e intenta de nuevo.');
-                return;
-            }
-        
-            const resultsSection = document.getElementById('resultsSection');
-            if (!resultsSection) {
-                alert('No se encontró la sección de resultados.');
-                return;
-            }
-        
-            const clone = resultsSection.cloneNode(true);
-            clone.style.display = 'block';
-            clone.style.position = 'fixed';
-            clone.style.left = '-10000px';
-            clone.style.top = '0';
-            clone.style.width = '800px';
-            clone.style.maxWidth = '800px';
-            clone.style.background = '#ffffff';
-            clone.style.padding = '20px';
-            document.body.appendChild(clone);
-        
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('p', 'pt', 'a4');
-            const fileName = 'Resultados-Test-' + (appState.userInfo?.name || 'Usuario').replace(/\s+/g, '-') + '.pdf';
-        
-            await doc.html(clone, {
-                x: 20,
-                y: 20,
-                width: 555,
-                windowWidth: 800,
-                autoPaging: 'text',
-                html2canvas: {
-                    scale: 0.75,
-                    useCORS: true
-                },
-                callback: (docInstance) => {
-                    docInstance.save(fileName);
-                }
-            });
-        
-            document.body.removeChild(clone);
-            console.log('✅ PDF generado y descargado: ' + fileName);
-        
+            appState.userInfo = JSON.parse(saved);
         } catch (error) {
-            console.error('❌ Error al generar PDF:', error);
-            const errorMessage = error && error.message ? error.message : 'Error desconocido';
-            alert('Hubo un error al generar el PDF: ' + errorMessage + '. Por favor, intenta de nuevo.');
+            console.error('Error al cargar datos guardados:', error);
         }
     }
-            const fileName = 'Resultados-Test-' + (appState.userInfo?.name || 'Usuario').replace(/\s+/g, '-') + '.pdf';
-        
-            await doc.html(clone, {
-                x: 20,
-                y: 20,
-                width: 555,
-                windowWidth: 800,
-                autoPaging: 'text',
-                html2canvas: {
-                    scale: 0.75,
-                    useCORS: true
-                },
-                callback: (docInstance) => {
-                    docInstance.save(fileName);
-                }
-            });
-        
-            document.body.removeChild(clone);
-            console.log('✅ PDF generado y descargado: ' + fileName);
-        
-        } catch (error) {
-            console.error('❌ Error al generar PDF:', error);
-            const errorMessage = error && error.message ? error.message : 'Error desconocido';
-            alert('Hubo un error al generar el PDF: ' + errorMessage + '. Por favor, intenta de nuevo.');
-        }
-    }
-    
+}
 
+async function downloadResults() {
+    console.log('📥 Generando PDF de resultados...');
+
+    try {
+        if (!window.jspdf || !window.jspdf.jsPDF) {
+            console.error('❌ jsPDF no está cargado');
+            alert('Error: No se pudo cargar la librería de PDF. Por favor, recarga la página e intenta de nuevo.');
+            return;
+        }
+    
+        const resultsSection = document.getElementById('resultsSection');
+        if (!resultsSection) {
+            alert('No se encontró la sección de resultados.');
+            return;
+        }
+        
+        const clone = resultsSection.cloneNode(true);
+        clone.style.display = 'block';
+        clone.style.position = 'fixed';
+        clone.style.left = '-10000px';
+        clone.style.top = '0';
+        clone.style.width = '800px';
+        clone.style.maxWidth = '800px';
+        clone.style.background = '#ffffff';
+        clone.style.padding = '20px';
+        document.body.appendChild(clone);
+        
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'pt', 'a4');
+        const fileName = 'Resultados-Test-' + (appState.userInfo?.name || 'Usuario').replace(/\s+/g, '-') + '.pdf';
+        
+        await doc.html(clone, {
+            x: 20,
+            y: 20,
+            width: 555,
+            windowWidth: 800,
+            autoPaging: 'text',
+            html2canvas: {
+                scale: 0.75,
+                useCORS: true
+            },
+            callback: (docInstance) => {
+                docInstance.save(fileName);
+            }
+        });
+        
+        document.body.removeChild(clone);
+        console.log('✅ PDF generado y descargado: ' + fileName);
+        
+    } catch (error) {
+        console.error('❌ Error al generar PDF:', error);
+        const errorMessage = error && error.message ? error.message : 'Error desconocido';
+        alert('Hubo un error al generar el PDF: ' + errorMessage + '. Por favor, intenta de nuevo.');
+    }
+}
 
 function showSection(sectionId) {
     console.log('📍 showSection llamada con:', sectionId);
